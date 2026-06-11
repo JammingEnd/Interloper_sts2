@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -36,4 +37,10 @@ public class Shhhh() : InterloperCard(2,
     {
         DynamicVars.Damage.UpgradeValueBy(4m);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromCard<GlyphMouth>(false),
+            HoverTipFactory.FromPower<ShhhStrengthPower>()
+        ];
+
 }

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -37,4 +38,10 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
         var mouthCard = CombatState.CreateCard<GlyphMouth>(Owner);
         await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, Owner);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromCard<GlyphEye>(false),
+            HoverTipFactory.FromCard<GlyphMouth>(false)
+        ];
+
 }

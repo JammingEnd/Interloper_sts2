@@ -16,7 +16,7 @@ public class EnergyNextTurnPower() : InterloperPower
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        await PlayerCmd.GainEnergy((int)this.Amount, Owner);
+        await PlayerCmd.GainEnergy((int)this.Amount, Owner.Player);
         await PowerCmd.Remove(this);
     }
 }

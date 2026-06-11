@@ -11,7 +11,7 @@ namespace Interloper.InterloperCode.Cards.Common;
 
 // all enemies take 6 damage and gain 3 corruption
 public class ShadowAbove() : InterloperCard(1,
-    CardType.Attack, CardRarity.Basic,
+    CardType.Attack, CardRarity.Common,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [

@@ -16,7 +16,7 @@ public class DeepScratch() : InterloperCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(8, ValueProp.Move)
+        new DamageVar(10, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(

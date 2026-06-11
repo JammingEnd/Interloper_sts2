@@ -17,14 +17,12 @@ public enum GlyphType
 // card-type that is used in the glyph cards
 public abstract class GlyphCard(int cost, CardType type, CardRarity rarity, TargetType target) : InterloperCard(cost, type, rarity, target)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, ConsumedKeyword.Consumed];
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // add glyph to sequence
-        
-        // add Consumed Keyword
-        CardCmd.ApplyKeyword(this, ConsumedKeyword.Consumed);
+        await PowerCmd.Apply<GlyphStorage>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
         
         // fire effects
     }

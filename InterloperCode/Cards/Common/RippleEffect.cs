@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Common;
 
@@ -34,4 +35,9 @@ public class RippleEffect() : InterloperCard(1,
     {
         DynamicVars["RippleEffectPower"].UpgradeValueBy(2m);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromPower<RippleEffectPower>()
+        ];
+
 }

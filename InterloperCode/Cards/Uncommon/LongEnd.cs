@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -40,4 +41,10 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
         var tailCard = CombatState.CreateCard<GlyphTail>(Owner);
         await CardPileCmd.AddGeneratedCardToCombat(tailCard, PileType.Hand, Owner);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromCard<GlyphTail>(false),
+            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        ];
+
 }

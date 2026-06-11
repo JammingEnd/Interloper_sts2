@@ -37,6 +37,6 @@ public abstract class InterloperCard(int cost, CardType type, CardRarity rarity,
     protected virtual void AfterMovedFromExhaust(CardModel card)
     {
         return;
-        
     }
+    
 }

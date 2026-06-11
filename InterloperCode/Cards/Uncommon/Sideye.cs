@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -39,4 +40,9 @@ public class Sideye() : InterloperCard(1,
         await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
         await CreatureCmd.GainBlock(card.Owner.Creature, CanonicalVars.First(v => v.Name == "SideyeMoved") as BlockVar, null);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromCard<GlyphEye>(false)
+        ];
+
 }

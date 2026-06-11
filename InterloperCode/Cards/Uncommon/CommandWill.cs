@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -43,4 +44,9 @@ public class CommandWill() : InterloperCard(2,
         DynamicVars.Damage.UpgradeValueBy(8m);
         DynamicVars["VoidReachPower"].UpgradeValueBy(2m);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromPower<VoidReachPower>()
+        ];
+
 }

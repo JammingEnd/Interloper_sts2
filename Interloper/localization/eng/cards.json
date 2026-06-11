@@ -1,0 +1,79 @@
+{
+  "INTERLOPER-STRIKE_INTERLOPER.title": "Strike",
+  "INTERLOPER-STRIKE_INTERLOPER.description": "Deal {Damage:diff()} damage.",
+
+  "INTERLOPER-DEFEND_INTERLOPER.description": "Defend",
+  "INTERLOPER-DEFEND_INTERLOPER.title": "Gain {Block:diff()} [gold]Block[/gold].",
+
+  "INTERLOPER-DEEP_SCRATCH.description": "",
+  "INTERLOPER-DEEP_SCRATCH.title": "Deep Scratch",
+
+  "INTERLOPER-INTO_THE_UNKNOWN.description": "",
+  "INTERLOPER-INTO_THE_UNKNOWN.title": "Into The Unknown",
+
+  "INTERLOPER-LOW_BREACH.description": "",
+  "INTERLOPER-LOW_BREACH.title": "LowBreach",
+
+  "INTERLOPER-BORDER_OFNOTHING.description": "",
+  "INTERLOPER-BORDER_OFNOTHING.title": "Border of Nothing",
+
+  "INTERLOPER-CORRUPT.description": "",
+  "INTERLOPER-CORRUPT.title": "Corrupt",
+
+  "INTERLOPER-DEEP_GAZE.description": "",
+  "INTERLOPER-DEEP_GAZE.title": "Deep Gaze",
+
+  "INTERLOPER-FOUL_PLAY.description": "",
+  "INTERLOPER-FOUL_PLAY.title": "FoulPlay",
+
+  "INTERLOPER-FROM_BELOW.description": "",
+  "INTERLOPER-FROM_BELOW.title": "From Below",
+
+  "INTERLOPER-HOLDING_IT_IN.description": "",
+  "INTERLOPER-HOLDING_IT_IN.title": "Holding It In",
+
+  "INTERLOPER-INSET.description": "",
+  "INTERLOPER-INSET.title": "Inset",
+
+  "INTERLOPER-LOST_AND_FOUND.description": "",
+  "INTERLOPER-LOST_AND_FOUND.title": "Lost and Found",
+
+  "INTERLOPER-MARKED_BY_MOUTHS.description": "",
+  "INTERLOPER-MARKED_BY_MOUTHS.title": "Marked By Mouths",
+
+  "INTERLOPER-NO_SHOT.description": "",
+  "INTERLOPER-NO_SHOT.title": "No Shot",
+  
+  "INTERLOPER-ONES_SERVICE.description": "",
+  "INTERLOPER-ONES_SERVICE.title": "One's Service",
+  
+  "INTERLOPER-RIPPLE_EFFECT.description": "",
+  "INTERLOPER-RIPPLE_EFFECT.title": "Ripple Effect",
+
+  "INTERLOPER-SHADOW_ABOVE.description": "",
+  "INTERLOPER-SHADOW_ABOVE.title": "Shadow Above",
+
+  "INTERLOPER-SOUL_EXCHANGE.description": "",
+  "INTERLOPER-SOUL_EXCHANGE.title": "Soul Exchange",
+
+  "INTERLOPER-VEIL_SWEEP.description": "",
+  "INTERLOPER-VEIL_SWEEP.title": "Veil Sweep",
+
+  "INTERLOPER-OUTWARD_STRENGTH.description": "",
+  "INTERLOPER-OUTWARD_STRENGTH.title": "Outward Strength",
+
+  "INTERLOPER-ABYSS_AEGIS.description": "",
+  "INTERLOPER-ABYSS_AEGIS.title": "Abyss Aegis",
+  
+  
+
+  "INTERLOPER-GLYPH_EYE.description": "",
+  "INTERLOPER-GLYPH_EYE.title": "Eye",
+  
+  "INTERLOPER-GLYPH_MOUTH.description": "",
+  "INTERLOPER-GLYPH_MOUTH.title": "Mouth",
+
+  "INTERLOPER-GLYPH_TAIL.description": "",
+  "INTERLOPER-GLYPH_TAIL.title": "Tail"
+  
+}

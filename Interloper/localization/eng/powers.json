@@ -1,0 +1,33 @@
+{
+  "INTERLOPER-VOID_REACH_POWER.description": "When [gold]Void Reach[/gold] reaches stacks equal to twice the cost of the oldest, non status or curse card in your [gold]Exhaust pile[/gold], return that card to your draw pile with a -1 {energyPrefix} until played",
+  "INTERLOPER-VOID_REACH_POWER.smartDescription": "When [gold]Void Reach[/gold] reaches stacks equal to twice the cost of the oldest, non status or curse card in your [gold]Exhaust pile[/gold], return that card to your draw pile with a -1 {energyPrefix} until played",
+  "INTERLOPER-VOID_REACH_POWER.title": "Void Reach",
+
+  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.description": "",
+  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.smartDescription": "",
+  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.title": "Abyssal Corruption",
+
+  "INTERLOPER-RIPPLE_EFFECT_POWER.description": "",
+  "INTERLOPER-RIPPLE_EFFECT_POWER.smartDescription": "",
+  "INTERLOPER-RIPPLE_EFFECT_POWER.title": "Ripple Effect",
+
+  "INTERLOPER-RIPPLE_EFFECT_POWER_AFTER.description": "",
+  "INTERLOPER-RIPPLE_EFFECT_POWER_AFTER.smartDescription": "",
+  "INTERLOPER-RIPPLE_EFFECT_POWER_AFTER.title": "Ripple Strength",
+
+  "INTERLOPER-GLYPH_EYE_POWER.description": "",
+  "INTERLOPER-GLYPH_EYE_POWER.smartDescription": "",
+  "INTERLOPER-GLYPH_EYE_POWER.title": "GlyphEyePower",
+
+  "INTERLOPER-GLYPH_MOUTH_POWER.description": "",
+  "INTERLOPER-GLYPH_MOUTH_POWER.smartDescription": "",
+  "INTERLOPER-GLYPH_MOUTH_POWER.title": "GlyphMouthPower",
+
+  "INTERLOPER-GLYPH_TAIL_POWER.description": "",
+  "INTERLOPER-GLYPH_TAIL_POWER.smartDescription": "",
+  "INTERLOPER-GLYPH_TAIL_POWER.title": "GlyphTailPower",
+
+  "INTERLOPER-GLYPH_STORAGE.description": "",
+  "INTERLOPER-GLYPH_STORAGE.smartDescription": "",
+  "INTERLOPER-GLYPH_STORAGE.title": "GlyphStorage"
+}

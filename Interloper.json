@@ -1,0 +1,11 @@
+{
+  "id": "Interloper",
+  "name": "Interloper",
+  "author": "Jammingend",
+  "description": "A wandering soul that uses the power of the Abyssal voids to manipulate the outcomes, using those that have been lost for another time.",
+  "version": "v0.0.0",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": ["BaseLib"],
+  "affects_gameplay": true
+}

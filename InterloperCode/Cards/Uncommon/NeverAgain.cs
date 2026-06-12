@@ -1,4 +1,5 @@
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -26,11 +27,11 @@ public class NeverAgain() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        DynamicVars["NeverAgainDraw"].UpgradeValueBy(1);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<NeverAgainPower>()
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
 }

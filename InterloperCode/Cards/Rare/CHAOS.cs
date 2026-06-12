@@ -34,14 +34,14 @@ public class CHAOS() : InterloperCard(3,
 
         foreach (var card in nonExhaustCards)
         {
-            CardCmd.ApplyKeyword(card, ConsumedKeyword.Consumed);
+            CardCmd.ApplyKeyword(card, InterloperKeywords.Consumed);
             await CardCmd.Exhaust(choiceContext, card);
         }
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(ConsumedKeyword.Consumed)
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
     protected override void OnUpgrade()

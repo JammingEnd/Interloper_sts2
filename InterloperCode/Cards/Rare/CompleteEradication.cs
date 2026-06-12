@@ -12,9 +12,12 @@ public class CompleteEradication() : CorruptionHandlerCard(40, 3,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (_, target) => target.GetPowerAmount<AbyssalCorruptionPower>() >= 40 ? 180M : 60M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(60),
+        new ExtraDamageVar(0),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+            (_, target) => target.GetPowerAmount<AbyssalCorruptionPower>() >= 40 ? 3M : 1M)
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

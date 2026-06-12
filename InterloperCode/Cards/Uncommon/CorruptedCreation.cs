@@ -1,4 +1,5 @@
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -29,7 +30,7 @@ public class CorruptedCreation() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<CorruptedCreationPower>()
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
 }

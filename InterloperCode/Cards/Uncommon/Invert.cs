@@ -25,6 +25,7 @@ public class Invert() : CorruptionHandlerCard(10 ,0,
     protected override void OnUpgrade()
     {
         this.AddKeyword(CardKeyword.Retain);
+        DynamicVars.Energy.UpgradeValueBy(1m);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

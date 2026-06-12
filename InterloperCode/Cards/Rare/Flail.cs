@@ -13,12 +13,13 @@ public class Flail() : InterloperCard(1,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    private int _multiplier = 4;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (card, _) => (Decimal)(_multiplier * PileType.Exhaust.GetPile(card.Owner).Cards
-                .Count(c => c is GlyphTail)))];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(4),
+        new ExtraDamageVar(0),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+            (card, _) => (Decimal)PileType.Exhaust.GetPile(card.Owner).Cards
+                .Count(c => c is GlyphTail))
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -35,7 +36,7 @@ public class Flail() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        _multiplier = 5;
+        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

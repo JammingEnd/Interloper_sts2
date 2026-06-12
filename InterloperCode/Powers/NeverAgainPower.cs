@@ -21,15 +21,15 @@ public class NeverAgainPower() : InterloperPower
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 0, Amount);
-        Func<CardModel, bool> filter = c => !c.Keywords.Contains(ConsumedKeyword.Consumed);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 0, Amount);
+        Func<CardModel, bool> filter = c => !c.Keywords.Contains(InterloperKeywords.Consumed);
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner.Player, prefs, filter, this);
         var targets = selected.ToList();
         if (targets.Count > 0)
         {
             foreach (var target in targets)
             {
-                target.AddKeyword(ConsumedKeyword.Consumed);
+                target.AddKeyword(InterloperKeywords.Consumed);
             }
         }
     }

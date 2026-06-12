@@ -25,7 +25,7 @@ public class FullControl() : InterloperCard(1,
         if (validCards.Length == 0)
             return;
 
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromSimpleGrid(
             choiceContext, validCards, Owner, prefs);
 
@@ -34,7 +34,7 @@ public class FullControl() : InterloperCard(1,
 
         foreach (var card in selected)
         {
-            card.RemoveKeyword(ConsumedKeyword.Consumed);
+            card.RemoveKeyword(InterloperKeywords.Consumed);
             exhaustPile.MoveToBottomInternal(card);
         }
     }

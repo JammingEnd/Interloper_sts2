@@ -15,7 +15,8 @@ public class EffigyOfFire() : CorruptionHandlerCard(10, 2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(20, ValueProp.Move)
+        new DamageVar(20, ValueProp.Move),
+        new PowerVar<EffigyOfFirePower>("EffigyOfFirePower", 1)
     ];
 
     protected override async Task OnPlay(
@@ -29,16 +30,11 @@ public class EffigyOfFire() : CorruptionHandlerCard(10, 2,
         PlayerChoiceContext choiceContext, CardPlay play)
     {
         await PowerCmd.Apply<EffigyOfFirePower>(
-            choiceContext, Owner.Creature, 1, Owner.Creature, this);
+            choiceContext, Owner.Creature, DynamicVars["EffigyOfFirePower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(8m);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [
-            HoverTipFactory.FromPower<EffigyOfFirePower>()
-        ];
-
 }

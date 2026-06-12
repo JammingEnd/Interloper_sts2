@@ -11,7 +11,7 @@ public static class Extentions
         var query = pile.Cards.AsEnumerable();
 
         if (!includeConsumed)
-            query = query.Where(p => !p.Keywords.Contains(ConsumedKeyword.Consumed));
+            query = query.Where(p => !p.Keywords.Contains(InterloperKeywords.Consumed));
         if (!includeCurse)
             query = query.Where(p => p.Type != CardType.Curse);
         if (!includeStatus)
@@ -27,7 +27,7 @@ public static class Extentions
         var query = pile.Cards.AsEnumerable();
 
         if (!includeConsumed)
-            query = query.Where(p => !p.Keywords.Contains(ConsumedKeyword.Consumed));
+            query = query.Where(p => !p.Keywords.Contains(InterloperKeywords.Consumed));
         if (!includeCurse)
             query = query.Where(p => p.Type != CardType.Curse);
         if (!includeStatus)

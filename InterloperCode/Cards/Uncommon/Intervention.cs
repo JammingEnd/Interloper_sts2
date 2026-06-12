@@ -22,7 +22,7 @@ public class Intervention() : InterloperCard(1,
         if (exhaustPile.Cards.Count == 0)
             return;
 
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromSimpleGrid(
             choiceContext, exhaustPile.Cards, Owner, prefs);
 

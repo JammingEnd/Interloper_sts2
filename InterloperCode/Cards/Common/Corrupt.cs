@@ -4,6 +4,7 @@ using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Interloper.InterloperCode.Cards.Common;
@@ -24,8 +25,13 @@ public class Corrupt() : InterloperCard(1,
         await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
     }
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [
+            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        ];
+
     protected override void OnUpgrade()
     {
-        DynamicVars["AbyssalCorruption"].UpgradeValueBy(3m);
+        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
     }
 }

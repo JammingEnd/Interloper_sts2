@@ -30,9 +30,4 @@ public class AddedBenefit() : InterloperCard(2,
     {
         AddKeyword(CardKeyword.Innate);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [
-            HoverTipFactory.FromPower<AddedBenefitPower>()
-        ];
-
 }

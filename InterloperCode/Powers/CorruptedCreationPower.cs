@@ -39,7 +39,7 @@ public class CorruptedCreationPower() : InterloperPower
                 CardFactory.GetDistinctForCombat(this.Owner.Player, cards, 1, Owner.Player.RunState.Rng.CombatCardGeneration).FirstOrDefault();
             if (newcard != null)
             {
-                newcard.AddKeyword(ConsumedKeyword.Consumed);
+                newcard.AddKeyword(InterloperKeywords.Consumed);
                 await CardPileCmd.AddGeneratedCardToCombat(newcard, PileType.Hand, Owner.Player);
             }
         }

@@ -20,22 +20,22 @@ public class VilePresence() : InterloperCard(0,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(1, ValueProp.Move),
-        new CalculationBaseVar(0M), new CalculationExtraVar(1M),
-        new CalculatedVar("CalculatedDamage").WithMultiplier(
-                (Func<CardModel, Creature, Decimal>) ((card, _) => 
-                    (Decimal) CombatManager.Instance.History.Entries.OfType<CorruptionModifiedEntry>().Where<CorruptionModifiedEntry>((Func<CorruptionModifiedEntry, bool>) (e => e.HappenedThisTurn(card.CombatState) && e.Amount > 0 && e.Actor == card.Owner.Creature)).Sum<CorruptionModifiedEntry>((Func<CorruptionModifiedEntry, int>) (e => e.Amount)
-                        )
-                    )
-                )
+        new DamageVar(3, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        VilePresence card = this;
-        AttackCommand attackCommand = await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).WithHitCount((int) ((CalculatedVar) card.DynamicVars["CalculatedDamage"]).Calculate(play.Target)).FromCard((CardModel) card).TargetingAllOpponents(card.CombatState).Execute(choiceContext);
+        int hitCount = CombatManager.Instance.History.Entries
+            .OfType<CorruptionModifiedEntry>()
+            .Where(e => e.HappenedThisTurn(CombatState) && e.Amount > 0 && e.Actor == Owner.Creature)
+            .Sum(e => e.Amount);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hitCount)
+            .FromCard(this)
+            .TargetingAllOpponents(CombatState)
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

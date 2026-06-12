@@ -16,16 +16,13 @@ public class Unnatural() : CorruptionHandlerCard(15, 1,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    private int _baseDamage = 10;
-
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(10),
+        new ExtraDamageVar(0),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (_, target) =>
-                target.GetPowerAmount<AbyssalCorruptionPower>() >= 15
-                    ? _baseDamage * 2
-                    : _baseDamage),
+            (_, target) => target.GetPowerAmount<AbyssalCorruptionPower>() >= 15 ? 2M : 1M),
         new PowerVar<WeakPower>("WeakPower", 2),
         new PowerVar<VulnerablePower>("VulnerablePower", 2)
     ];
@@ -62,7 +59,7 @@ public class Unnatural() : CorruptionHandlerCard(15, 1,
 
     protected override void OnUpgrade()
     {
-        _baseDamage += 5;
+        DynamicVars.ExtraDamage.UpgradeValueBy(5m);
         DynamicVars["WeakPower"].UpgradeValueBy(1m);
         DynamicVars["VulnerablePower"].UpgradeValueBy(1m);
     }

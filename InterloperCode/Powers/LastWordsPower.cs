@@ -18,7 +18,7 @@ public class LastWordsPower() : InterloperPower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Keywords.Contains(ConsumedKeyword.Consumed))
+        if (cardPlay.Card.Keywords.Contains(InterloperKeywords.Consumed))
         {
             var mouthCard = CombatState.CreateCard<GlyphMouth>(this.Owner.Player);
             await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, this.Owner.Player);

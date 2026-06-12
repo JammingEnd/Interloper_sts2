@@ -32,7 +32,7 @@ public class HugeRift() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<HugeRiftPower>()
+            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
         ];
 
 }

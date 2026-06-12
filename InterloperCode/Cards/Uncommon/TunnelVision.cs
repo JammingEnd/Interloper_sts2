@@ -32,7 +32,7 @@ public class TunnelVision() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<TunnelVisionPower>()
+            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
         ];
 
 }

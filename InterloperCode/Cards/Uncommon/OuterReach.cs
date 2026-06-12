@@ -30,13 +30,13 @@ public class OuterReach() : InterloperCard(1,
             return;
 
         oldestCard.EnergyCost.AddUntilPlayed(-1, true);
-        oldestCard.AddKeyword(ConsumedKeyword.Consumed);
+        oldestCard.AddKeyword(InterloperKeywords.Consumed);
         await CardPileCmd.Add(oldestCard, PileType.Hand);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(ConsumedKeyword.Consumed)
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
     protected override void OnUpgrade()

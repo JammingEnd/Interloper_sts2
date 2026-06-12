@@ -33,7 +33,7 @@ public class TwistedAbyss() : InterloperCard(1,
                 Owner.RunState.Rng.CombatCardGeneration).FirstOrDefault();
             if (newcard != null)
             {
-                newcard.AddKeyword(ConsumedKeyword.Consumed);
+                newcard.AddKeyword(InterloperKeywords.Consumed);
                 if (this.IsUpgraded)
                 {
                     newcard.BaseReplayCount += 1;
@@ -42,14 +42,8 @@ public class TwistedAbyss() : InterloperCard(1,
             }
         }
     }
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [
-            HoverTipFactory.FromKeyword(ConsumedKeyword.Consumed)
-        ];
-
     protected override void OnUpgrade()
     {
-        // it also gains replay(1)
+        EnergyCost.UpgradeBy(-1);
     }
 }

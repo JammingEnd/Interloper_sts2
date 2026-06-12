@@ -3,12 +3,15 @@ using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
@@ -16,15 +19,13 @@ public class BreakingPoint() : InterloperCard(2,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    private int _strengthLoss = 8;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (_, target) =>
-            {
-                int after = target.GetPowerAmount<StrengthPower>() - _strengthLoss;
-                return after < 0 ? (Decimal)(2 * -after) : 0M;
-            })
+        new CalculationBaseVar(2),
+        new ExtraDamageVar(0),
+        new CalculatedDamageVar(ValueProp.Move)
+            .WithMultiplier((Func<CardModel, Creature, Decimal>) 
+                ((_, target) => (target != null ? target.GetPowerAmount<StrengthPower>() * 2 : 0))),
+        new PowerVar<BreakingPointPower>("BreakingPointPower", 10)
     ];
 
     protected override async Task OnPlay(
@@ -32,14 +33,15 @@ public class BreakingPoint() : InterloperCard(2,
         CardPlay play)
     {
         await PowerCmd.Apply<BreakingPointPower>(
-            choiceContext, play.Target, _strengthLoss, Owner.Creature, this);
+            choiceContext, play.Target, DynamicVars["BreakingPointPower"].IntValue, Owner.Creature, this);
 
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        
     }
 
     protected override void OnUpgrade()
     {
-        _strengthLoss = 10;
+        DynamicVars["BreakingPointPower"].UpgradeValueBy(2);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

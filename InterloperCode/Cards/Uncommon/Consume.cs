@@ -19,7 +19,7 @@ public class Consume() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner, prefs, null, this);
         var target = selected.FirstOrDefault();
         if (target != null)

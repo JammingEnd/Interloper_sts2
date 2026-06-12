@@ -28,7 +28,7 @@ public class Goodwill() : InterloperCard(0,
         if (glyphCards.Length == 0)
             return;
 
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromSimpleGrid(
             choiceContext, glyphCards, Owner, prefs);
 

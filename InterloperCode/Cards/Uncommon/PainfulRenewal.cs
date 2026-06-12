@@ -12,7 +12,8 @@ public class PainfulRenewal() : InterloperCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
         new PowerVar<PainfulRenewalPower>("PainfulRenewalPower", 8)
     ];
 
@@ -20,16 +21,13 @@ public class PainfulRenewal() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<PainfulRenewalPower>(choiceContext, play.Target, DynamicVars["PainfulRenewalPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<PainfulRenewalPower>(choiceContext, play.Target,
+            DynamicVars["PainfulRenewalPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["PainfulRenewalPower"].UpgradeValueBy(3m);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [
-            HoverTipFactory.FromPower<PainfulRenewalPower>()
-        ];
 
 }

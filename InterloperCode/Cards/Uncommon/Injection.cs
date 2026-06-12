@@ -35,7 +35,7 @@ public class Injection() : CorruptionHandlerCard(10,1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, DynamicVars["RippleEffectPower"].IntValue,
+        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, DynamicVars["WeakPower"].IntValue,
             Owner.Creature, this);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, DynamicVars["VulnerablePower"].IntValue,
             Owner.Creature, this);

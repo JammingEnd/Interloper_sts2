@@ -23,13 +23,13 @@ public class CompletelyLostPower() : InterloperPower
     {
         var pile = PileType.Exhaust.GetPile(Owner.Player);
         var consumedCards = pile.Cards
-            .Where(c => c.Keywords.Contains(ConsumedKeyword.Consumed))
+            .Where(c => c.Keywords.Contains(InterloperKeywords.Consumed))
             .ToList();
 
         if (consumedCards.Count == 0)
             return;
 
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.RemoveSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromSimpleGrid(
             null, consumedCards, Owner.Player, prefs);
 

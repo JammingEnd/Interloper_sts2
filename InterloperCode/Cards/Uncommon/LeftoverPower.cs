@@ -30,7 +30,7 @@ public class LeftoverPower() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<LeftoverPowerPower>()
+            HoverTipFactory.FromPower<VoidReachPower>()
         ];
 
 }

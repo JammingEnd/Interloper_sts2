@@ -23,14 +23,14 @@ public class LittleControl() : InterloperCard(2,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, DynamicVars.Cards.IntValue);
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(Owner).Cards, Owner, prefs);
         if (selected != null)
         {
             foreach (var card in selected)
             {
                 card.AddKeyword(CardKeyword.Exhaust);
-                card.AddKeyword(ConsumedKeyword.Consumed);
+                card.AddKeyword(InterloperKeywords.Consumed);
                 card.EnergyCost.SetThisCombat(0);
             }
         }
@@ -38,7 +38,7 @@ public class LittleControl() : InterloperCard(2,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(ConsumedKeyword.Consumed)
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
     protected override void OnUpgrade()

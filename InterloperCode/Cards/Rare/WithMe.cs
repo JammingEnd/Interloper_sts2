@@ -36,7 +36,7 @@ public class WithMe() : InterloperCard(1,
         var sets = exhaustPile.GetOldestPlayableCards();
         if (sets.Length > 0)
         {
-            var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+            var prefs = new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1);
             var ctx = new ThrowingPlayerChoiceContext() as PlayerChoiceContext;
             var selected = await CardSelectCmd.FromSimpleGrid(
                 ctx!, sets, Owner, prefs);

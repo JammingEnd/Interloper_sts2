@@ -15,7 +15,7 @@ public class ToTheDepths() : InterloperCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, ConsumedKeyword.Consumed];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(5, ValueProp.Move)
     ];
@@ -43,7 +43,7 @@ public class ToTheDepths() : InterloperCard(0,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(ConsumedKeyword.Consumed),
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed),
             HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
         ];
 

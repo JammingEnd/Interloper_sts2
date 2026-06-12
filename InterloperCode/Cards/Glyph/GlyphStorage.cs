@@ -26,49 +26,53 @@ public class GlyphStorage() : InterloperPower
         CardModel? cardSource)
     {
         if (power.GetType() != typeof(GlyphStorage))
-        {
             return;
-        }
-        
-        var glyphsOnPlayer = this.Owner.Powers.OfType<GlyphPower>().ToArray();
 
-        if (glyphsOnPlayer.Length == 3)
+        if (amount <= 0)
+            return;
+
+        var glyphsOnPlayer = Owner.Powers.OfType<GlyphPower>().ToArray();
+        if (glyphsOnPlayer.Length < 3)
+            return;
+
+        int eyes = glyphsOnPlayer.Count(g => g is GlyphEyePower);
+        int mouths = glyphsOnPlayer.Count(g => g is GlyphMouthPower);
+        int tails = glyphsOnPlayer.Count(g => g is GlyphTailPower);
+
+        var effectTask = (eyes, mouths, tails) switch
         {
-            int[] codes = new int[glyphsOnPlayer.Length];
+            (3, 0, 0) => ThreeEyes(choiceContext),
+            (0, 3, 0) => ThreeMouths(choiceContext),
+            (0, 0, 3) => ThreeTails(choiceContext),
+            (2, 1, 0) => TwoEyesOneMouth(choiceContext),
+            (2, 0, 1) => TwoEyesOneTail(choiceContext),
+            (1, 2, 0) => OneEyeTwoMouths(choiceContext),
+            (0, 2, 1) => TwoMouthsOneTail(choiceContext),
+            (1, 0, 2) => OneEyeTwoTails(choiceContext),
+            (0, 1, 2) => OneMouthTwoTails(choiceContext),
+            (1, 1, 1) => OneOfEach(choiceContext),
+            _ => Task.CompletedTask
+        };
+        await effectTask;
 
-            for (int i = 0; i < glyphsOnPlayer.Length; i++)
-            {
-                codes[i] = glyphsOnPlayer[i] switch
-                {
-                    GlyphEyePower => 0,
-                    GlyphMouthPower => 1,
-                    GlyphTailPower => 2,
-                    _ => -1 // unknown glyph type
-                };
-            }
+        await PowerCmd.Remove<GlyphPower>(Owner);
 
-            string code = string.Join("", codes);
+        var entry = new SequenceActivatedEntry(
+            2, Owner.Player, CombatState.RoundNumber,
+            CombatState.CurrentSide, CombatManager.Instance.History,
+            CombatState.Players);
 
-            // three eyes
-            if (code == "000")
-            {
-                await CreatureCmd.Damage(choiceContext, CombatState!.HittableEnemies, 10, ValueProp.Unblockable,
-                    this.Owner, null);
-            }
-            //TODO:more codes
-            
-            
-            // remove after activating 
-            await PowerCmd.Remove<GlyphPower>(Owner);
-            
-            
-            // TODO: this probably is not correct
-            var entry = new SequenceActivatedEntry(
-                2, Owner.Player, CombatState.RoundNumber,
-                CombatState.CurrentSide, CombatManager.Instance.History,
-                CombatState.Players);
-
-            await PowerCmd.Remove<GlyphStorage>(Owner);
-        }
+        await PowerCmd.Remove<GlyphStorage>(Owner);
     }
+
+    private static async Task ThreeEyes(PlayerChoiceContext choiceContext) { }
+    private static async Task ThreeMouths(PlayerChoiceContext choiceContext) { }
+    private static async Task ThreeTails(PlayerChoiceContext choiceContext) { }
+    private static async Task TwoEyesOneMouth(PlayerChoiceContext choiceContext) { }
+    private static async Task TwoEyesOneTail(PlayerChoiceContext choiceContext) { }
+    private static async Task OneEyeTwoMouths(PlayerChoiceContext choiceContext) { }
+    private static async Task TwoMouthsOneTail(PlayerChoiceContext choiceContext) { }
+    private static async Task OneEyeTwoTails(PlayerChoiceContext choiceContext) { }
+    private static async Task OneMouthTwoTails(PlayerChoiceContext choiceContext) { }
+    private static async Task OneOfEach(PlayerChoiceContext choiceContext) { }
 }

@@ -10,28 +10,24 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Rare;
-
+//TODO: this card lol
 public class DarkDivinity() : InterloperCard(2,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(3, ValueProp.Move),
-        new CalculationBaseVar(3M),
-        new CalculationExtraVar(1M),
-        new CalculatedVar("TotalDamage").WithMultiplier(
-            (card, _) => (card.IsUpgraded ? 5 : 0)
-                + CombatManager.Instance.History.Entries
-                    .OfType<SequenceActivatedEntry>()
-                    .Sum(e => e.Amount))
+        new DamageVar(3, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        int totalDamage = (int)((CalculatedVar)DynamicVars["TotalDamage"]).Calculate(play.Target);
-        DynamicVars.Damage.BaseValue = totalDamage;
+        int seqCount = CombatManager.Instance.History.Entries
+            .OfType<SequenceActivatedEntry>()
+            .Sum(e => e.Amount);
+        int bonus = IsUpgraded ? 5 : 0;
+        DynamicVars.Damage.BaseValue = 3 + bonus + seqCount;
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
 

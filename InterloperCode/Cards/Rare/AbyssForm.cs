@@ -32,7 +32,7 @@ public class AbyssForm() : InterloperCard(3,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssFormPower>()
+            HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
         ];
 
 }

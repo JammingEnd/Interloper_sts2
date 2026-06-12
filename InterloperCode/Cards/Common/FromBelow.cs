@@ -1,7 +1,9 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -31,4 +33,8 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+    ];
 }

@@ -32,7 +32,7 @@ public class Syphon() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<SyphonPower>()
+            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
         ];
 
 }

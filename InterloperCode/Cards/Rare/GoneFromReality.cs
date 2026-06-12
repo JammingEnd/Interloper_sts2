@@ -14,10 +14,13 @@ public class GoneFromReality() : InterloperCard(1,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(1),
+        new ExtraDamageVar(0),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
             (card, _) => (Decimal)card.CombatState.HittableEnemies
-                .Sum(e => e.GetPowerAmount<AbyssalCorruptionPower>()))];
+                .Sum(e => e.GetPowerAmount<AbyssalCorruptionPower>()))
+    ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

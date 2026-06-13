@@ -30,8 +30,7 @@ public class Intervention() : InterloperCard(1,
         {
             foreach (var card in selected)
             {
-                exhaustPile.RemoveInternal(card);
-                exhaustPile.AddInternal(card);
+                exhaustPile.MoveToTopInternal(card);
             }
         }
     }

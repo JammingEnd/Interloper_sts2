@@ -10,10 +10,11 @@ namespace Interloper.InterloperCode.Cards.Uncommon;
 
 public class DarkToLight() : CorruptionHandlerCard(10, 1,
     CardType.Skill, CardRarity.Uncommon,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VoidReachPower>("VoidReachPower", 4)
+        new PowerVar<VoidReachPower>("VoidReachPower", 4),
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5)
     ];
 
     protected override async Task OnPlay(

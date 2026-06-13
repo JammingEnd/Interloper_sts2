@@ -3,6 +3,7 @@ using BaseLib.Utils.NodeFactories;
 using Interloper.InterloperCode.Extensions;
 using Godot;
 using Interloper.InterloperCode.Cards.Basic;
+using Interloper.InterloperCode.Relics;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -13,7 +14,7 @@ public class Interloper : PlaceholderCharacterModel
 {
     public const string CharacterId = "Interloper";
 
-    public static readonly Color Color = new("ffffff");
+    public static readonly Color Color = new("8d00cf");
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Masculine;
@@ -36,7 +37,7 @@ public class Interloper : PlaceholderCharacterModel
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<BurningBlood>()
+        ModelDb.Relic<DarkChainsRelic>()
     ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<InterloperCardPool>();
@@ -61,4 +62,7 @@ public class Interloper : PlaceholderCharacterModel
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
+    // art by https://www.reddit.com/r/DnD/comments/1is5rcz/artdisintegrate_most_memorable_experiences_with/
+    public override string CustomCharacterSelectBg => "char_select_bg_interloper.tscn".ScenePath();
+    public override string CustomEnergyCounterPath => "res://Interloper/scenes/interloper_energy_counter.tscn";
 }

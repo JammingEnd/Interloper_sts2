@@ -31,6 +31,7 @@ public class LowBreach() : InterloperCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars["VoidReachPower"].UpgradeValueBy(1m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

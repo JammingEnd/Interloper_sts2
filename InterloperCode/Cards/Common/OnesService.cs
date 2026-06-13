@@ -18,7 +18,7 @@ public class OnesService() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
             new DamageVar(5, ValueProp.Move),
-            new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 3),
+            new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5),
             new PowerVar<VoidReachPower>("VoidReachPower", 1)
     ];
 
@@ -28,6 +28,7 @@ public class OnesService() : InterloperCard(1,
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
         await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPower"].IntValue, Owner.Creature, this);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -39,6 +40,7 @@ public class OnesService() : InterloperCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["AbyssalCorruption"].UpgradeValueBy(2m);
+        DynamicVars["AbyssalCorruption"].UpgradeValueBy(3m);
+        DynamicVars["VoidReachPower"].UpgradeValueBy(1m);
     }
 }

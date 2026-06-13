@@ -1,4 +1,5 @@
 using BaseLib.Extensions;
+using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -26,6 +27,7 @@ public class IntoTheUnknown() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        await CommonActions.CardBlock(this, play);
         var prefs = new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner, prefs, null, this);
         var target = selected.FirstOrDefault();

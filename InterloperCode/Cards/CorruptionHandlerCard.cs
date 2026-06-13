@@ -13,7 +13,12 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Target.Powers.Any(p => p is AbyssalCorruptionPower acp && acp.Amount >= corruptionThreshold))
+        if (cardPlay.Card != this)
+        {
+            return;
+        }
+        
+        if (cardPlay.Target.GetPowerAmount<AbyssalCorruptionPower>() >= corruptionThreshold)
         {
             await CorruptionConsumptionEffect(choiceContext, cardPlay);
             int consumed = -corruptionThreshold;

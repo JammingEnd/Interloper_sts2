@@ -1,3 +1,9 @@
 {
-  
+  "INTERLOPER-LOSE_CHAINS_RELIC.description": "The first time you [gold]Exhaust[/gold] a card each turn, gain 2 [gold]Void Reach[/gold].",
+  "INTERLOPER-LOSE_CHAINS_RELIC.flavor": "Each leap is a progress towards my desired end... yet the abyss pushes back.",
+  "INTERLOPER-LOSE_CHAINS_RELIC.title": "Lose Chains",
+
+  "INTERLOPER-DARK_CHAINS_RELIC.description": "The first time you [gold]Exhaust[/gold] a card each combat, gain 2 [gold]Void Reach[/gold].",
+  "INTERLOPER-DARK_CHAINS_RELIC.flavor": "Forged in silence, snapped once. The void remembers the sound.",
+  "INTERLOPER-DARK_CHAINS_RELIC.title": "Dark Chains"
 }

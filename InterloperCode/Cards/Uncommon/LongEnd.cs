@@ -30,10 +30,10 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
             Owner.Creature, this);
     }
 
-    protected override async void OnUpgrade()
+    protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-         DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3);
+        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
@@ -43,7 +43,7 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphTail>(false),
+            HoverTipFactory.FromCard<GlyphTail>(),
             HoverTipFactory.FromPower<AbyssalCorruptionPower>()
         ];
 

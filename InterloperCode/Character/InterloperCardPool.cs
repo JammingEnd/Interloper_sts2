@@ -28,7 +28,7 @@ public class InterloperCardPool : CustomCardPoolModel
     }*/
 
     //Color of small card icons
-    public override Color DeckEntryCardColor => new("ffffff");
+    public override Color DeckEntryCardColor => new("8d00cf");
 
     public override bool IsColorless => false;
 }

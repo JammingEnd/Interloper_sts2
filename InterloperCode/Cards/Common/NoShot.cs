@@ -18,7 +18,7 @@ public class NoShot() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(7, ValueProp.Move),
-         new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5)
+         new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 7)
     ];
 
     protected override async Task OnPlay(
@@ -40,6 +40,6 @@ public class NoShot() : InterloperCard(1,
     protected override void OnUpgrade()
     {
             DynamicVars.Damage.UpgradeValueBy(3m);
-            DynamicVars["AbyssalCorruption"].UpgradeValueBy(2m);
+            DynamicVars["AbyssalCorruption"].UpgradeValueBy(3m);
     }
 }

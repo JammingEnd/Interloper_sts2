@@ -1,6 +1,7 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Powers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -14,7 +15,8 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Move)
+        new DamageVar(6, ValueProp.Move),
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5)
     ];
 
     protected override async Task OnPlay(
@@ -22,6 +24,8 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target,
+            DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

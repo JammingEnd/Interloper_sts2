@@ -55,11 +55,18 @@ public class VoidReachPower() : InterloperPower
             }
 
             MainFile.Logger.Info($"[VoidReach] Pulling {oldestCard.Title}, consuming {threshold} VoidReach");
-            await CardPileCmd.Add(oldestCard, PileType.Draw, CardPilePosition.Random);
-            oldestCard.EnergyCost.AddUntilPlayed(-1);
 
-            await PowerCmd.ModifyAmount(choiceContext, this, -threshold, applier, cardSource);
+            oldestCard.EnergyCost.AddUntilPlayed(-1);
+            Action? handler = null;
+            handler = () =>
+            {
+                oldestCard.EnergyCost.AddUntilPlayed(-1);
+                oldestCard.EnergyCostChanged -= handler;
+            };
+            oldestCard.EnergyCostChanged += handler;
+            await CardPileCmd.Add(oldestCard, PileType.Draw, CardPilePosition.Random);
+
+            await PowerCmd.ModifyAmount(choiceContext, this, -threshold, applier, null);
         }
     }
-    
 }

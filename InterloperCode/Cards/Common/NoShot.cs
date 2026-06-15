@@ -26,7 +26,7 @@ public class NoShot() : InterloperCard(1,
         CardPlay play)
     {
          await CommonActions.CardAttack(this, play).Execute(choiceContext);
-         if (play.Target.Monster.NextMove.Intents.OfType<AbstractIntent>().Any(e => e.IntentType is IntentType.Debuff or IntentType.DebuffStrong))
+         if (play.Target.Monster.NextMove.Intents.OfType<AbstractIntent>().Any(e => e.IntentType is IntentType.Debuff or IntentType.DebuffStrong or IntentType.Buff or IntentType.Heal))
          {
              await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
          }

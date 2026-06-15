@@ -1,4 +1,6 @@
+using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Cards.Glyph;
 using Interloper.InterloperCode.Keywords;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -15,9 +17,8 @@ public class ToTheDepths() : InterloperCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5, ValueProp.Move)
+        new DamageVar(6, ValueProp.Move),
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -27,28 +28,36 @@ public class ToTheDepths() : InterloperCard(0,
     {
         var card = this;
         int energyX = card.ResolveEnergyXValue();
-        int cardsInHand = PileType.Hand.GetPile(Owner).Cards.Count - 1;
-        int difference = cardsInHand - energyX;
-        if (energyX > 0)
+        await CommonActions.CardAttack(this, play, energyX).Execute(choiceContext);
+        if(energyX < 3)
+            return;
+        if (energyX < 6)
         {
-            var exhaustPrefs = new CardSelectorPrefs(SelectionScreenPrompt, cardsInHand);
-            var exhaustSelected = await CardSelectCmd.FromHand(choiceContext, Owner, exhaustPrefs, null, this);
-            var exhaustTarget = exhaustSelected.FirstOrDefault();
-            CardCmd.Exhaust(choiceContext, exhaustTarget);
-            
-            // give back leftover
-            await PlayerCmd.GainEnergy(difference, Owner);
+            var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
+            await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
         }
+        if (energyX < 9)
+        {
+            var eyeCard = CombatState.CreateCard<GlyphMouth>(Owner);
+            await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        }
+        if (energyX >= 9)
+        {
+            var eyeCard = CombatState.CreateCard<GlyphTail>(Owner);
+            await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        }
+            
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed),
-            HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
+            HoverTipFactory.FromCard<GlyphEye>(),
+            HoverTipFactory.FromCard<GlyphMouth>(),
+            HoverTipFactory.FromCard<GlyphTail>()
         ];
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

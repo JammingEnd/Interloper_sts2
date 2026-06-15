@@ -5,5 +5,6 @@ namespace Interloper.InterloperCode.Cards.Glyph;
 
 public abstract class GlyphPower() : InterloperPower
 {
-    
+    public override PowerInstanceType InstanceType =>
+        PowerInstanceType.Instanced;
 }

@@ -23,7 +23,7 @@ public class LookBeyond() : InterloperCard(0,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars["VoidReachPower"].IntValue);
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner, prefs, null, this);
         var target = selected.FirstOrDefault();
         if (target != null)

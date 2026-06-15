@@ -1,5 +1,6 @@
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -18,16 +19,16 @@ public class PainfulRenewalPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
     {
+        if(card.Owner.Creature != this.Owner)
+            return;
         var cardSource = this;
-        if (oldPileType == PileType.Exhaust)
-        {
-            Creature target = cardSource.Owner.Player.RunState.Rng.CombatTargets.NextItem( cardSource.CombatState.HittableEnemies);
-            if (target == null)
-                return;
-            var ctx = new ThrowingPlayerChoiceContext() as PlayerChoiceContext;
-            await CreatureCmd.Damage(ctx, target, this.Amount, ValueProp.Move, this.Owner);
-        }
+        Creature target = cardSource.Owner.Player.RunState.Rng.CombatTargets.NextItem( cardSource.CombatState.HittableEnemies);
+        if (target == null)
+            return;
+        var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner.Player, "h", true));
+        await CreatureCmd.Damage(ctx, target, this.Amount, ValueProp.Unpowered, this.Owner);
+        
     }
 }

@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class Consume() : InterloperCard(1,
+public class Consume() : InterloperCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -31,7 +31,7 @@ public class Consume() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        AddKeyword(CardKeyword.Retain);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

@@ -14,8 +14,8 @@
   "INTERLOPER-COMPLETELY_LOST_POWER.description": "At the end of combat, choose a [gold]Consumed[/gold] card from your [gold]Exhaust pile[/gold] to permanently remove from your deck.",
   "INTERLOPER-COMPLETELY_LOST_POWER.smartDescription": "At the end of combat, choose a [gold]Consumed[/gold] card from your [gold]Exhaust pile[/gold] to permanently remove from your deck.",
   "INTERLOPER-COMPLETELY_LOST_POWER.title": "Completely Lost",
-  "INTERLOPER-CORRUPTED_CREATION_POWER.description": "At the start of each turn, add a random 0-cost card from other characters' card pools to your hand. It is [gold]Consumed[/gold].",
-  "INTERLOPER-CORRUPTED_CREATION_POWER.smartDescription": "At the start of each turn, add a random 0-cost card from other characters' card pools to your hand. It is [gold]Consumed[/gold].",
+  "INTERLOPER-CORRUPTED_CREATION_POWER.description": "At the start of each turn, add a random 0-cost card from other characters' card pools to your hand. It is [gold]Consumed[/gold] and [gold]Exhaust[/gold].",
+  "INTERLOPER-CORRUPTED_CREATION_POWER.smartDescription": "At the start of each turn, add a random 0-cost card from other characters' card pools to your hand. It is [gold]Consumed[/gold] and [gold]Exhaust[/gold].",
   "INTERLOPER-CORRUPTED_CREATION_POWER.title": "Corrupted Creation",
   "INTERLOPER-EFFIGY_OF_FIRE_POWER.description": "When a card is pulled from your [gold]Exhaust pile[/gold], create a duplicate of it in your hand, then remove this power.",
   "INTERLOPER-EFFIGY_OF_FIRE_POWER.smartDescription": "When a card is pulled from your [gold]Exhaust pile[/gold], create a duplicate of it in your hand.",
@@ -77,7 +77,7 @@
   "INTERLOPER-WEAKEN_MIND_POWER.description": "Multiply any [gold]Abyssal Corruption[/gold] you apply.",
   "INTERLOPER-WEAKEN_MIND_POWER.smartDescription": "Multiply any [gold]Abyssal Corruption[/gold] you apply by {Amount}x.",
   "INTERLOPER-WEAKEN_MIND_POWER.title": "Weaken Mind",
-  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.description": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal damage equal to your [gold]Block[/gold] to ALL enemies. Unblockable.",
-  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.smartDescription": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal damage equal to your [gold]Block[/gold] to ALL enemies. Unblockable.",
+  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.description": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal {Amount} x your [gold]Void Reach[/gold] damage to ALL enemies.",
+  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.smartDescription": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal {Amount} x your [gold]Void Reach[/gold] damage to ALL enemies.",
   "INTERLOPER-W_IT_HN_ES_SM_E_POWER.title": "WITHNESS ME"
 }

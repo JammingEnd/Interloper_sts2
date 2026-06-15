@@ -36,6 +36,7 @@ public class CommandWill() : InterloperCard(2,
             await PowerCmd.Apply<VoidReachPower>(
                 choiceContext, Owner.Creature,
                 DynamicVars["VoidReachPower"].IntValue, Owner.Creature, this);
+            await CardPileCmd.Draw(choiceContext, 2, Owner);
         }
     }
 

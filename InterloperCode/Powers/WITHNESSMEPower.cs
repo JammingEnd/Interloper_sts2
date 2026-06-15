@@ -15,21 +15,38 @@ public class WITHNESSMEPower() : InterloperPower
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.Single;
+        PowerStackType.Counter;
 
-    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
+    private bool _subscribed;
 
     public override async Task AfterPowerAmountChanged(
         PlayerChoiceContext choiceContext, PowerModel power,
         decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (power is GlyphStorage && amount < 0)
+        if (power.GetType() != typeof(WITHNESSMEPower))
+            return;
+
+        if (amount <= 0)
+            return;
+
+        if (!_subscribed)
         {
-            int block = Owner.Block;
-            if (block > 0)
-                await CreatureCmd.Damage(choiceContext,
-                    CombatState!.HittableEnemies, block,
-                    ValueProp.Unblockable, Owner, null);
+            GlyphStorage.OnGlyphsConsumed += OnGlyphsConsumed;
+            _subscribed = true;
         }
+    }
+
+    private async Task OnGlyphsConsumed(Creature owner, PlayerChoiceContext choiceContext)
+    {
+        if (owner != this.Owner)
+            return;
+
+        int voidreach = Owner.GetPowerAmount<VoidReachPower>();
+        var calc = voidreach == 0 ? 1 : voidreach;
+
+        MainFile.Logger.Info("triggering WITHNESS ME");
+        await CreatureCmd.Damage(choiceContext,
+                CombatState!.HittableEnemies, this.Amount * calc,
+                ValueProp.Unpowered, Owner, null);
     }
 }

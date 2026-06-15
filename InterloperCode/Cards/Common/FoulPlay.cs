@@ -12,10 +12,10 @@ namespace Interloper.InterloperCode.Cards.Common;
 // gain 5 block, if the enemy has 10+ corruption, draw 2 cards and consume 5
 public class FoulPlay() : CorruptionHandlerCard(10, 1,
     CardType.Skill, CardRarity.Common,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5, ValueProp.Move),
+        new BlockVar(6, ValueProp.Move),
         new CardsVar(1)
     ];
 
@@ -25,10 +25,7 @@ public class FoulPlay() : CorruptionHandlerCard(10, 1,
     {
         await CommonActions.CardBlock(this, play);
         // see if enemy has 10+ corruption
-        if(play.Target.Powers.FirstOrDefault(p => p.GetType() == typeof(AbyssalCorruptionPower)) is AbyssalCorruptionPower
-           {
-               Amount: >= 10
-           })
+        if(play.Target.GetPowerAmount<AbyssalCorruptionPower>() >= 10)
         {
             ConsumptionOverride = 5;
         }

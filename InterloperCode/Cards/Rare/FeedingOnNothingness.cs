@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -46,7 +47,7 @@ public class FeedingOnNothingness() : InterloperCard(1,
         this.Multiplier += this.Multiplier;
         this.UpdateDamage();
     }
-    private void UpdateDamage() => this.CurrentDamage = 10 * this.Multiplier;
+    private void UpdateDamage() => this.CurrentDamage = 7 * this.Multiplier;
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -60,10 +61,7 @@ public class FeedingOnNothingness() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
-            .Targeting(play.Target)
-            .Execute(choiceContext);
+        await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
 
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)

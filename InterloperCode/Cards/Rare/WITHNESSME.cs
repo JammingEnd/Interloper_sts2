@@ -20,7 +20,7 @@ public class WITHNESSME() : InterloperCard(1,
         CardPlay play)
     {
         await PowerCmd.Apply<WITHNESSMEPower>(
-            choiceContext, Owner.Creature, 1, Owner.Creature, this);
+            choiceContext, Owner.Creature, 7, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

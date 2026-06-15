@@ -20,8 +20,8 @@ public class BreakingPoint() : InterloperCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(2),
-        new ExtraDamageVar(0),
+        new CalculationBaseVar(1),
+        new ExtraDamageVar(2),
         new CalculatedDamageVar(ValueProp.Move)
             .WithMultiplier((Func<CardModel, Creature, Decimal>) 
                 ((_, target) => (target != null ? target.GetPowerAmount<StrengthPower>() * 2 : 0))),
@@ -34,8 +34,8 @@ public class BreakingPoint() : InterloperCard(2,
     {
         await PowerCmd.Apply<BreakingPointPower>(
             choiceContext, play.Target, DynamicVars["BreakingPointPower"].IntValue, Owner.Creature, this);
-
-        await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        decimal damage = Math.Abs(play.Target.GetPowerAmount<StrengthPower>() * 2);
+        await CreatureCmd.Damage(choiceContext, play.Target, damage, ValueProp.Move, this);
         
     }
 

@@ -24,7 +24,7 @@ public class WeakenMind() : InterloperCard(2,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
-        await PowerCmd.Apply<WeakenMindPower>(choiceContext, play.Target, this.DynamicVars["NextCorruptionMultiplier"].IntValue, this.Owner.Creature, this);
+        await PowerCmd.Apply<WeakenMindPower>(choiceContext, Owner.Creature, this.DynamicVars["NextCorruptionMultiplier"].IntValue, this.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

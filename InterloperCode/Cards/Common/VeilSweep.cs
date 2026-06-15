@@ -1,20 +1,25 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Common;
 
 // deal 12 damage, if the enemy has 15+ corruption, deal damage to all enemies
-public class VeilSweep() : CorruptionHandlerCard(15, 2,
+public class VeilSweep() : InterloperCard(2,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(14, ValueProp.Move)
+        new DamageVar(16, ValueProp.Move),
+        new CardsVar(2)
     ];
 
     protected override async Task OnPlay(
@@ -26,17 +31,19 @@ public class VeilSweep() : CorruptionHandlerCard(15, 2,
 
     protected override void OnUpgrade()
     {
-            DynamicVars.Damage.UpgradeValueBy(4m);
+            DynamicVars.Damage.UpgradeValueBy(5m);
+            DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
-    protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        foreach (var enemy in CombatState!.HittableEnemies)
-        {
-            if(enemy == play.Target)
-                continue;
-            
-           await CreatureCmd.Damage(choiceContext, enemy, DynamicVars.Damage.IntValue, ValueProp.Move, this.Owner.Creature, this);
-        }
+        if(card.GetType() != typeof(VeilSweep) && card != this)
+            return;
+        if(oldPileType != PileType.Exhaust)
+            return;
+        if(card.Owner != this.Owner)
+            return;
+        PlayerChoiceContext ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner, "h", true));
+        await CardPileCmd.Draw(ctx, DynamicVars.Cards.IntValue, Owner);
     }
 }

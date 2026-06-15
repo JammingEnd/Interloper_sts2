@@ -26,14 +26,20 @@ public class MarkedByMouths() : InterloperCard(0,
         // mark a card
         var prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 1);
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner, prefs, null, this);
-        var target = selected.FirstOrDefault();
-        CardCmd.ApplyKeyword(target, InterloperKeywords.Consumed);
+        if (selected != null && selected.Count() > 0)
+        {
+            var target = selected.FirstOrDefault();
+            CardCmd.ApplyKeyword(target, InterloperKeywords.Consumed);
+        }
         
         // exhaust a card
         var exhaustPrefs = new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1);
         var exhaustSelected = await CardSelectCmd.FromHand(choiceContext, Owner, exhaustPrefs, null, this);
-        var exhaustTarget = exhaustSelected.FirstOrDefault();
-        CardCmd.Exhaust(choiceContext, exhaustTarget);
+        if (exhaustSelected != null && selected.Count() > 0)
+        {
+            var exhaustTarget = exhaustSelected.FirstOrDefault();
+            CardCmd.Exhaust(choiceContext, exhaustTarget);
+        }
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class ByStrings() : InterloperCard(3,
+public class ByStrings() : InterloperCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
@@ -24,7 +24,7 @@ public class ByStrings() : InterloperCard(3,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        AddKeyword(CardKeyword.Innate);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

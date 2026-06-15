@@ -2,6 +2,7 @@ using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Helpers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -37,9 +38,10 @@ public class WithMe() : InterloperCard(1,
         if (sets.Length > 0)
         {
             var prefs = new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1);
-            var ctx = new ThrowingPlayerChoiceContext() as PlayerChoiceContext;
+            PlayerChoiceContext ctx =
+                new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(card.Owner, "h", true));
             var selected = await CardSelectCmd.FromSimpleGrid(
-                ctx!, sets, Owner, prefs);
+                ctx, sets, Owner, prefs);
 
             if (selected != null)
             {

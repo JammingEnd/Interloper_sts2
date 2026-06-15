@@ -1,6 +1,7 @@
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,8 @@ public class SoulExchange() : InterloperCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5, ValueProp.Move),
         new RepeatVar(2),
-        new PowerVar<WeakPower>(2m)
+        new PowerVar<WeakPower>(2m),
+        new PowerVar<VoidReachPower>("VoidReachPower",1m)
     ];
 
     protected override async Task OnPlay(
@@ -27,11 +29,13 @@ public class SoulExchange() : InterloperCard(2,
     {
         await CommonActions.CardAttack(this, play, DynamicVars.Repeat.IntValue).Execute(choiceContext);
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, DynamicVars["WeakPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
         DynamicVars["WeakPower"].UpgradeValueBy(1m);
+        DynamicVars["VoidReachPower"].UpgradeValueBy(1m);
     }
 }

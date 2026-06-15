@@ -13,13 +13,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class Shhhh() : InterloperCard(2,
+public class Shhhh() : InterloperCard(1,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(10, ValueProp.Move),
-        new PowerVar<MonarchsGazePower>("ShhhPower", 1)
+        new DamageVar(13, ValueProp.Move),
     ];
 
     protected override async Task OnPlay(
@@ -29,8 +28,6 @@ public class Shhhh() : InterloperCard(2,
         var mouthCard = CombatState.CreateCard<GlyphMouth>(Owner);
         await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, Owner);
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
-        await PowerCmd.Apply<ShhhStrengthPower>(choiceContext, play.Target, DynamicVars["ShhhPower"].IntValue,
-             Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
@@ -40,7 +37,6 @@ public class Shhhh() : InterloperCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
             HoverTipFactory.FromCard<GlyphMouth>(false),
-            HoverTipFactory.FromPower<ShhhStrengthPower>()
         ];
 
 }

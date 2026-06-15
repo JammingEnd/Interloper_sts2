@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class Absorb() : InterloperCard(3,
+public class Absorb() : InterloperCard(0,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
@@ -21,9 +21,9 @@ public class Absorb() : InterloperCard(3,
     {
         int voidReach = 0;
 
-        if (Owner.Creature.GetPowerAmount<StrengthPower>() >= 1)
+        if (Owner.Creature.GetPowerAmount<VulnerablePower>() >= 1)
         {
-            await PowerCmd.Apply<StrengthPower>(
+            await PowerCmd.Apply<VulnerablePower>(
                 choiceContext, Owner.Creature, -1, Owner.Creature, this);
             voidReach++;
         }

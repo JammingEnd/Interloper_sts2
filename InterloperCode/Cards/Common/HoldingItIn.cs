@@ -21,8 +21,8 @@ public class HoldingItIn() : CorruptionHandlerCard(5, 1,
         new BlockVar(10, ValueProp.Move)
     ];
 
-    protected override bool IsPlayable => CombatState.Enemies.Any(e => 
-        e.Powers.First(p => p.GetType() == typeof(AbyssalCorruptionPower)).Amount >= 5);
+    protected override bool IsPlayable => CombatState!.Enemies.Any(e => 
+        e.GetPowerAmount<AbyssalCorruptionPower>() >= 5);
     
     
     protected override async Task OnPlay(

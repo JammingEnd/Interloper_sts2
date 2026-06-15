@@ -27,19 +27,11 @@ public class VilePresence() : InterloperCard(0,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        int hitCount = CombatManager.Instance.History.Entries
-            .OfType<CorruptionModifiedEntry>()
-            .Where(e => e.HappenedThisTurn(CombatState) && e.Amount > 0 && e.Actor == Owner.Creature)
-            .Sum(e => e.Amount);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(hitCount)
-            .FromCard(this)
-            .TargetingAllOpponents(CombatState)
-            .Execute(choiceContext);
+        await CommonActions.CardAttack(this, play, (int)CombatVarTracker.GetTotalCorruptionAppliedTurn(Owner.Creature)).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars.Damage.UpgradeValueBy(1m);
     }
 }

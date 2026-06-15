@@ -14,14 +14,14 @@ public class PainfulRenewal() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<PainfulRenewalPower>("PainfulRenewalPower", 8)
+        new PowerVar<PainfulRenewalPower>("PainfulRenewalPower", 6)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<PainfulRenewalPower>(choiceContext, play.Target,
+        await PowerCmd.Apply<PainfulRenewalPower>(choiceContext, Owner.Creature,
             DynamicVars["PainfulRenewalPower"].IntValue, Owner.Creature, this);
     }
 

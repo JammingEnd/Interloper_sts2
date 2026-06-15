@@ -13,7 +13,7 @@ public class Syphon() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SyphonPower>("SyphonPower", 1)
+        new EnergyVar(1)
     ];
 
     protected override async Task OnPlay(
@@ -22,13 +22,13 @@ public class Syphon() : InterloperCard(1,
     {
         await PowerCmd.Apply<SyphonPower>(
             choiceContext, Owner.Creature,
-            DynamicVars["SyphonPower"].IntValue,
+            1,
             Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SyphonPower"].UpgradeValueBy(1m);
+        AddKeyword(CardKeyword.Innate);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

@@ -25,13 +25,14 @@ public abstract class InterloperCard(int cost, CardType type, CardRarity rarity,
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-         if (oldPileType == PileType.Exhaust)
-         {
-             AfterMovedFromExhaust(card);
-         }
-         return base.AfterCardChangedPiles(card, oldPileType, clonedBy);
+        if (card != this)
+            return;
+        if (oldPileType == PileType.Exhaust)
+        { 
+            AfterMovedFromExhaust(card);
+        }
     }
 
     protected virtual void AfterMovedFromExhaust(CardModel card)

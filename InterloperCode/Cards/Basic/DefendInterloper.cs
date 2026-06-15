@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Cards.Basic;
 
 public class DefendInterloper() : InterloperCard(1,
-    CardType.Attack, CardRarity.Basic,
+    CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
     public override bool GainsBlock => true;

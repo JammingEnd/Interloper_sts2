@@ -20,7 +20,7 @@ public class TunnelVisionPower() : InterloperPower
         if (enemies.Count == 1)
         {
             await PowerCmd.Apply<AbyssalCorruptionPower>(
-                choiceContext, enemies[1],
+                choiceContext, enemies[0],
                 Amount,
                 Owner, null
             );
@@ -38,14 +38,13 @@ public class TunnelVisionPower() : InterloperPower
 
         foreach (var enemy in enemies)
         {
-            if (enemy == highestHpEnemy) continue;
+            if (enemy == highestHpEnemy || enemy.GetPowerAmount<AbyssalCorruptionPower>() < 5) continue;
             await PowerCmd.Apply<AbyssalCorruptionPower>(
                 choiceContext, enemy,
                 -this.Amount,
                 Owner, null
             );
         }
-
         await PowerCmd.Apply<AbyssalCorruptionPower>(
             choiceContext, highestHpEnemy,
             totalLoss,

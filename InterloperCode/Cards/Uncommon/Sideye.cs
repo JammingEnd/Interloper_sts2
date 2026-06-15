@@ -38,7 +38,7 @@ public class Sideye() : InterloperCard(1,
     {
         var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
         await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
-        await CreatureCmd.GainBlock(card.Owner.Creature, CanonicalVars.First(v => v.Name == "SideyeMoved") as BlockVar, null);
+        await CreatureCmd.GainBlock(card.Owner.Creature, DynamicVars["SideyeMoved"] as BlockVar, null);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

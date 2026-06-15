@@ -13,7 +13,7 @@ public class TunnelVision() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<TunnelVisionPower>("TunnelVisionPower", 3)
+        new PowerVar<TunnelVisionPower>("TunnelVisionPower", 5)
     ];
 
     protected override async Task OnPlay(

@@ -1,11 +1,9 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards.Glyph;
-using Interloper.InterloperCode.Entries;
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -21,9 +19,9 @@ public class Absolute() : InterloperCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
 
-    private const int _baseDamage = 3;
     private int _currentDamage = 3;
     private int _increasedDamage;
+    private bool _subscribed;
     [SavedProperty]
     public int CurrentDamage
     {
@@ -67,16 +65,27 @@ public class Absolute() : InterloperCard(1,
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (Owner.Creature.GetPowerAmount<GlyphStorage>() != 3)
-        {
+        if (power.GetType() != typeof(GlyphStorage))
             return;
-        }
-        var card = this;
-        int value = this.DynamicVars["Increase"].IntValue;
-        this.BuffFromPlay(value);
-        if (!(card.DeckVersion is Absolute deckVersion))
+
+        if (_subscribed)
             return;
-        deckVersion.BuffFromPlay(value);
+
+        GlyphStorage.OnGlyphsConsumed += OnGlyphsConsumed;
+        _subscribed = true;
+    }
+
+    private Task OnGlyphsConsumed(Creature owner, PlayerChoiceContext choiceContext)
+    {
+        if (owner != Owner.Creature)
+            return Task.CompletedTask;
+
+        int value = DynamicVars["Increase"].IntValue;
+        BuffFromPlay(value);
+        if (DeckVersion is Absolute deckVersion)
+            deckVersion.BuffFromPlay(value);
+
+        return Task.CompletedTask;
     }
 
     protected override void OnUpgrade()

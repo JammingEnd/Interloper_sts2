@@ -1,7 +1,9 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Entries;
 using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -25,12 +27,7 @@ public abstract class GlyphCard(int cost, CardType type, CardRarity rarity, Targ
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card != this)
-        {
             return;
-        }
-        // add glyph to sequence
         await PowerCmd.Apply<GlyphStorage>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
-        // fire effects
     }
-    
 }

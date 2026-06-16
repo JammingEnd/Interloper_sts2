@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class TwistedAbyss() : InterloperCard(1,
+public class TwistedAbyss() : InterloperCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -24,7 +24,7 @@ public class TwistedAbyss() : InterloperCard(1,
         CardPlay play)
     {
         var oldestCard = PileType.Exhaust.GetPile(Owner)
-            .GetOldestPlayableCard(includeStatus: true, includeCurse: true);
+            .GetOldestPlayableCard(includeStatus: true, includeCurse: true, includeConsumed:true);
         if (oldestCard != null)
         {
             CardModel newcard = CardFactory.GetForCombat(this.Owner,
@@ -33,17 +33,14 @@ public class TwistedAbyss() : InterloperCard(1,
                 Owner.RunState.Rng.CombatCardGeneration).FirstOrDefault();
             if (newcard != null)
             {
-                newcard.AddKeyword(InterloperKeywords.Consumed);
-                if (this.IsUpgraded)
-                {
-                    newcard.BaseReplayCount += 1;
-                }
+                if(oldestCard.IsUpgraded)
+                    CardCmd.Upgrade(newcard);
                 await CardCmd.Transform(oldestCard, newcard);
             }
         }
     }
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        this.AddKeyword(CardKeyword.Retain);
     }
 }

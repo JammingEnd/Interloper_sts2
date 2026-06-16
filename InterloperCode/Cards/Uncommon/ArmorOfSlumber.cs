@@ -28,8 +28,7 @@ public class ArmorOfSlumber() : InterloperCard(1,
         await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target,
             DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
         var targetCorruption = play.Target.GetPowerAmount<AbyssalCorruptionPower>();
-        DynamicVars["SlumberBlock"].BaseValue = targetCorruption;
-        await CommonActions.CardBlock(this, play);
+        await CreatureCmd.GainBlock(Owner.Creature, targetCorruption, ValueProp.Move, play);
     }
 
     protected override void OnUpgrade()

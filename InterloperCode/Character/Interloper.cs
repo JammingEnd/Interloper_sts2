@@ -65,4 +65,5 @@ public class Interloper : PlaceholderCharacterModel
     // art by https://www.reddit.com/r/DnD/comments/1is5rcz/artdisintegrate_most_memorable_experiences_with/
     public override string CustomCharacterSelectBg => "char_select_bg_interloper.tscn".ScenePath();
     public override string CustomEnergyCounterPath => "res://Interloper/scenes/interloper_energy_counter.tscn";
+    public override string CustomVisualPath => "res://Interloper/scenes/interloper_visual.tscn";
 }

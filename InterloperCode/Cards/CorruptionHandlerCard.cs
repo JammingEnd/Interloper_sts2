@@ -24,7 +24,7 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
             int consumed = -corruptionThreshold;
             if (this.ConsumptionOverride != 0)
             {
-                consumed = this.ConsumptionOverride;
+                consumed = -this.ConsumptionOverride;
                 // reset after usage
                 ConsumptionOverride = 0;
             }

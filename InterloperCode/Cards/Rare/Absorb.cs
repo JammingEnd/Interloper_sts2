@@ -49,6 +49,6 @@ public class Absorb() : InterloperCard(0,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        AddKeyword(CardKeyword.Retain);
     }
 }

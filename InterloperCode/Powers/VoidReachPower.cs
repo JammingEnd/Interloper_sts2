@@ -46,6 +46,9 @@ public class VoidReachPower() : InterloperPower
         if (player == null)
             return;
         var amount = player.Creature.GetPowerAmount<VoidReachPower>();
+        if(amount <= 0)
+            return;
+        MainFile.Logger.Info($"Reached Trigger!!!!");
         Trigger(choiceContext, player, amount);
         
     }

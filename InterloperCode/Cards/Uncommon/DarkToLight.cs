@@ -21,12 +21,7 @@ public class DarkToLight() : CorruptionHandlerCard(10, 1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-    }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        base.AfterCardPlayed(choiceContext, cardPlay);
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, cardPlay.Target, 5, Owner.Creature, this);
+        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, 5, Owner.Creature, this);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

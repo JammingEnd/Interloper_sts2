@@ -15,7 +15,7 @@ public class Corrupt() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower",7)
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower",10)
     ];
 
     protected override async Task OnPlay(
@@ -32,6 +32,6 @@ public class Corrupt() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
+        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(5m);
     }
 }

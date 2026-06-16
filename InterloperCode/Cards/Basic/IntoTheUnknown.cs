@@ -39,6 +39,6 @@ public class IntoTheUnknown() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

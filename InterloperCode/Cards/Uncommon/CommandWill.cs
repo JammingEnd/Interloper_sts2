@@ -15,7 +15,7 @@ public class CommandWill() : InterloperCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(25, ValueProp.Move),
+        new DamageVar(20, ValueProp.Move),
         new PowerVar<VoidReachPower>("VoidReachPower", 5)
     ];
 
@@ -42,7 +42,7 @@ public class CommandWill() : InterloperCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(8m);
+        DynamicVars.Damage.UpgradeValueBy(7m);
         DynamicVars["VoidReachPower"].UpgradeValueBy(2m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

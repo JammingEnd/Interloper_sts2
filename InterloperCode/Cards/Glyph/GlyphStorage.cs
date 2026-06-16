@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -84,7 +85,13 @@ public class GlyphStorage() : InterloperPower
 
     private async Task ThreeTails(PlayerChoiceContext choiceContext)
     {
-        // % based damage
+        Creature highestHp = CombatState.HittableEnemies.MaxBy(c => c.CurrentHp);
+        if (highestHp != null)
+        {
+            var hpPercent = (decimal)highestHp.MaxHp * 0.25m;
+            DamageVar newDamage = new DamageVar(hpPercent, ValueProp.Unblockable);
+            await CreatureCmd.Damage(choiceContext, highestHp, newDamage, Owner);
+        }
     }
     
     // pick 1 cards and put them in your hand

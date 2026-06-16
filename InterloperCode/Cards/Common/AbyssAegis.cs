@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Cards.Common;
 
 public class AbyssAegis() : InterloperCard(2,
-    CardType.Attack, CardRarity.Common,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

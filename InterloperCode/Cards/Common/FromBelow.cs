@@ -12,7 +12,7 @@ namespace Interloper.InterloperCode.Cards.Common;
 // deal 6 damage, if corruption is 10+, deal 6 again
 public class FromBelow() : CorruptionHandlerCard(10, 1,
     CardType.Attack, CardRarity.Common,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6, ValueProp.Move),

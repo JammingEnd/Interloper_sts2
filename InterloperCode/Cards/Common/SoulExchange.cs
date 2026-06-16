@@ -17,7 +17,7 @@ public class SoulExchange() : InterloperCard(2,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(5, ValueProp.Move),
+        new DamageVar(6, ValueProp.Move),
         new RepeatVar(2),
         new PowerVar<WeakPower>(2m),
         new PowerVar<VoidReachPower>("VoidReachPower",1m)

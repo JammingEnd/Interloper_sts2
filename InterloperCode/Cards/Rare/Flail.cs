@@ -14,8 +14,8 @@ public class Flail() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(4),
-        new ExtraDamageVar(0),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(4),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
             (card, _) => (Decimal)PileType.Exhaust.GetPile(card.Owner).Cards
                 .Count(c => c is GlyphTail))

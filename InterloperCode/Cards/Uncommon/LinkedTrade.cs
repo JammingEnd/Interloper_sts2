@@ -20,7 +20,7 @@ public class LinkedTrade() : InterloperCard(2,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<LinkedTradePower>(choiceContext, play.Target, DynamicVars["LinkedTradePower"].IntValue,
+        await PowerCmd.Apply<LinkedTradePower>(choiceContext, Owner.Creature, DynamicVars["LinkedTradePower"].IntValue,
             Owner.Creature, this);
     }
 

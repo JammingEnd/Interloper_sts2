@@ -1,5 +1,6 @@
 using Interloper.InterloperCode.Cards.Basic;
 using Interloper.InterloperCode.Cards.Common;
+using Interloper.InterloperCode.Cards.Uncommon;
 using Interloper.InterloperCode.Helpers;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -82,10 +83,16 @@ public class VoidReachPower() : InterloperPower
             }
 
             int cardCost = oldestCard.EnergyCost.Canonical;
+            if (oldestCard.GetType() == typeof(GraspOfTheAbyss))
+            {
+                var b = oldestCard.EnergyCost.GetWithModifiers(CostModifiers.Local);
+                cardCost = b;
+            }
             if (cardCost == 0)
                 cardCost = 1;
 
             int threshold = cardCost * 2;
+            
             if (this.Amount < threshold)
             {
                 MainFile.Logger.Info($"[VoidReach] Not enough ({this.Amount} < {threshold}) for {oldestCard.Title} (cost {cardCost})");

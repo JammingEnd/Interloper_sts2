@@ -28,7 +28,7 @@ public class AbyssForm() : InterloperCard(3,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        EnergyCost.UpgradeBy(-1);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

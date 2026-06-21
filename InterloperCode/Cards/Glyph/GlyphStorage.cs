@@ -137,8 +137,6 @@ public class GlyphStorage() : InterloperPower
             }
         }
         int energyGain = statusses.Count() == 0 ? 1 : statusses.Count();
-        await PlayerCmd.GainEnergy(energyGain, Owner.Player);
-        
     }
 
     private async Task TwoMouthsOneTail(PlayerChoiceContext choiceContext)

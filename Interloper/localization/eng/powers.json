@@ -63,7 +63,7 @@
   "INTERLOPER-RIPPLE_EFFECT_POWER_AFTER.smartDescription": "Gain {Amount} [gold]Temporary Strength[/gold] that decays each turn.",
   "INTERLOPER-RIPPLE_EFFECT_POWER_AFTER.title": "Ripple Strength",
   "INTERLOPER-SYPHON_POWER.description": "Whenever you apply 10 [gold]Abyssal Corruption[/gold] in a single turn, gain {energyPrefix} next turn. Resets each turn.",
-  "INTERLOPER-SYPHON_POWER.smartDescription": "Track {Amount} [gold]Abyssal Corruption[/gold] applied this turn. At 10, gain {Energy:energyIcons()} next turn.",
+  "INTERLOPER-SYPHON_POWER.smartDescription": "Track {Amount} [gold]Abyssal Corruption[/gold] applied this turn. At 10, gain {energyPrefix} next turn.",
   "INTERLOPER-SYPHON_POWER.title": "Syphon",
   "INTERLOPER-TUNNEL_VISION_POWER.description": "At the start of each turn, move 5 [gold]Abyssal Corruption[/gold] from each other enemy to the enemy with the highest HP.",
   "INTERLOPER-TUNNEL_VISION_POWER.smartDescription": "At the start of each turn, move {Amount} [gold]Abyssal Corruption[/gold] from each other enemy to the enemy with the highest HP.",

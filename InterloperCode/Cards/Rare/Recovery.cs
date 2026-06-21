@@ -15,7 +15,7 @@ public class Recovery() : InterloperCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1),
-        new PowerVar<VoidReachPower>("VoidReachPower", 2)
+        new PowerVar<VoidReachPower>("VoidReachPower", 4)
     ];
 
     protected override async Task OnPlay(

@@ -21,8 +21,9 @@ public class HoldingItIn() : CorruptionHandlerCard(5, 1,
         new BlockVar(10, ValueProp.Move)
     ];
 
-    protected override bool IsPlayable => CombatState!.Enemies.Any(e => 
-        e.GetPowerAmount<AbyssalCorruptionPower>() >= 5);
+    protected override bool IsPlayable =>
+        CombatState?.Enemies.Any(e =>
+            e.GetPowerAmount<AbyssalCorruptionPower>() >= 5) ?? false;
     
     
     protected override async Task OnPlay(
@@ -34,7 +35,7 @@ public class HoldingItIn() : CorruptionHandlerCard(5, 1,
 
     protected override void OnUpgrade()
     {
-            DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(4m);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

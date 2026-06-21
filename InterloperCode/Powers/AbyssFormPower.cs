@@ -40,6 +40,7 @@ public class AbyssFormPower() : InterloperPower
             if (newCard != null)
             {
                 newCard.EnergyCost.SetThisTurnOrUntilPlayed(0);
+                newCard.SetStarCostThisCombat(0);
                 await CardPileCmd.AddGeneratedCardToCombat(
                     newCard, PileType.Hand, Owner.Player);
             }

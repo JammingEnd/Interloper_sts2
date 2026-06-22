@@ -15,8 +15,8 @@ public class GoneFromReality() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(1),
-        new ExtraDamageVar(0),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
             (card, _) => (Decimal)card.CombatState.HittableEnemies
                 .Sum(e => e.GetPowerAmount<AbyssalCorruptionPower>()))

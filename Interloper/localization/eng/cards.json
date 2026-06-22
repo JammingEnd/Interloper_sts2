@@ -47,7 +47,7 @@
   "INTERLOPER-DISTORD_PLANE.title": "Distort Plane",
   "INTERLOPER-EFFIGY_OF_FIRE.description": "Deal {Damage:diff()} damage.\nWhen [color=#952990]Abyssal Corruption[/color] is 10+, the next card you pull from your [gold]Exhaust pile[/gold] is duplicated",
   "INTERLOPER-EFFIGY_OF_FIRE.title": "Effigy Of Fire",
-  "INTERLOPER-ENGULF.description": "Deal {Damage:diff()} damage.\nIf the target has [color=#952990]Abyssal Corruption[/color], triple it.",
+  "INTERLOPER-ENGULF.description": "Deal {Damage:diff()} damage.\nThe next card that consumes [color=#952990]Abyssal Corruption[/color] has its requirements met and consumes 0.",
   "INTERLOPER-ENGULF.title": "Engulf",
   "INTERLOPER-FEEDING_ON_NOTHINGNESS.description": "Deal 7 damage, doubled each time this card is [gold]Exhausted[/gold]. {InCombat:\n({Damage:diff()})|}",
   "INTERLOPER-FEEDING_ON_NOTHINGNESS.title": "Feeding On Nothingness",

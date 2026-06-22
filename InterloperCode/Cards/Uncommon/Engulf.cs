@@ -15,7 +15,7 @@ public class Engulf() : InterloperCard(2,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(12, ValueProp.Move)
+        new DamageVar(16, ValueProp.Move),
     ];
 
     protected override async Task OnPlay(
@@ -23,15 +23,11 @@ public class Engulf() : InterloperCard(2,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
-
-        var current = play.Target.GetPowerAmount<AbyssalCorruptionPower>();
-        if (current > 0)
-        {
-            await PowerCmd.Apply<AbyssalCorruptionPower>(
-                choiceContext, play.Target,
-                current * 3,
-                Owner.Creature, this);
-        }
+        await PowerCmd.Apply<EngulfPower>(
+            choiceContext, Owner.Creature,
+            1,
+            Owner.Creature, this);
+        
     }
 
     protected override void OnUpgrade()

@@ -31,13 +31,12 @@ public class VeilSweep() : InterloperCard(2,
 
     protected override void OnUpgrade()
     {
-            DynamicVars.Damage.UpgradeValueBy(5m);
             DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if(card.GetType() != typeof(VeilSweep) && card != this)
+        if(card != this)
             return;
         if(oldPileType != PileType.Exhaust)
             return;

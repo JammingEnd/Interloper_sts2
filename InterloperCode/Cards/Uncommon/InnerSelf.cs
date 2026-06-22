@@ -32,7 +32,7 @@ public class InnerSelf() : InterloperCard(1,
     }
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if(card.GetType() != typeof(InnerSelf) && card != this)
+        if(card != this)
             return;
         if(oldPileType != PileType.Exhaust)
             return;

@@ -27,7 +27,7 @@ public class FoulPlay() : CorruptionHandlerCard(10, 1,
         // see if enemy has 10+ corruption
         if(play.Target.GetPowerAmount<AbyssalCorruptionPower>() >= 10)
         {
-            ConsumptionOverride = 5;
+            ConsumptionOverride = -1;
         }
     }
 

@@ -33,8 +33,8 @@ public class RippleEffect() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["RippleEffectPower"].UpgradeValueBy(2m);
-        DynamicVars.Block.UpgradeValueBy(1m);
+        DynamicVars["RippleEffectPower"].UpgradeValueBy(1m);
+        DynamicVars.Block.UpgradeValueBy(2m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

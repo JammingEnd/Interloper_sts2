@@ -28,6 +28,7 @@ public class ToTheDepths() : InterloperCard(0,
     {
         var card = this;
         int energyX = card.ResolveEnergyXValue();
+        if (energyX <= 0) return;
         await CommonActions.CardAttack(this, play, energyX).Execute(choiceContext);
         if(energyX < 3)
             return;

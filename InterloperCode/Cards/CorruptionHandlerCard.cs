@@ -17,8 +17,13 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
         {
             return;
         }
-        
-        if (cardPlay.Target.GetPowerAmount<AbyssalCorruptionPower>() >= corruptionThreshold)
+
+        if (Owner.Creature.GetPowerAmount<EngulfPower>() > 0)
+        {
+            await CorruptionConsumptionEffect(choiceContext, cardPlay);
+            await PowerCmd.Apply<EngulfPower>(choiceContext, cardPlay.Card.Owner.Creature, -1, Owner.Creature, null);
+        }
+        else if (cardPlay.Target.GetPowerAmount<AbyssalCorruptionPower>() >= corruptionThreshold)
         {
             await CorruptionConsumptionEffect(choiceContext, cardPlay);
             int consumed = -corruptionThreshold;
@@ -28,7 +33,11 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
                 // reset after usage
                 ConsumptionOverride = 0;
             }
-            await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, cardPlay.Target, consumed, Owner.Creature, this);
+            else if (this.ConsumptionOverride == -1)
+            {
+                consumed = 0;
+            }
+            await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, cardPlay.Target, consumed * 0.5m, Owner.Creature, this);
         }
     }
     

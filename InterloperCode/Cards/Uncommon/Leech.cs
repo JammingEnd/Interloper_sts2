@@ -18,6 +18,8 @@ public class Leech() : CorruptionHandlerCard(15, 2,
         new RepeatVar(2)
     ];
 
+    private bool isFree = false;
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -33,7 +35,7 @@ public class Leech() : CorruptionHandlerCard(15, 2,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        this.EnergyCost.SetThisTurnOrUntilPlayed(0);
+        this.EnergyCost.SetThisTurn(0);
         await CardPileCmd.Add(this, PileType.Hand);
         await PowerCmd.Apply<AbyssalCorruptionPower>(
             choiceContext, play.Target,
@@ -44,4 +46,6 @@ public class Leech() : CorruptionHandlerCard(15, 2,
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
+    
+    
 }

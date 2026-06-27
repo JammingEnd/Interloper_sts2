@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Powers;
 
-public class WITHNESSMEPower() : InterloperPower
+public class WitnessMePower() : InterloperPower
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -23,7 +23,7 @@ public class WITHNESSMEPower() : InterloperPower
         PlayerChoiceContext choiceContext, PowerModel power,
         decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (power.GetType() != typeof(WITHNESSMEPower))
+        if (power.GetType() != typeof(WitnessMePower))
             return;
 
         if (amount <= 0)

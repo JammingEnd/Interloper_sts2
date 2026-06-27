@@ -77,9 +77,9 @@
   "INTERLOPER-WEAKEN_MIND_POWER.description": "Multiply any [gold]Abyssal Corruption[/gold] you apply.",
   "INTERLOPER-WEAKEN_MIND_POWER.smartDescription": "Multiply any [gold]Abyssal Corruption[/gold] you apply by {Amount}x.",
   "INTERLOPER-WEAKEN_MIND_POWER.title": "Weaken Mind",
-  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.description": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal {Amount} x your [gold]Void Reach[/gold] damage to ALL enemies.",
-  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.smartDescription": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal {Amount} x your [gold]Void Reach[/gold] damage to ALL enemies.",
-  "INTERLOPER-W_IT_HN_ES_SM_E_POWER.title": "WITNESS ME",
+  "INTERLOPER-WITNESS_ME_POWER.description": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal {Amount} damage to ALL enemies.",
+  "INTERLOPER-WITNESS_ME_POWER.smartDescription": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal {Amount} damage to ALL enemies.",
+  "INTERLOPER-WITNESS_ME_POWER.title": "WITNESS ME",
   "INTERLOPER-ENGULF_POWER.description": "The next card that consumes [color=#952990]Abyssal Corruption[/color] has its requirements met and consumes 0.",
   "INTERLOPER-ENGULF_POWER.smartDescription": "The next {Amount} cards that consume [color=#952990]Abyssal Corruption[/color] has their requirements met and consume 0.",
   "INTERLOPER-ENGULF_POWER.title": "Engulf"

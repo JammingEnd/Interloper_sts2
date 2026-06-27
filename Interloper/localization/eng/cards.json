@@ -163,7 +163,7 @@
   "INTERLOPER-VEIL_SWEEP.title": "Veil Sweep",
   "INTERLOPER-VILE_PRESENCE.description": "Deal {Damage:diff()} damage to ALL enemies for each [color=#952990]Abyssal Corruption[/color] applied this turn.",
   "INTERLOPER-VILE_PRESENCE.title": "Vile Presence",
-  "INTERLOPER-VOID_CREATIONS.description": "After playing cards each turn, transform a random card in your [gold]Discard pile[/gold] into a random [gold]Interloper card[/gold] and add it to your hand.",
+  "INTERLOPER-VOID_CREATIONS.description": "After playing 5 cards each turn, transform a random card in your [gold]Discard pile[/gold] into a random [gold]Interloper card[/gold] and add it to your hand.",
   "INTERLOPER-VOID_CREATIONS.title": "Void Creations",
   "INTERLOPER-WEAKEN_MIND.description": "Deal {Damage:diff()} damage.\nThe next time you apply [color=#952990]Abyssal Corruption[/color] to the target, double it.",
   "INTERLOPER-WEAKEN_MIND.title": "Weaken Mind",
@@ -171,8 +171,8 @@
   "INTERLOPER-WIDE_OPEN.title": "Wide Open",
   "INTERLOPER-WITH_ME.description": "Deal {Damage:diff()} damage 3 times.\nWhen this card leaves your [gold]Exhaust pile[/gold], return a card from your [gold]Exhaust pile[/gold] to your hand.",
   "INTERLOPER-WITH_ME.title": "With Me",
-  "INTERLOPER-W_IT_HN_ES_SM_E.description": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal 7 x your [color=#AE30A8]Void Reach[/color] damage to ALL enemies.",
-  "INTERLOPER-W_IT_HN_ES_SM_E.title": "WITNESS ME",
+  "INTERLOPER-WITNESS_ME.description": "Whenever a [gold]Glyph Sequence[/gold] is consumed, deal 7 damage to ALL enemies.",
+  "INTERLOPER-WITNESS_ME.title": "WITNESS ME",
 
   "INTERLOPERMOD.selectionScreenPrompt.return": "Return up to {Cards:Diff()} from your [gold]Exhaust Pile[/gold]",
 

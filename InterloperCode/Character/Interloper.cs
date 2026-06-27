@@ -66,4 +66,13 @@ public class Interloper : PlaceholderCharacterModel
     public override string CustomCharacterSelectBg => "char_select_bg_interloper.tscn".ScenePath();
     public override string CustomEnergyCounterPath => "res://Interloper/scenes/interloper_energy_counter.tscn";
     public override string CustomVisualPath => "res://Interloper/scenes/interloper_visual.tscn";
+    
+    public override string CustomArmPointingTexturePath =>
+        $"res://Interloper/images/interloper/hands/multiplayer_hand_interloper_point.png";
+    public override string CustomArmRockTexturePath =>
+        $"res://Interloper/images/interloper/hands/multiplayer_hand_interloper_rock.png";
+    public override string CustomArmPaperTexturePath =>
+        $"res://Interloper/images/interloper/hands/multiplayer_hand_interloper_paper.png";
+    public override string CustomArmScissorsTexturePath =>
+        $"res://Interloper/images/interloper/hands//multiplayer_hand_interloper_scissor.png";
 }

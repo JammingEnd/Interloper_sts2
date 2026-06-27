@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class WITHNESSME() : InterloperCard(1,
+public class WitnessMe() : InterloperCard(1,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
@@ -19,7 +19,7 @@ public class WITHNESSME() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<WITHNESSMEPower>(
+        await PowerCmd.Apply<WitnessMePower>(
             choiceContext, Owner.Creature, 7, Owner.Creature, this);
     }
 

@@ -42,11 +42,10 @@ public class WithMe() : InterloperCard(1,
                 new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(card.Owner, "h", true));
             var selected = await CardSelectCmd.FromSimpleGrid(
                 ctx, sets, Owner, prefs);
-
-            if (selected != null)
+            var cards = selected.ToArray();
+            if (cards.Length > 0)
             {
-                foreach (var friend in selected)
-                    await CardPileCmd.Add(friend, PileType.Hand);
+                await CardPileCmd.Add(selected.ToArray()[0], PileType.Hand);
             }
         }
     }

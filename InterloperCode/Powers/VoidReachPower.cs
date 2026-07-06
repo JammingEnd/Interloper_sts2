@@ -69,8 +69,6 @@ public class VoidReachPower() : InterloperPower
     {
        
         var exhaustPile = PileType.Exhaust.GetPile(player);
-        MainFile.Logger.Info($"[VoidReach] Changed by {amount}, total: {this.Amount}, exhaust count: {exhaustPile.Cards.Count}");
-
         var drawnCardIds = new HashSet<string>();
 
         while (true)

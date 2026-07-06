@@ -1,12 +1,15 @@
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Character;
 using Interloper.InterloperCode.Helpers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Rare;
@@ -33,19 +36,22 @@ public class WithMe() : InterloperCard(1,
 
     protected override async void AfterMovedFromExhaust(CardModel card)
     {
+        //TODO: prolly change this to random card since the ctx causes issues when picking.
         var exhaustPile = PileType.Exhaust.GetPile(Owner);
         var sets = exhaustPile.GetOldestPlayableCards();
         if (sets.Length > 0)
         {
-            var prefs = new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1);
-            PlayerChoiceContext ctx =
-                new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(card.Owner, "h", true));
+            /*var prefs = new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1);
+            PlayerChoiceContext ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(card.Owner, "h", true));
             var selected = await CardSelectCmd.FromSimpleGrid(
                 ctx, sets, Owner, prefs);
-            var cards = selected.ToArray();
-            if (cards.Length > 0)
+            var selectedCard = selected.FirstOrDefault();*/
+            var selectedCard = sets[Owner.RunState.Rng.CombatCardGeneration.NextInt(sets.Length)];
+            MainFile.Logger.Info($"WithMe: {selectedCard}");
+            if (selectedCard != null)
             {
-                await CardPileCmd.Add(selected.ToArray()[0], PileType.Hand);
+                MainFile.Logger.Info($"WithMe: Adding {selectedCard} to hand.");
+                await CardPileCmd.Add(selectedCard, PileType.Hand);
             }
         }
     }

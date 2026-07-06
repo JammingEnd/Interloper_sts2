@@ -30,7 +30,7 @@ public class VoidCreationsPower() : InterloperPower
         PowerInstanceType.Instanced;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar(_cardsLeftKey, _baseCardsLeft)];
+        [new DynamicVar(_cardsLeftKey, _baseCardsLeft + 1)];
 
     protected override object InitInternalData() =>
         new Data();
@@ -42,12 +42,11 @@ public class VoidCreationsPower() : InterloperPower
             return;
 
         var data = GetInternalData<Data>();
-        if (data.alreadyApplied)
+        if (!data.alreadyApplied)
         {
             DynamicVars[_cardsLeftKey].BaseValue--;
             InvokeDisplayAmountChanged();
-
-            if (DynamicVars[_cardsLeftKey].IntValue <= 0)
+            if (DynamicVars[_cardsLeftKey].IntValue <= 0 && !data.alreadyApplied)
             {
                 var discardPile = PileType.Discard.GetPile(Owner.Player);
                 var discardCards = discardPile.Cards.ToArray();
@@ -60,22 +59,20 @@ public class VoidCreationsPower() : InterloperPower
                     var newCard = CardFactory.GetForCombat(Owner.Player,
                         ModelDb.CardPool<InterloperCardPool>()
                             .GetUnlockedCards(Owner.Player.UnlockState,
-                                CardMultiplayerConstraint.SingleplayerOnly), 0,
+                                CardMultiplayerConstraint.SingleplayerOnly), 1,
                         Owner.Player.RunState.Rng.CombatCardGeneration)
                         .FirstOrDefault();
-
+    
                     if (newCard != null)
                     {
                         await CardCmd.Transform(target, newCard);
                         await CardPileCmd.Add(newCard, PileType.Hand);
+                        data.alreadyApplied = true;
                     }
                 }
-
-                DynamicVars[_cardsLeftKey].BaseValue = _baseCardsLeft;
-                InvokeDisplayAmountChanged();
             }
+            
         }
-        data.alreadyApplied = true;
     }
 
     public override Task AfterSideTurnEnd(
@@ -87,12 +84,14 @@ public class VoidCreationsPower() : InterloperPower
             return Task.CompletedTask;
 
         DynamicVars[_cardsLeftKey].BaseValue = _baseCardsLeft;
+        var data = GetInternalData<Data>();
+        data.alreadyApplied = false;
         InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
     private class Data
     {
-        public bool alreadyApplied;
+        public bool alreadyApplied = false;
     }
 }

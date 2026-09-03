@@ -32,12 +32,18 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.3.1" PrivateAssets="All" />
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
         <!-- Generates a .pck file when building if only using simple assets. May not work on all setups. Uncomment to test. -->
         <!-- <PackageReference Include="BSchneppe.StS2.PckPacker" Version="0.1.1" PrivateAssets="All" /> -->
         <AdditionalFiles Include="Interloper/localization/**/*.json"/> <!-- Used by analyzer -->
+    </ItemGroup>
+
+    <ItemGroup Condition="Exists('$(HOME)/.local/share/Steam/steamapps/workshop/content/2868840/3737335127/BaseLib/BaseLib.dll')">
+        <Reference Include="BaseLib">
+            <HintPath>$(HOME)/.local/share/Steam/steamapps/workshop/content/2868840/3737335127/BaseLib/BaseLib.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>

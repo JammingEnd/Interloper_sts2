@@ -22,8 +22,11 @@ public class LastWordsPower() : InterloperPower
             return;
         if (cardPlay.Card.Keywords.Contains(InterloperKeywords.Consumed))
         {
-            var mouthCard = CombatState.CreateCard<GlyphMouth>(this.Owner.Player);
-            await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, this.Owner.Player);
+            for (int i = 0; i < this.Amount; i++)
+            {
+                var mouthCard = CombatState.CreateCard<GlyphMouth>(this.Owner.Player);
+                await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, this.Owner.Player);
+            }
         }
     }
 }

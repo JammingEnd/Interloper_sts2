@@ -3,6 +3,7 @@ using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
@@ -28,4 +29,8 @@ public class LifeLock() : InterloperCard(1,
     {
         DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(7m);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+    ];
 }

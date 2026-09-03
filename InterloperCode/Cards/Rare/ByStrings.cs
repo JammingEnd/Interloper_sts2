@@ -12,6 +12,9 @@ public class ByStrings() : InterloperCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<ByStringsPower>("ByStringsPower", 1m)
+    ];
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)

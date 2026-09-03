@@ -1,8 +1,10 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
@@ -32,4 +34,8 @@ public class Invert() : CorruptionHandlerCard(10 ,0,
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+    ];
 }

@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Keywords;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -54,13 +55,16 @@ public class FeedingOnNothingness() : InterloperCard(1,
         new DamageVar((Decimal) this.CurrentDamage, ValueProp.Move),
         new IntVar("Increase", 2M)
     ];
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        if (play.Card.Keywords.Contains(InterloperKeywords.Consumed))
+        {
+            play.Card.RemoveKeyword(InterloperKeywords.Consumed);
+        }
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
 

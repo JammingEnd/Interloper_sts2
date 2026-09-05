@@ -22,15 +22,8 @@ public class EffigyOfFirePower() : InterloperPower
         if (oldPileType != PileType.Exhaust)
             return;
 
-        var createMethod = typeof(CombatState)
-            .GetMethod(nameof(CombatState.CreateCard))
-            ?.MakeGenericMethod(card.GetType());
-
-        if (createMethod?.Invoke(null, [Owner.Player]) is CardModel duplicate)
-        {
-            await CardPileCmd.AddGeneratedCardToCombat(
-                duplicate, PileType.Hand, Owner.Player);
-        }
+        var duplicate = CombatState.CreateCard(card.CanonicalInstance, Owner.Player);
+        await CardPileCmd.AddGeneratedCardToCombat(duplicate, PileType.Hand, Owner.Player);
 
         await PowerCmd.Remove(this);
     }

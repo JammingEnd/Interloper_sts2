@@ -121,22 +121,26 @@ public class GlyphStorage() : InterloperPower
     private async Task OneEyeTwoMouths(PlayerChoiceContext choiceContext)
     {
         var pile = PileType.Draw.GetPile(Owner.Player); 
-        var statusses = pile.Cards.Where(c => c.Type == CardType.Status);
-        if (statusses.Count() != 0)
+        var statusses = pile.Cards.Where(c => c.Type == CardType.Status).ToArray();
+        if (statusses.Length != 0)
         {
             foreach (var status in statusses)
             {
                 await CardCmd.Exhaust(choiceContext, status);
             }
-            var all = PileType.Discard.GetPile(Owner.Player).Cards.Concat(PileType.Exhaust.GetPile(Owner.Player).Cards).Concat(PileType.Hand.GetPile(Owner.Player).Cards);
-            var unUpgraded = all.Where(c => c.IsUpgraded == false).ToArray();
-            for (int i = 0; i < statusses.Count(); i++)
+            IEnumerable<CardModel> all = [
+                .. PileType.Discard.GetPile(Owner.Player).Cards,
+                .. PileType.Draw.GetPile(Owner.Player).Cards,
+                .. PileType.Hand.GetPile(Owner.Player).Cards];
+            
+            var unUpgraded = all.Where(c => c.IsUpgraded == false && c.GetType() != typeof(GlyphCard)).ToArray();
+            for (int i = 0; i < statusses.Length; i++)
             {
                 var selected = unUpgraded[Owner.Player.RunState.Rng.CombatCardGeneration.NextInt(unUpgraded.Length)];
                 CardCmd.Upgrade(selected);
             }
         }
-        int energyGain = statusses.Count() == 0 ? 1 : statusses.Count();
+        int energyGain = statusses.Length == 0 ? 1 : statusses.Length;
     }
 
     private async Task TwoMouthsOneTail(PlayerChoiceContext choiceContext)

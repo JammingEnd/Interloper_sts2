@@ -24,7 +24,9 @@ public class TunnelVisionPower() : InterloperPower
                 Amount,
                 Owner, null
             );
-        } else if (enemies.Count < 1)
+            return;
+        } 
+        if (enemies.Count < 1)
         {
             return;
         }

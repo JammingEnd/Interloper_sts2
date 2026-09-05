@@ -22,7 +22,7 @@ public class Unnatural() : CorruptionHandlerCard(15, 1,
         new CalculationBaseVar(10),
         new ExtraDamageVar(0),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (_, target) => target.GetPowerAmount<AbyssalCorruptionPower>() >= 15 ? 2M : 1M),
+            (_, target) => target != null && target.GetPowerAmount<AbyssalCorruptionPower>() >= 15 ? 2M : 1M),
         new PowerVar<WeakPower>("WeakPower", 2),
         new PowerVar<VulnerablePower>("VulnerablePower", 2)
     ];

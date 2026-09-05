@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -14,6 +15,10 @@ public class OuterReach() : InterloperCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyAlly)
 {
+    public override CardMultiplayerConstraint MultiplayerConstraint
+    {
+        get => CardMultiplayerConstraint.MultiplayerOnly;
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
     protected override async Task OnPlay(

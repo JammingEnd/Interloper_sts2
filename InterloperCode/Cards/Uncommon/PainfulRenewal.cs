@@ -14,7 +14,7 @@ public class PainfulRenewal() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<PainfulRenewalPower>("PainfulRenewalPower", 6)
+        new PowerVar<PainfulRenewalPower>("PainfulRenewalPower", 4)
     ];
 
     protected override async Task OnPlay(
@@ -27,7 +27,7 @@ public class PainfulRenewal() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PainfulRenewalPower"].UpgradeValueBy(3m);
+        DynamicVars["PainfulRenewalPower"].UpgradeValueBy(2m);
     }
 
 }

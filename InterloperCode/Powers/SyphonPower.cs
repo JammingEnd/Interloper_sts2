@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -22,45 +23,40 @@ public class SyphonPower() : InterloperPower
     public override PowerInstanceType InstanceType =>
         PowerInstanceType.Instanced;
 
-    public override int DisplayAmount => 10 - this.GetInternalData<SyphonPower.Data>().corruptionApplied % 10;
+    public override int DisplayAmount => 15 - this.GetInternalData<SyphonPower.Data>().corruptionApplied % 15;
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        Log.Debug("START SYHPON");
         var data = GetInternalData<SyphonPower.Data>();
         data.corruptionApplied = 0;
         data.triggeredThisTurn = false;
+        InvokeDisplayAmountChanged();
+        Log.Debug("END SYHPON");
     }
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if(power.GetType() != typeof(AbyssalCorruptionPower))
+        if (power.GetType() != typeof(AbyssalCorruptionPower))
             return;
-        SyphonPower syphon = this;
-        SyphonPower.Data data;
-        if (cardSource.Owner.Creature != syphon.Owner)
-        {
-            data = null;
-        }
-        else if (amount <= 0)
-        {
-            data = null;
-        }
-        else
-        {
-            data = syphon.GetInternalData<SyphonPower.Data>();
-            data.corruptionApplied += (int)amount;
 
-            if (!data.triggeredThisTurn && data.corruptionApplied >= 10)
-            {
-                syphon.Flash();
-                await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner, 1, Owner, null);
-                data.triggeredThisTurn = true;
-            }
-            syphon.InvokeDisplayAmountChanged();
-            data = null;
-        }
+        if (cardSource?.Owner.Creature != Owner)
+            return;
 
+        if (amount <= 0)
+            return;
+
+        var data = GetInternalData<SyphonPower.Data>();
+        data.corruptionApplied += (int)amount;
+
+        if (!data.triggeredThisTurn && data.corruptionApplied >= 15)
+        {
+            Flash();
+            await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner, 1, Owner, null);
+            data.triggeredThisTurn = true;
+        }
+        InvokeDisplayAmountChanged();
     }
 
     private class Data

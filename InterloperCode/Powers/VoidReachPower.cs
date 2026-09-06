@@ -31,6 +31,9 @@ public class VoidReachPower() : InterloperPower
         if (power.GetType() != typeof(VoidReachPower))
             return;
 
+        if (power.Owner != Owner)
+            return;
+
         if (amount <= 0)
             return;
 

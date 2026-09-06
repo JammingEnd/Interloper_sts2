@@ -54,6 +54,8 @@ public class LoseChainsRelic() : InterloperRelic
 
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
     {
+        if(card.Owner != this.Owner)
+            return;
         if (this.UsedThisTurn)
             return;
         await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, 2m, Owner.Creature, null);

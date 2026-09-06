@@ -41,7 +41,7 @@ public class SyphonPower() : InterloperPower
         if (power.GetType() != typeof(AbyssalCorruptionPower))
             return;
 
-        if (cardSource?.Owner.Creature != Owner)
+        if (applier != Owner)
             return;
 
         if (amount <= 0)

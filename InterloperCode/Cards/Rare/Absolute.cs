@@ -68,6 +68,9 @@ public class Absolute() : InterloperCard(1,
         if (power.GetType() != typeof(GlyphStorage))
             return;
 
+        if (power.Owner != Owner.Creature)
+            return;
+
         if (_subscribed)
             return;
 

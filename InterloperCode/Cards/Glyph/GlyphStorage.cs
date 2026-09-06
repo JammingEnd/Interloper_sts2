@@ -33,6 +33,9 @@ public class GlyphStorage() : InterloperPower
         if (power.GetType() != typeof(GlyphStorage))
             return;
 
+        if (power.Owner != Owner)
+            return;
+
         if (amount <= 0)
             return;
         

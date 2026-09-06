@@ -26,6 +26,9 @@ public class WitnessMePower() : InterloperPower
         if (power.GetType() != typeof(WitnessMePower))
             return;
 
+        if (power.Owner != Owner)
+            return;
+
         if (amount <= 0)
             return;
 

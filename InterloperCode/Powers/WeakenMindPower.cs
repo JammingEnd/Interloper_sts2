@@ -40,6 +40,9 @@ public class WeakenMindPower() : InterloperPower
         if (power.GetType() != typeof(AbyssalCorruptionPower))
             return;
 
+        if (applier != Owner)
+            return;
+
         if (amount <= 0)
             return;
 

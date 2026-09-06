@@ -24,31 +24,25 @@ public class LinkedTradePower() : InterloperPower
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (power.GetType() == typeof(AbyssalCorruptionPower))
+        if (power.GetType() != typeof(AbyssalCorruptionPower))
+            return;
+
+        if (applier != Owner)
+            return;
+
+        if (amount <= 0)
+            return;
+
+        var data = GetInternalData<Data>();
+        data.corruptionSpend += (int)amount;
+        int triggers = data.corruptionSpend / 10 - data.triggerCount;
+        if (triggers > 0)
         {
-            LinkedTradePower linkedTradePower = this;
-            LinkedTradePower.Data data;
-            if (Owner != linkedTradePower.Owner)
-                data = (LinkedTradePower.Data) null;
-            else if (amount <= 0)
-            {
-                data = (LinkedTradePower.Data) null;
-            }
-            else
-            {
-                data = linkedTradePower.GetInternalData<LinkedTradePower.Data>();
-                data.corruptionSpend += (int) amount;
-                int triggers = data.corruptionSpend / 10 - data.triggerCount;
-                if (triggers > 0)
-                {
-                    linkedTradePower.Flash();
-                    await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner, 1 * triggers, Owner, null);
-                    data.triggerCount += triggers;
-                }
-                linkedTradePower.InvokeDisplayAmountChanged();
-                data = (LinkedTradePower.Data) null;
-            }
+            Flash();
+            await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner, triggers, Owner, null);
+            data.triggerCount += triggers;
         }
+        InvokeDisplayAmountChanged();
     }
     
     private class Data

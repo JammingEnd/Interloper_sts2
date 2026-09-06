@@ -21,27 +21,24 @@ public class Goodwill() : InterloperCard(0,
         CardPlay play)
     {
         var hand = PileType.Hand.GetPile(Owner);
-        var glyphCards = hand.Cards
-            .Where(c => c is GlyphCard)
-            .ToArray();
-
-        if (glyphCards.Length == 0)
+        if (!hand.Cards.Any(c => c is GlyphCard))
             return;
 
         var prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1);
-        var selected = await CardSelectCmd.FromSimpleGrid(
-            choiceContext, glyphCards, Owner, prefs);
+        var selected = await CardSelectCmd.FromHand(
+            choiceContext, Owner, prefs, c => c is GlyphCard, this);
 
-        if (selected == null)
+        var target = selected.FirstOrDefault();
+        if (target == null)
             return;
 
         var newCard = CardFactory.GetForCombat(Owner,
             ModelDb.CardPool<ColorlessCardPool>()
-                .GetUnlockedCards(Owner.UnlockState, CardMultiplayerConstraint.SingleplayerOnly), 0,
+                .GetUnlockedCards(Owner.UnlockState, CardMultiplayerConstraint.SingleplayerOnly), 1,
             Owner.RunState.Rng.CombatCardGeneration).FirstOrDefault();
 
         if (newCard != null)
-            await CardCmd.Transform(selected.First(), newCard);
+            await CardCmd.Transform(target, newCard);
     }
 
     protected override void OnUpgrade()

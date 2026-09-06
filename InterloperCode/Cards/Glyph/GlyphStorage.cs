@@ -26,6 +26,7 @@ public class GlyphStorage() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
+    private GlyphPower[] _currentGlyphsOnPlayer;
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
@@ -34,14 +35,14 @@ public class GlyphStorage() : InterloperPower
 
         if (amount <= 0)
             return;
-
-        var glyphsOnPlayer = Owner.Powers.OfType<GlyphPower>().ToArray();
-        if (glyphsOnPlayer.Length < 3)
+        
+        _currentGlyphsOnPlayer = Owner.Powers.OfType<GlyphPower>().ToArray();
+        if (_currentGlyphsOnPlayer.Length < 3)
             return;
 
-        int eyes = glyphsOnPlayer.Count(g => g is GlyphEyePower);
-        int mouths = glyphsOnPlayer.Count(g => g is GlyphMouthPower);
-        int tails = glyphsOnPlayer.Count(g => g is GlyphTailPower);
+        int eyes = _currentGlyphsOnPlayer.Count(g => g is GlyphEyePower);
+        int mouths = _currentGlyphsOnPlayer.Count(g => g is GlyphMouthPower);
+        int tails = _currentGlyphsOnPlayer.Count(g => g is GlyphTailPower);
 
         var effectTask = (eyes, mouths, tails) switch
         {
@@ -59,7 +60,7 @@ public class GlyphStorage() : InterloperPower
         };
         await effectTask;
         await PlayerCmd.GainEnergy(2, Owner.Player);
-        foreach (var inst in glyphsOnPlayer)
+        foreach (var inst in _currentGlyphsOnPlayer)
         {
             await PowerCmd.Remove(inst);
         }
@@ -162,5 +163,16 @@ public class GlyphStorage() : InterloperPower
     private async Task OneOfEach(PlayerChoiceContext choiceContext)
     {
         await CardPileCmd.Shuffle(choiceContext, Owner.Player);
+    }
+
+    public bool HasTwoPowers(out GlyphPower[] powers)
+    {
+        if(_currentGlyphsOnPlayer.Length == 2)
+        {
+            powers = _currentGlyphsOnPlayer;
+            return true;
+        }
+        powers = Array.Empty<GlyphPower>();
+        return false;
     }
 }

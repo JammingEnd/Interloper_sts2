@@ -15,7 +15,7 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Move),
+        new DamageVar(7, ValueProp.Move),
         new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5)
     ];
 
@@ -30,7 +30,7 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

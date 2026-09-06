@@ -1,5 +1,6 @@
 using Interloper.InterloperCode.Keywords;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 
 namespace Interloper.InterloperCode.Helpers;
@@ -37,5 +38,11 @@ public static class Extentions
         
         return query.FirstOrDefault();
         
+    }
+
+    public static bool TryGetPower<T>(Creature creature, out PowerModel power) where T : PowerModel
+    {
+        power = creature.GetPower<T>();
+        return power != null;
     }
 }

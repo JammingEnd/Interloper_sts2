@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class DarkToLight() : CorruptionHandlerCard(10, 1,
+public class DarkToLight() : CorruptionHandlerCard(20, 1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {

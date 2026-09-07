@@ -8,6 +8,8 @@ namespace Interloper.InterloperCode.Cards;
 // cardtype that for cards that have corruption effects
 public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, CardType type, CardRarity rarity, TargetType target) : InterloperCard(cost, type, rarity, target)
 {
+    public int CorruptionThreshold => corruptionThreshold;
+
     protected int ConsumptionOverride = 0;
     protected abstract Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play);
 

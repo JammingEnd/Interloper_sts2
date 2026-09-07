@@ -16,6 +16,8 @@ namespace Interloper.InterloperCode.Glyphs;
 
 public static class GlyphCmd
 {
+    public static event Action<Player>? OnSequenceActivated;
+
     /// <summary>
     /// Enqueue a Glyph of type <c>T</c> into the player's Glyph queue. Automatically activates the sequence when the queue is full.
     /// </summary>
@@ -90,6 +92,8 @@ public static class GlyphCmd
         await PlayerCmd.GainEnergy(2, player);
 
         await GlyphHook.AfterSequenceActivated(combatState, choiceContext, player, glyphs);
+
+        OnSequenceActivated?.Invoke(player);
     }
 
     private static async Task ThreeEyes(PlayerChoiceContext choiceContext, Player player)
@@ -168,7 +172,7 @@ public static class GlyphCmd
 
     private static async Task TwoMouthsOneTail(PlayerChoiceContext choiceContext, Player player)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, 3, player.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, 2, player.Creature, null);
     }
 
     private static async Task OneEyeTwoTails(PlayerChoiceContext choiceContext, Player player)
@@ -178,7 +182,6 @@ public static class GlyphCmd
 
     private static async Task OneMouthTwoTails(PlayerChoiceContext choiceContext, Player player)
     {
-        await PlayerCmd.GainEnergy(2, player);
         await PowerCmd.Apply<DexterityPower>(choiceContext, player.Creature, 2, player.Creature, null);
     }
 

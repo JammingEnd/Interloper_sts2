@@ -65,7 +65,7 @@
   "INTERLOPER-GLYPH_MOUTH.title": "Mouth",
   "INTERLOPER-GLYPH_TAIL.description": "",
   "INTERLOPER-GLYPH_TAIL.title": "Tail",
-  "INTERLOPER-GONE_FROM_REALITY.description": "Deal {CalculatedDamage:diff()} damage equal to [color=#952990]Abyssal Corruption[/color] on all enemies.",
+  "INTERLOPER-GONE_FROM_REALITY.description": "Deal damage equal to [color=#952990]Abyssal Corruption[/color] on all enemies.{InCombat:cond:\n({CalculatedDamage:diff()})|}",
   "INTERLOPER-GONE_FROM_REALITY.title": "Gone From Reality",
   "INTERLOPER-GOODWILL.description": "Choose a [gold]Glyph[/gold] card in your hand. Transform it into a random [gold]Colorless[/gold] card.",
   "INTERLOPER-GOODWILL.title": "Goodwill",

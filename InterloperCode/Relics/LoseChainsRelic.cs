@@ -25,22 +25,20 @@ public class LoseChainsRelic() : InterloperRelic
             this._usedThisTurn = value;
         }
     }
-    public override Task AfterRoomEntered(AbstractRoom room)
+    public override async Task AfterRoomEntered(AbstractRoom room)
     {
         if (!(room is CombatRoom))
-            return Task.CompletedTask;
+            return;
         this.UsedThisTurn = false;
         this.Status = RelicStatus.Active;
-        return Task.CompletedTask;
     }
-    public override Task AfterCombatEnd(CombatRoom _)
+    public override async Task AfterCombatEnd(CombatRoom _)
     {
         this.UsedThisTurn = false;
         this.Status = RelicStatus.Normal;
-        return Task.CompletedTask;
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants,
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
         if (side == CombatSide.Player)
@@ -48,7 +46,6 @@ public class LoseChainsRelic() : InterloperRelic
             this.Status = RelicStatus.Active;
             this.UsedThisTurn = false;
         }
-        return Task.CompletedTask;
         
     }
 

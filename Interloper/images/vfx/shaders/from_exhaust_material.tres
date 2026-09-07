@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://blf4cw2crdqgn"]
+
+[ext_resource type="Shader" uid="uid://vblek0xq6fxh" path="res://Interloper/images/vfx/shaders/from_exhaust_shader.tres" id="1_h7je8"]
+[ext_resource type="Texture2D" uid="uid://b01v1e1o4wt3r" path="res://Interloper/images/vfx/cfxr stretch trait.png" id="2_cr8tp"]
+
+[resource]
+shader = ExtResource("1_h7je8")
+shader_parameter/Texture2DParameter = ExtResource("2_cr8tp")

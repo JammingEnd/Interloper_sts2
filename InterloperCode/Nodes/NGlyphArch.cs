@@ -1,3 +1,5 @@
+using BaseLib.Audio;
+using BaseLib.Extensions;
 using Godot;
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Glyphs;
@@ -5,6 +7,7 @@ using Interloper.InterloperCode.Helpers;
 using Interloper.InterloperCode.Utils;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
@@ -41,6 +44,8 @@ public partial class NGlyphArch : Control
 
     private Player? _player;
 
+    private int _lastGlyphCount;
+
     private readonly List<TextureRect> _placements = [];
     private readonly List<TextureRect> _highlights = [];
     private readonly List<TextureRect> _icons = [];
@@ -49,6 +54,18 @@ public partial class NGlyphArch : Control
     {
         _player = player;
         Refresh();
+    }
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+        GlyphCmd.OnSequenceActivated += OnSequenceActivated;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GlyphCmd.OnSequenceActivated -= OnSequenceActivated;
     }
 
     public override void _Ready()
@@ -111,6 +128,58 @@ public partial class NGlyphArch : Control
     public override void _Process(double delta)
     {
         Refresh();
+        UpdateVfx();
+    }
+
+    private void UpdateVfx()
+    {
+        if (!IsNodeReady() || _player == null)
+            return;
+
+        int count = _player.PlayerCombatState?.GetGlyphQueue()?.Glyphs.Count ?? 0;
+        if (count == _lastGlyphCount)
+            return;
+
+if (count is 1 or 2)
+        {
+            ModAudio.PlaySound(GlyphResource.QueueSound, volumeMult: 17);
+            PlayVfx(GlyphResource.QueueVfxPath, _placements[count - 1], GlyphResource.QueueVfxScale);
+        }
+
+        _lastGlyphCount = count;
+    }
+
+    private void OnSequenceActivated(Player player)
+    {
+        if (player != _player)
+            return;
+
+        ModAudio.PlaySound(GlyphResource.SequenceSound, volumeMult: 17);
+        foreach (var placement in _placements)
+            PlayVfx(GlyphResource.SequenceVfxPath, placement, GlyphResource.SequenceVfxScale);
+    }
+
+    private void PlayVfx(string scenePath, Control parent, float scale)
+    {
+        var vfx = PreloadManager.Cache.GetScene(scenePath).Instantiate<Node2D>();
+        parent.AddChild(vfx);
+        vfx.Scale = new Vector2(scale, scale);
+        vfx.GlobalPosition = parent.GlobalPosition + parent.Size * 0.5f;
+
+        foreach (var child in vfx.FindChildren("*", "GPUParticles2D", true, false))
+            child.Set("emitting", true);
+
+        _ = FireAndFreeVfx(vfx);
+    }
+
+    private async Task FireAndFreeVfx(Node2D vfx)
+    {
+        double maxLifetime = 0;
+        foreach (var child in vfx.FindChildren("*", "GPUParticles2D", true, false))
+            maxLifetime = Math.Max(maxLifetime, (double)child.Get("lifetime"));
+
+        await ToSignal(GetTree().CreateTimer(maxLifetime), SceneTreeTimer.SignalName.Timeout);
+        vfx.QueueFreeSafely();
     }
 
     private void Refresh()

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://k5c0pqsubckn"]
+
+[ext_resource type="Material" uid="uid://blf4cw2crdqgn" path="res://Interloper/images/vfx/shaders/from_exhaust_material.tres" id="1_bolyl"]
+
+[node name="fromexhaustvfx" type="Node2D"]
+
+[node name="Line2D" type="Line2D" parent="."]
+material = ExtResource("1_bolyl")
+points = PackedVector2Array(0, 0, 2, -28, -4, -47, -8, -64, 1, -86, 16, -98)
+texture_mode = 2

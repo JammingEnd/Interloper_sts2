@@ -1,6 +1,8 @@
 using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 
 namespace Interloper.InterloperCode.Helpers;
@@ -19,10 +21,14 @@ public static class Extentions
             query = query.Where(p => p.Type != CardType.Status);
         if (!includeQuest)
             query = query.Where(p => p.Type != CardType.Quest);
-        
+
+        var owner = pile.Cards.Select(c => c.Owner).FirstOrDefault();
+        if (owner != null && owner.Relics.Any(r => r is PocketPocketDimensionRelic))
+            query = query.Where(p => !p.Keywords.Contains(CardKeyword.Ethereal));
+
         return query.ToArray();
-        
     }
+
     public static CardModel GetOldestPlayableCard(this CardPile pile, bool includeStatus = false, bool includeCurse = false, bool includeQuest = false, bool includeConsumed = false)
     {
         var query = pile.Cards.AsEnumerable();
@@ -35,9 +41,12 @@ public static class Extentions
             query = query.Where(p => p.Type != CardType.Status);
         if (!includeQuest)
             query = query.Where(p => p.Type != CardType.Quest);
-        
+
+        var owner = pile.Cards.Select(c => c.Owner).FirstOrDefault();
+        if (owner != null && owner.Relics.Any(r => r is PocketPocketDimensionRelic))
+            query = query.Where(p => !p.Keywords.Contains(CardKeyword.Ethereal));
+
         return query.FirstOrDefault();
-        
     }
 
     public static bool TryGetPower<T>(Creature creature, out PowerModel power) where T : PowerModel

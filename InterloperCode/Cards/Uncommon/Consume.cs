@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class Consume() : InterloperCard(0,
+public class Consume() : InterloperCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {

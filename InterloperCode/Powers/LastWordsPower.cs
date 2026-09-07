@@ -17,7 +17,7 @@ public class LastWordsPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Single;
 
-    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
         if (target == Owner && dealer != Owner && dealer != null)
@@ -25,9 +25,8 @@ public class LastWordsPower() : InterloperPower
             int amount = (int)result.UnblockedDamage;
             if (amount > 0)
             {
-                PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, dealer, amount, Owner, null);
+               await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, dealer, amount, Owner, null);
             }
         }
-        return Task.CompletedTask;
     }
 }

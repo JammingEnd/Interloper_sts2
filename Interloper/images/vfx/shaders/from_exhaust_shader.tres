@@ -1,0 +1,65 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://vblek0xq6fxh"]
+
+[ext_resource type="Texture2D" uid="uid://dw4ssq5can7xo" path="res://Interloper/images/vfx/cfxr line loop electric.png" id="1_w2mpv"]
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_0ogcx"]
+parameter_name = "Texture2DParameter"
+texture_type = 1
+color_default = 2
+texture_repeat = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_mhs8g"]
+expanded_output_ports = [0]
+source = 5
+texture = ExtResource("1_w2mpv")
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_0ogcx"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_mhs8g"]
+input_name = "color"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_add, unshaded;
+
+uniform sampler2D Texture2DParameter : source_color, hint_default_transparent, repeat_enable;
+
+
+
+void fragment() {
+// Input:9
+	vec4 n_out9p0 = COLOR;
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(Texture2DParameter, UV);
+	float n_out3p1 = n_out3p0.r;
+
+
+// VectorOp:8
+	vec3 n_out8p0 = vec3(n_out9p0.xyz) * vec3(n_out3p1);
+
+
+// Output:0
+	COLOR.rgb = n_out8p0;
+
+
+}
+"
+mode = 1
+modes/blend = 1
+flags/unshaded = true
+flags/light_only = false
+nodes/vertex/0/position = Vector2(160, 300)
+nodes/fragment/0/position = Vector2(840, 180)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_0ogcx")
+nodes/fragment/2/position = Vector2(-380, 420)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_mhs8g")
+nodes/fragment/3/position = Vector2(40, 260)
+nodes/fragment/8/node = SubResource("VisualShaderNodeVectorOp_0ogcx")
+nodes/fragment/8/position = Vector2(520, 260)
+nodes/fragment/9/node = SubResource("VisualShaderNodeInput_mhs8g")
+nodes/fragment/9/position = Vector2(140, 100)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 3, 1, 8, 1, 9, 0, 8, 0, 8, 0, 0, 0)

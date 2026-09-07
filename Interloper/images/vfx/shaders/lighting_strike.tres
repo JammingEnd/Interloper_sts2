@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bvw0kc5nwyoox"]
+
+[ext_resource type="Shader" uid="uid://d4cwq7d1goexj" path="res://Interloper/images/vfx/shaders/lighting_strike_shader.tres" id="1_8tb23"]
+[ext_resource type="Texture2D" uid="uid://bu87b66q044kd" path="res://Interloper/images/vfx/cfxr line loop electric black.png" id="2_8tb23"]
+
+[resource]
+shader = ExtResource("1_8tb23")
+shader_parameter/speed = Vector2(2.5, 0)
+shader_parameter/Texture2DParameter = ExtResource("2_8tb23")

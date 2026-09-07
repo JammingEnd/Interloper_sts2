@@ -41,20 +41,22 @@ public class VoidReachPower() : InterloperPower
         if (player == null)
             return;
 
-        Trigger(choiceContext, player, amount);
+        await Trigger(choiceContext, player, amount);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        if (cardPlay.Card.Owner != Owner.Player)
+            return;
+
         var player = Owner.Player;
         if (player == null)
             return;
         var amount = player.Creature.GetPowerAmount<VoidReachPower>();
-        if(amount <= 0)
+        if (amount <= 0)
             return;
         MainFile.Logger.Info($"Reached Trigger!!!!");
-        Trigger(choiceContext, player, amount);
-        
+        await Trigger(choiceContext, player, amount);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
@@ -65,10 +67,10 @@ public class VoidReachPower() : InterloperPower
         if (player == null)
             return;
         var amount = player.Creature.GetPowerAmount<VoidReachPower>();
-        Trigger(choiceContext, player, amount);
+        await Trigger(choiceContext, player, amount);
     }
 
-    private async void Trigger(PlayerChoiceContext choiceContext, Player player, decimal amount)
+    private async Task Trigger(PlayerChoiceContext choiceContext, Player player, decimal amount)
     {
        
         var exhaustPile = PileType.Exhaust.GetPile(player);

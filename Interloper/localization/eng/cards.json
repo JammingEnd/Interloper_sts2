@@ -91,7 +91,7 @@
   "INTERLOPER-INTO_THE_UNKNOWN.title": "Into The Unknown",
   "INTERLOPER-INVERT.description": "When [color=#952990]Abyssal Corruption[/color] is 10+, Gain {Energy:energyIcons()}.",
   "INTERLOPER-INVERT.title": "Invert",
-  "INTERLOPER-LAST_WORDS.description": "Whenever you play a [gold]Consumed[/gold] card, add a [gold]Mouth[/gold] to your hand.",
+  "INTERLOPER-LAST_WORDS.description": "Whenever you take unblocked damage, apply that much [color=#952990]Abyssal Corruption[/color] to the attacker.",
   "INTERLOPER-LAST_WORDS.title": "Last Words",
   "INTERLOPER-LEECH.description": "Deal {Damage:diff()} damage {Repeat:diff()} times. \nWhen [color=#952990]Abyssal Corruption[/color] is 15+, Return this to your hand. It costs 0 this turn and apply 5 [color=#952990]Abyssal Corruption[/color], otherwise [gold]Exhaust[/gold] this.",
   "INTERLOPER-LEECH.title": "Leech",

@@ -1,10 +1,11 @@
-using Interloper.InterloperCode.Cards.Glyph;
-using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Powers;
 
@@ -16,17 +17,17 @@ public class LastWordsPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Single;
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
     {
-        if(cardPlay.Card.Owner != Owner.Player)
-            return;
-        if (cardPlay.Card.Keywords.Contains(InterloperKeywords.Consumed))
+        if (target == Owner && dealer != Owner && dealer != null)
         {
-            for (int i = 0; i < this.Amount; i++)
+            int amount = (int)result.UnblockedDamage;
+            if (amount > 0)
             {
-                var mouthCard = CombatState.CreateCard<GlyphMouth>(this.Owner.Player);
-                await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, this.Owner.Player);
+                PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, dealer, amount, Owner, null);
             }
         }
+        return Task.CompletedTask;
     }
 }

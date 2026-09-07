@@ -1,8 +1,9 @@
 using BaseLib.Utils;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Glyphs;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -14,14 +15,13 @@ namespace Interloper.InterloperCode.Cards.Rare;
 
 public class Absolute() : InterloperCard(1,
     CardType.Attack, CardRarity.Rare,
-    TargetType.AnyEnemy)
+    TargetType.AnyEnemy), IAfterSequenceActivated
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
 
     private int _currentDamage = 3;
     private int _increasedDamage;
-    private bool _subscribed;
     [SavedProperty]
     public int CurrentDamage
     {
@@ -62,25 +62,9 @@ public class Absolute() : InterloperCard(1,
         await CommonActions.CardAttack(this, cardPlay).Execute(choiceContext);
     }
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
-        CardModel? cardSource)
+    public Task AfterSequenceActivated(PlayerChoiceContext choiceContext, Player player, IReadOnlyList<GlyphModel> glyphs)
     {
-        if (power.GetType() != typeof(GlyphStorage))
-            return;
-
-        if (power.Owner != Owner.Creature)
-            return;
-
-        if (_subscribed)
-            return;
-
-        GlyphStorage.OnGlyphsConsumed += OnGlyphsConsumed;
-        _subscribed = true;
-    }
-
-    private Task OnGlyphsConsumed(Creature owner, PlayerChoiceContext choiceContext)
-    {
-        if (owner != Owner.Creature)
+        if (player != Owner)
             return Task.CompletedTask;
 
         int value = DynamicVars["Increase"].IntValue;

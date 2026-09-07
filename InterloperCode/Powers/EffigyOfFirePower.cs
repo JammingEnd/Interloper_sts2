@@ -19,6 +19,9 @@ public class EffigyOfFirePower() : InterloperPower
     public override async Task AfterCardChangedPiles(
         CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
+        if (card.Owner != Owner.Player)
+            return;
+
         if (oldPileType != PileType.Exhaust)
             return;
 

@@ -19,6 +19,9 @@ public class ReactiveChainsPower() : InterloperPower
     
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        if (cardPlay.Card.Owner != Owner.Player)
+            return;
+
         if (cardPlay.Card is GlyphCard)
         {
             await PowerCmd.Apply<ReactiveChainsStrengthPower>(choiceContext, Owner, this.Amount, Owner, null);

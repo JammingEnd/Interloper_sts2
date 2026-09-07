@@ -1,15 +1,14 @@
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Glyphs;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Powers;
 
-public class WitnessMePower() : InterloperPower
+public class WitnessMePower() : InterloperPower, IAfterSequenceActivated
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -17,31 +16,9 @@ public class WitnessMePower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    private bool _subscribed;
-
-    public override async Task AfterPowerAmountChanged(
-        PlayerChoiceContext choiceContext, PowerModel power,
-        decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterSequenceActivated(PlayerChoiceContext choiceContext, Player player, IReadOnlyList<GlyphModel> glyphs)
     {
-        if (power.GetType() != typeof(WitnessMePower))
-            return;
-
-        if (power.Owner != Owner)
-            return;
-
-        if (amount <= 0)
-            return;
-
-        if (!_subscribed)
-        {
-            GlyphStorage.OnGlyphsConsumed += OnGlyphsConsumed;
-            _subscribed = true;
-        }
-    }
-
-    private async Task OnGlyphsConsumed(Creature owner, PlayerChoiceContext choiceContext)
-    {
-        if (owner != this.Owner)
+        if (player != Owner.Player)
             return;
 
         int voidreach = Owner.GetPowerAmount<VoidReachPower>();

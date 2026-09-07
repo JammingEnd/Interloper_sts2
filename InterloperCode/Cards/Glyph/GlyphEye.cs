@@ -12,13 +12,14 @@ public class GlyphEye() : GlyphCard(0,
     CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
+    public override GlyphType GlyphType => GlyphType.EYE;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<GlyphEyePower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -18,6 +18,9 @@ public class AddedBenefitPower() : InterloperPower
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
+        if (card.Owner != Owner.Player)
+            return;
+
         if (oldPileType == PileType.Exhaust && card.EnergyCost.Canonical >= 2)
         {
             CardModel glyphCard;

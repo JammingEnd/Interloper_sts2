@@ -1,4 +1,4 @@
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Glyphs;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 
 namespace Interloper.InterloperCode.Helpers;
@@ -8,24 +8,23 @@ public static class LocHelper
     public static string GetPossibleOutcomeLoc(Creature creature)
     {
         string baseLoc = "";
-        var power = creature.GetPower<GlyphStorage>();
-        if (power != null)
-        {
-            if (power.HasTwoPowers(out var powers))
-            {
-                int eyes = powers.Count(p => p is GlyphEyePower);
-                int mouths = powers.Count(p => p is GlyphMouthPower);
-                int tails = powers.Count(p => p is GlyphTailPower);
+        var player = creature.Player;
+        if (player == null)
+            return baseLoc;
 
-                string[] outcomes =
-                [
-                    $"[Eye]: {ComboDesc(eyes + 1, mouths, tails)}",
-                    $"[Mouth]: {ComboDesc(eyes, mouths + 1, tails)}",
-                    $"[Tail]: {ComboDesc(eyes, mouths, tails + 1)}"
-                ];
-                baseLoc = string.Join("   ", outcomes);
-            }
-        }
+        var queue = player.PlayerCombatState?.GetGlyphQueue();
+        if (queue == null || queue.Glyphs.Count != 2)
+            return baseLoc;
+
+        var (eyes, mouths, tails) = queue.GetCounts();
+
+        string[] outcomes =
+        [
+            $"[Eye]: {ComboDesc(eyes + 1, mouths, tails)}",
+            $"[Mouth]: {ComboDesc(eyes, mouths + 1, tails)}",
+            $"[Tail]: {ComboDesc(eyes, mouths, tails + 1)}"
+        ];
+        baseLoc = string.Join("\n", outcomes);
 
         return baseLoc;
     }

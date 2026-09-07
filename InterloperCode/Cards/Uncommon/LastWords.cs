@@ -14,14 +14,13 @@ public class LastWords() : InterloperCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<LastWordsPower>(choiceContext, play.Target, 1M, Owner.Creature, this);
+        await PowerCmd.Apply<LastWordsPower>(choiceContext, Owner.Creature, 1M, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
@@ -31,7 +30,7 @@ public class LastWords() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
+            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
         ];
 
 }

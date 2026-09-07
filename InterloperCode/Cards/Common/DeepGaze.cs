@@ -13,6 +13,8 @@ public class DeepGaze() : GlyphCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override GlyphType GlyphType => GlyphType.EYE;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
     protected override async Task OnPlay(

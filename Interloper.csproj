@@ -27,7 +27,7 @@
         </Reference>
     </ItemGroup>
 
-    <ItemGroup Condition="False"> <!--Allows access to originally private/protected members but may (unlikely to) cause errors.-->
+    <ItemGroup> <!--Allows access to originally private/protected members but may (unlikely to) cause errors.-->
         <Publicize Include="sts2" IncludeVirtualMembers="false" IncludeCompilerGeneratedMembers="false"/>
     </ItemGroup>
 
@@ -68,9 +68,11 @@
     <ItemGroup>
         <Folder Include="InterloperCode\Cards\Ancient\" />
         <Folder Include="InterloperCode\Cards\Status\" />
+        <Folder Include="InterloperCode\Glyphs\" />
         <Folder Include="Interloper\images\card_portraits\big\"/>
         <Folder Include="Interloper\images\powers\big\"/>
         <Folder Include="Interloper\images\relics\big\"/>
+        <Folder Include="Interloper\scenes\Glyphs\" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

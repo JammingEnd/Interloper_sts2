@@ -10,13 +10,14 @@ public class GlyphMouth() : GlyphCard(0,
     CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
+    public override GlyphType GlyphType => GlyphType.MOUTH;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<GlyphMouthPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

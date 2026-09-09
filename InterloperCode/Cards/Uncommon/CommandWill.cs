@@ -24,7 +24,7 @@ public class CommandWill() : InterloperCard(2,
         CardPlay play)
     {
         bool killed = (await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext))
             .Results

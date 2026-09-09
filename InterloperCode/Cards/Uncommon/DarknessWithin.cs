@@ -4,16 +4,18 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class DarknessWithin() : CorruptionHandlerCard(5, 1,
+public class DarknessWithin() : CorruptionHandlerCard(5, 2,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(12, ValueProp.Move),
+        new DamageVar(3, ValueProp.Move),
+        new RepeatVar(3),
         new CardsVar(1)
     ];
 
@@ -21,12 +23,13 @@ public class DarknessWithin() : CorruptionHandlerCard(5, 1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(DynamicVars.Repeat.IntValue)
+            .TargetingAllOpponents(CombatState).FromCard(this, play).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Repeat.UpgradeValueBy(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 

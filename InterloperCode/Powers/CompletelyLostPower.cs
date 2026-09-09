@@ -1,21 +1,19 @@
+using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.Rewards;
-using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Powers;
 
-//TODO: new behaviour
+// at the start of each turn, deal amount power x amount of cards in your exhaust pile with the consumed keyword (glyphs excluded) to all enemies
 public class CompletelyLostPower() : InterloperPower
 {
     public override PowerType Type =>
@@ -24,8 +22,21 @@ public class CompletelyLostPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Single;
 
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        
+        if (player != Owner.Player)
+            return;
+
+        var exhaustPile = PileType.Exhaust.GetPile(player);
+        int count = exhaustPile.Cards.Count(c =>
+            c.Keywords.Contains(InterloperKeywords.Consumed) && c is not GlyphCard);
+        if (count <= 0)
+            return;
+
+        var enemies = player.Creature.CombatState?.HittableEnemies;
+        if (enemies == null)
+            return;
+
+        await CreatureCmd.Damage(choiceContext, enemies, this.Amount * count, ValueProp.Unpowered, Owner, null, null);
     }
 }

@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class FeedingOnNothingness() : InterloperCard(1,
+public class FeedingOnNothingness() : InterloperCard(2,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
@@ -45,10 +45,10 @@ public class FeedingOnNothingness() : InterloperCard(1,
     }
     private void BuffFromPlay()
     {
-        this.Multiplier += this.Multiplier;
+        this.Multiplier += 1;
         this.UpdateDamage();
     }
-    private void UpdateDamage() => this.CurrentDamage = 7 * this.Multiplier;
+    private void UpdateDamage() => this.CurrentDamage = 7 * (this.Multiplier + 1);
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -70,6 +70,9 @@ public class FeedingOnNothingness() : InterloperCard(1,
 
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
     {
+        if (card != this)
+            return;
+
         this.BuffFromPlay();
     }
     protected override void AfterDowngraded() => this.UpdateDamage();

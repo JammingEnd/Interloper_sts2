@@ -14,7 +14,7 @@ public class CompletelyLost() : InterloperCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<CompletelyLostPower>("CompletelyLostPower", 1)
+        new PowerVar<CompletelyLostPower>("CompletelyLostPower", 2)
     ];
 
     protected override async Task OnPlay(

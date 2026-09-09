@@ -25,7 +25,7 @@ public class DarkDivinity() : InterloperCard(2,
         CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
     }

@@ -28,7 +28,7 @@ public class CompleteEradication() : CorruptionHandlerCard(40, 3,
         CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
     }

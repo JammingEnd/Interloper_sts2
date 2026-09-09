@@ -35,7 +35,10 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        foreach (var enemy in CombatState.HittableEnemies)
+        {
+            await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        }
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

@@ -32,7 +32,7 @@ public class MinorRift() : InterloperCard(2,
             Creature enemy = card.Owner.RunState.Rng.CombatTargets.NextItem<Creature>((IEnumerable<Creature>) card.CombatState.HittableEnemies);
             if (enemy  != null)
             {
-                await CreatureCmd.Damage(choiceContext, enemy, this.DynamicVars.Damage, this);
+                await CreatureCmd.Damage(choiceContext, enemy, this.DynamicVars.Damage, this, null);
                 await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, enemy,
                     card.DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
             }

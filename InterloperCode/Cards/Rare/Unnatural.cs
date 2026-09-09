@@ -32,7 +32,7 @@ public class Unnatural() : CorruptionHandlerCard(15, 1,
         CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
 

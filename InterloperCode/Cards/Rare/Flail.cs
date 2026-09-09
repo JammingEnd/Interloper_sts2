@@ -29,7 +29,7 @@ public class Flail() : InterloperCard(1,
         await CardPileCmd.AddGeneratedCardToCombat(tailCard, PileType.Hand, Owner);
 
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
     }

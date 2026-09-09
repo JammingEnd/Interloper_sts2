@@ -35,7 +35,7 @@ public class BreakingPoint() : InterloperCard(2,
         await PowerCmd.Apply<BreakingPointPower>(
             choiceContext, play.Target, DynamicVars["BreakingPointPower"].IntValue, Owner.Creature, this);
         decimal damage = Math.Abs(play.Target.GetPowerAmount<StrengthPower>() * 2);
-        await CreatureCmd.Damage(choiceContext, play.Target, damage, ValueProp.Move, this);
+        await CreatureCmd.Damage(choiceContext, play.Target, damage, ValueProp.Move, Owner.Creature, this, null);
         
     }
 

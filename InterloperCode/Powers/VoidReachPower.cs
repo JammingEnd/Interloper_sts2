@@ -2,6 +2,7 @@ using Interloper.InterloperCode.Cards.Basic;
 using Interloper.InterloperCode.Cards.Common;
 using Interloper.InterloperCode.Cards.Uncommon;
 using Interloper.InterloperCode.Helpers;
+using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -11,7 +12,9 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 
@@ -101,6 +104,8 @@ public class VoidReachPower() : InterloperPower
                 MainFile.Logger.Info($"[VoidReach] Not enough ({this.Amount} < {threshold}) for {oldestCard.Title} (cost {cardCost})");
                 break;
             }
+            if(oldestCard.Pool is ColorlessCardPool)
+                oldestCard.AddKeyword(InterloperKeywords.Consumed);
             if (oldestCard.GetType() == typeof(StrikeInterloper))
             {
                 bool upgraded = oldestCard.IsUpgraded;
@@ -120,6 +125,7 @@ public class VoidReachPower() : InterloperPower
             }
             MainFile.Logger.Info($"[VoidReach] Pulling {oldestCard.Title}, consuming {threshold} VoidReach");
             oldestCard.EnergyCost.AddUntilPlayed(-1);
+            
             Action? handler = null;
             handler = () =>
             {
@@ -140,4 +146,8 @@ public class VoidReachPower() : InterloperPower
             await PowerCmd.ModifyAmount(choiceContext, this, -threshold, player.Creature, null);
         }
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
+    ];
 }

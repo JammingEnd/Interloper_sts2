@@ -27,6 +27,6 @@ public class WitnessMePower() : InterloperPower, IAfterSequenceActivated
         MainFile.Logger.Info("triggering WITHNESS ME");
         await CreatureCmd.Damage(choiceContext,
                 CombatState!.HittableEnemies, this.Amount * calc,
-                ValueProp.Unpowered, Owner, null);
+                ValueProp.Unpowered, Owner, null, null);
     }
 }

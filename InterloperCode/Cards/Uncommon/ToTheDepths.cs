@@ -32,7 +32,7 @@ public class ToTheDepths() : InterloperCard(0,
         
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(card.ResolveEnergyXValue())
-            .FromCard(card).Targeting(play.Target)
+            .FromCard(card, play).Targeting(play.Target)
             .Execute(choiceContext);
         if(energyX < 3)
             return;

@@ -28,7 +28,7 @@ public class WithMe() : InterloperCard(1,
         CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitCount(3)
             .Execute(choiceContext);
@@ -36,7 +36,6 @@ public class WithMe() : InterloperCard(1,
 
     protected override async void AfterMovedFromExhaust(CardModel card)
     {
-        //TODO: prolly change this to random card since the ctx causes issues when picking.
         var exhaustPile = PileType.Exhaust.GetPile(Owner);
         var sets = exhaustPile.GetOldestPlayableCards();
         if (sets.Length > 0)

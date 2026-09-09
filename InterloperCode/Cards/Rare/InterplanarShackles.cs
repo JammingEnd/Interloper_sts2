@@ -1,6 +1,7 @@
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Helpers;
 using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -10,9 +11,10 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class CHAOS() : InterloperCard(3,
+// a random enemy gains the InterplanarShacklesPower debuff, which, when on the enemy causes each time abyssalcorruption is consumed to deal 7 (amount of stacks) damage
+public class InterplanarShackles() : InterloperCard(2,
     CardType.Skill, CardRarity.Rare,
-    TargetType.Self)
+    TargetType.RandomEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -21,31 +23,16 @@ public class CHAOS() : InterloperCard(3,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var exhaustPile = PileType.Exhaust.GetPile(Owner);
-        var exhaustCards = exhaustPile.GetOldestPlayableCards(includeConsumed: true);
-
-        var nonExhaustCards = new List<CardModel>();
-        nonExhaustCards.AddRange(PileType.Hand.GetPile(Owner).Cards);
-        nonExhaustCards.AddRange(PileType.Draw.GetPile(Owner).Cards);
-        nonExhaustCards.AddRange(PileType.Discard.GetPile(Owner).Cards);
-
-        foreach (var card in exhaustCards)
-            await CardPileCmd.Add(card, PileType.Hand);
-
-        foreach (var card in nonExhaustCards)
-        {
-            CardCmd.ApplyKeyword(card, InterloperKeywords.Consumed);
-            await CardCmd.Exhaust(choiceContext, card);
-        }
+        await PowerCmd.Apply<InterplanarShacklesPower>(choiceContext, play.Target, 1, Owner.Creature, this);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
+            HoverTipFactory.FromPower<InterplanarShacklesPower>()
         ];
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        this.AddKeyword(CardKeyword.Innate);
     }
 }

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.HoverTips;
+using Interloper.InterloperCode.Keywords;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -41,7 +42,8 @@ public class LookBeyond() : InterloperCard(0,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<VoidReachPower>()
+            HoverTipFactory.FromPower<VoidReachPower>(),
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
 }

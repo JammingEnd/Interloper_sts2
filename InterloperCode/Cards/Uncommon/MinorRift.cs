@@ -19,7 +19,7 @@ public class MinorRift() : InterloperCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new RepeatVar(4),
         new DamageVar(5, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 2)
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 4)
     ];
 
     protected override async Task OnPlay(

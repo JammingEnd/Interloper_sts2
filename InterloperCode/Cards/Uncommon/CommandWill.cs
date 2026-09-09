@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
+using Interloper.InterloperCode.Keywords;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -47,7 +48,8 @@ public class CommandWill() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<VoidReachPower>()
+            HoverTipFactory.FromPower<VoidReachPower>(),
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];
 
 }

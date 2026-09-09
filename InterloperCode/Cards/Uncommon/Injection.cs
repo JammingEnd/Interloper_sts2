@@ -1,8 +1,10 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Cards.Glyph;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -14,7 +16,7 @@ public class Injection() : CorruptionHandlerCard(10,1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(12, ValueProp.Move),
+        new DamageVar(8, ValueProp.Move),
         new PowerVar<WeakPower>("WeakPower", 2),
         new PowerVar<VulnerablePower>("VulnerablePower", 2)
     ];
@@ -40,4 +42,9 @@ public class Injection() : CorruptionHandlerCard(10,1,
         await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, DynamicVars["VulnerablePower"].IntValue,
             Owner.Creature, this);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        base.ExtraHoverTips.Concat(
+        [
+            HoverTipFactory.FromPower<VulnerablePower>(),
+        ]);
 }

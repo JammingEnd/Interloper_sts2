@@ -103,21 +103,27 @@ public static class GlyphCmd
 
     private static async Task ThreeMouths(PlayerChoiceContext choiceContext, Player player)
     {
-        await CreatureCmd.Heal(player.Creature, 5, true);
+        await CreatureCmd.Heal(player.Creature, 3, true);
     }
 
     private static async Task ThreeTails(PlayerChoiceContext choiceContext, Player player)
     {
+        // deal damage based on the amount of powers on the player. 8 * amount of different powers. then that damage is distributed over the hittable enemies
         var combatState = player.Creature.CombatState;
         if (combatState == null)
             return;
 
-        Creature highestHp = combatState.HittableEnemies.MaxBy(c => c.CurrentHp);
-        if (highestHp != null)
+        int powerCount = player.Creature.Powers.Select(p => p.GetType()).Distinct().Count();
+        decimal total = 8m * powerCount;
+
+        var enemies = combatState.HittableEnemies.ToArray();
+        if (enemies.Length == 0)
+            return;
+
+        decimal perEnemy = total / enemies.Length;
+        foreach (var enemy in enemies)
         {
-            var hpPercent = (decimal)highestHp.MaxHp * 0.25m;
-            DamageVar newDamage = new DamageVar(hpPercent, ValueProp.Unblockable);
-            await CreatureCmd.Damage(choiceContext, highestHp, newDamage, player.Creature);
+            await CreatureCmd.Damage(choiceContext, enemy, perEnemy, ValueProp.Unpowered, player.Creature, null, null);
         }
     }
 
@@ -147,27 +153,7 @@ public static class GlyphCmd
 
     private static async Task OneEyeTwoMouths(PlayerChoiceContext choiceContext, Player player)
     {
-        var pile = PileType.Draw.GetPile(player);
-        var statusses = pile.Cards.Where(c => c.Type == CardType.Status).ToArray();
-        if (statusses.Length != 0)
-        {
-            foreach (var status in statusses)
-            {
-                await CardCmd.Exhaust(choiceContext, status);
-            }
-
-            IEnumerable<CardModel> all = [
-                .. PileType.Discard.GetPile(player).Cards,
-                .. PileType.Draw.GetPile(player).Cards,
-                .. PileType.Hand.GetPile(player).Cards];
-
-            var unUpgraded = all.Where(c => c.IsUpgraded == false && c.GetType() != typeof(GlyphCard)).ToArray();
-            for (int i = 0; i < statusses.Length; i++)
-            {
-                var selected = unUpgraded[player.RunState.Rng.CombatCardGeneration.NextInt(unUpgraded.Length)];
-                CardCmd.Upgrade(selected);
-            }
-        }
+        await PowerCmd.Apply<VigorPower>(choiceContext, player.Creature, 5, player.Creature, null);
     }
 
     private static async Task TwoMouthsOneTail(PlayerChoiceContext choiceContext, Player player)

@@ -1,4 +1,5 @@
 ﻿using BaseLib.Abstracts;
+using BaseLib.Patches.UI;
 using BaseLib.Utils.NodeFactories;
 using Interloper.InterloperCode.Extensions;
 using Godot;
@@ -10,6 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
 
 namespace Interloper.InterloperCode.Character;
+
 public class Interloper : PlaceholderCharacterModel
 {
     public const string CharacterId = "Interloper";
@@ -74,4 +76,10 @@ public class Interloper : PlaceholderCharacterModel
         $"res://Interloper/images/interloper/hands/multiplayer_hand_interloper_paper.png";
     public override string CustomArmScissorsTexturePath =>
         $"res://Interloper/images/interloper/hands//multiplayer_hand_interloper_scissor.png";
+
+    public override RelicIconData? CustomYummyCookie => new RelicIconData(
+        "cookie.png".BigRelicImagePath(),
+        "cookie.png".RelicImagePath(),
+        "cookie_outline.png".RelicImagePath()
+    );
 }

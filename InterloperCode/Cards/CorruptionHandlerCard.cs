@@ -2,6 +2,7 @@ using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards;
 
@@ -42,5 +43,9 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
             await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, cardPlay.Target, consumed * 0.5m, Owner.Creature, this);
         }
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+    ];
     
 }

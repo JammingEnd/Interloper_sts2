@@ -42,9 +42,9 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
         await CardPileCmd.AddGeneratedCardToCombat(tailCard, PileType.Hand, Owner);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        base.ExtraHoverTips.Concat(
         [
-            HoverTipFactory.FromCard<GlyphTail>(),
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
-        ];
+            HoverTipFactory.FromCard<GlyphTail>()
+        ]);
 
 }

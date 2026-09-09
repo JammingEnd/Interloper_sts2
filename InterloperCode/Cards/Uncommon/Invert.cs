@@ -34,8 +34,4 @@ public class Invert() : CorruptionHandlerCard(10 ,0,
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-    [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
-    ];
 }

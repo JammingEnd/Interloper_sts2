@@ -47,9 +47,5 @@ public class Leech() : CorruptionHandlerCard(15, 2,
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-    [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
-    ];
-    
+
 }

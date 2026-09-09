@@ -14,7 +14,7 @@ public class EffigyOfFirePower() : InterloperPower
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.Counter;
+        PowerStackType.Single;
 
     public override async Task AfterCardChangedPiles(
         CardModel card, PileType oldPileType, AbstractModel? clonedBy)

@@ -18,8 +18,8 @@ public class RippleEffect() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(8, ValueProp.Move),
-        new PowerVar<RippleEffectPower>("RippleEffectPower",2)
+        new BlockVar(7, ValueProp.Move),
+        new PowerVar<RippleEffectPower>("RippleEffectPower",1)
     ];
     public override bool GainsBlock => true;
 

@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class EffigyOfFire() : CorruptionHandlerCard(10, 2,
+public class EffigyOfFire() : CorruptionHandlerCard(20, 2,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {

@@ -10,7 +10,7 @@ namespace Interloper.InterloperCode.Potions;
 
 public sealed class EssenceOfSpitePotion : InterloperPotion
 {
-    public override PotionRarity Rarity => PotionRarity.Rare;
+    public override PotionRarity Rarity => PotionRarity.Uncommon;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
 

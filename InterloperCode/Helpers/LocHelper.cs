@@ -32,14 +32,14 @@ public static class LocHelper
     private static string ComboDesc(int eyes, int mouths, int tails) => (eyes, mouths, tails) switch
     {
         (3, 0, 0) => "Draw 3 cards",
-        (0, 3, 0) => "Heal 5",
-        (0, 0, 3) => "Deal percentage damage",
+        (0, 3, 0) => "Heal 3",
+        (0, 0, 3) => "Deal 8 damage per distinct power you have, split among enemies",
         (2, 1, 0) => "Add a card to your hand",
         (2, 0, 1) => "Gain 15 Block",
-        (1, 2, 0) => "Exhaust status cards and upgrade cards",
-        (0, 2, 1) => "Gain 3 Strength",
+        (1, 2, 0) => "Gain 5 Vigor",
+        (0, 2, 1) => "Gain 2 Strength",
         (1, 0, 2) => "Apply One-Two Punch",
-        (0, 1, 2) => "Gain 2 Energy and 2 Dexterity",
+        (0, 1, 2) => "2 Dexterity",
         (1, 1, 1) => "Shuffle your draw pile",
         _ => ""
     };

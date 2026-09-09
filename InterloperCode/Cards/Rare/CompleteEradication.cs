@@ -41,8 +41,4 @@ public class CompleteEradication() : CorruptionHandlerCard(40, 3,
     {
         EnergyCost.UpgradeBy(-1);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-    [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
-    ];
 }

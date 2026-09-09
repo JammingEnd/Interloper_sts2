@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.HoverTips;
+using Interloper.InterloperCode.Keywords;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -37,9 +38,10 @@ public class DarkToLight() : CorruptionHandlerCard(20, 1,
         DynamicVars["VoidReachPower"].UpgradeValueBy(2m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        base.ExtraHoverTips.Concat(
         [
             HoverTipFactory.FromPower<VoidReachPower>(),
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
-        ];
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
+        ]);
 
 }

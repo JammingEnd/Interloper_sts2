@@ -5,9 +5,11 @@ using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using Interloper.InterloperCode.Keywords;
 
 namespace Interloper.InterloperCode.Cards.Common;
 // attack twice for 3, apply weak, exhaust
@@ -35,7 +37,13 @@ public class SoulExchange() : InterloperCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["WeakPower"].UpgradeValueBy(1m);
         DynamicVars["VoidReachPower"].UpgradeValueBy(1m);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        base.ExtraHoverTips.Concat(
+        [
+            HoverTipFactory.FromPower<VoidReachPower>(),
+            HoverTipFactory.FromKeyword(InterloperKeywords.Consumed),
+            HoverTipFactory.FromPower<WeakPower>(),
+        ]);
 }

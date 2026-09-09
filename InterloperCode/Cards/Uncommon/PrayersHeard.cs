@@ -41,10 +41,11 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
         await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, Owner);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        base.ExtraHoverTips.Concat(
         [
             HoverTipFactory.FromPower<StrengthPower>(),
             HoverTipFactory.FromCard<GlyphEye>(false),
             HoverTipFactory.FromCard<GlyphMouth>(false)
-        ];
+        ]);
 
 }

@@ -18,13 +18,17 @@ public class LeftoverPowerPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public override async Task AfterAutoPostPlayPhaseEntered(PlayerChoiceContext choiceContext, Player player)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        var voidAmount = player.Creature.GetPowerAmount<VoidReachPower>();
+        if(side != CombatSide.Player)
+            return;
+        var voidAmount = Owner.GetPowerAmount<VoidReachPower>();
         if (voidAmount > 1)
         {
             await CreatureCmd.Damage(choiceContext, this.CombatState!.HittableEnemies, this.Amount, ValueProp.Unpowered,
                 Owner);
         }
+        
     }
+
 }

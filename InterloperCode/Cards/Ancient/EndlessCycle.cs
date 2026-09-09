@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using Interloper.InterloperCode.Keywords;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Ancient;
 
@@ -25,4 +27,11 @@ public class EndlessCycle() : CorruptionHandlerCard(20, 1, CardType.Skill, CardR
         EnergyCost.UpgradeBy(-1);
         DynamicVars["VoidReachPowerPerTurn"].UpgradeValueBy(1m);
     }
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<VoidReachPower>(),
+        HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
+    ];
+
 }

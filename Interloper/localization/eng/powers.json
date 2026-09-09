@@ -42,7 +42,7 @@
   "INTERLOPER-LAST_WORDS_POWER.smartDescription": "Whenever you take unblocked damage, apply that much [color=#952990]Abyssal Corruption[/color] to the attacker.",
   "INTERLOPER-LAST_WORDS_POWER.title": "Last Words",
   "INTERLOPER-LEFTOVER_POWER_POWER.description": "At the end of your turn, if you have more than 1 [gold]Void Reach[/gold], deal damage 10 to ALL enemies.",
-  "INTERLOPER-LEFTOVER_POWER_POWER.smartDescription": "After playing cards, if you have more than 1 [gold]Void Reach[/gold], deal {Amount} damage to ALL enemies.",
+  "INTERLOPER-LEFTOVER_POWER_POWER.smartDescription": "At the end of your turn, if you have more than 1 [gold]Void Reach[/gold], deal {Amount} damage to ALL enemies.",
   "INTERLOPER-LEFTOVER_POWER_POWER.title": "Leftover Power",
   "INTERLOPER-LINKED_TRADE_POWER.description": "Whenever you apply [gold]Abyssal Corruption[/gold] to an enemy, gain [gold]Void Reach[/gold] for every 10 corruption applied.",
   "INTERLOPER-LINKED_TRADE_POWER.smartDescription": "Whenever you apply [gold]Abyssal Corruption[/gold] to an enemy, gain {Amount} [gold]Void Reach[/gold] for every 10 corruption applied.",

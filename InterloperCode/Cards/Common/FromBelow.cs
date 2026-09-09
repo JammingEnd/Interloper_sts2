@@ -35,13 +35,6 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        foreach (var enemy in CombatState.HittableEnemies)
-        {
-            await CommonActions.CardAttack(this, play).Execute(choiceContext);
-        }
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).TargetingAllOpponents(CombatState).FromCard(this, play).Execute(choiceContext);
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-    [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
-    ];
 }

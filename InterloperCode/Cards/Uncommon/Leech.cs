@@ -20,20 +20,20 @@ public class Leech() : CorruptionHandlerCard(15, 2,
     ];
 
     private bool isFree = false;
-
+    
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play, DynamicVars.Repeat.IntValue).Execute(choiceContext);
-
+        this.ConsumptionOverride = 15;
         bool metThreshold = play.Target.GetPowerAmount<AbyssalCorruptionPower>() >= 15;
         if (!metThreshold)
         {
-            await CardPileCmd.Add(this, PileType.Exhaust);
+            await CardCmd.Exhaust(choiceContext, this);
         }
     }
-
+    
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
         this.EnergyCost.SetThisTurn(0);

@@ -11,11 +11,11 @@ namespace Interloper.InterloperCode.Cards.Uncommon;
 
 public class Engulf() : InterloperCard(2,
     CardType.Attack, CardRarity.Uncommon,
-    TargetType.AnyEnemy)
+    TargetType.AllEnemies)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(16, ValueProp.Move),
+        new DamageVar(8, ValueProp.Move),
     ];
 
     protected override async Task OnPlay(

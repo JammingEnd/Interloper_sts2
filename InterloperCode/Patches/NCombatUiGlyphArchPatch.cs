@@ -4,6 +4,7 @@ using Interloper.InterloperCode.Field;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using InterloperCharacter = Interloper.InterloperCode.Character.Interloper;
 
 namespace Interloper.InterloperCode.Patches;
 
@@ -15,6 +16,9 @@ internal class NCombatUiGlyphArchPatch
     {
         var me = LocalContext.GetMe(state);
         if (me == null)
+            return;
+
+        if (me.Character is not InterloperCharacter)
             return;
 
         var arch = GlyphNode.NGlyphArch[__instance];

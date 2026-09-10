@@ -55,7 +55,7 @@ public class CombatVarTracker() : CustomSingletonModel(HookType.Combat)
     {
         if (power.GetType() == typeof(AbyssalCorruptionPower))
         {
-            totalCorruptionAppliedInTurn[applier] += amount;
+            totalCorruptionAppliedInTurn[applier] += 1;
         }
     }
 }

@@ -14,7 +14,7 @@ public class DarkDivinity() : InterloperCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(6),
-        new ExtraDamageVar(3),
+        new ExtraDamageVar(2),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
             (card, _) => (Decimal)PileType.Exhaust.GetPile(card.Owner).Cards
                 .Count(c => c is GlyphEye || c is GlyphMouth || c is GlyphTail))

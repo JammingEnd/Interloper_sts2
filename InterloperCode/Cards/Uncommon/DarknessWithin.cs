@@ -23,8 +23,10 @@ public class DarknessWithin() : CorruptionHandlerCard(5, 2,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(DynamicVars.Repeat.IntValue)
-            .TargetingAllOpponents(CombatState).FromCard(this, play).Execute(choiceContext);
+        foreach (var enemy in CombatState.HittableEnemies)
+        {
+            await CommonActions.CardAttack(this, enemy, DynamicVars.Repeat.IntValue).Execute(choiceContext);
+        }
     }
 
     protected override void OnUpgrade()

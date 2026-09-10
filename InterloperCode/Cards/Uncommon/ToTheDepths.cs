@@ -14,8 +14,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
 public class ToTheDepths() : InterloperCard(0,
-    CardType.Skill, CardRarity.Uncommon,
-    TargetType.Self)
+    CardType.Attack, CardRarity.Uncommon,
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6, ValueProp.Move),
@@ -31,7 +31,7 @@ public class ToTheDepths() : InterloperCard(0,
         if (energyX <= 0) return;
         
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .WithHitCount(card.ResolveEnergyXValue())
+            .WithHitCount(energyX)
             .FromCard(card, play).Targeting(play.Target)
             .Execute(choiceContext);
         if(energyX < 3)

@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
 public class ArmorOfSlumber() : InterloperCard(1,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     public override bool GainsBlock => true;

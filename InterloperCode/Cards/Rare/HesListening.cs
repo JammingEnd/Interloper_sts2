@@ -1,4 +1,5 @@
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,7 +16,7 @@ public class HesListening() : InterloperCard(0,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
-
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)

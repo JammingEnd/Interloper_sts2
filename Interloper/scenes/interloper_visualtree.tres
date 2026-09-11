@@ -1,0 +1,48 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=12 format=3 uid="uid://ye1137gu4bty"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rb55e"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_koype"]
+animation = &"cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uamge"]
+animation = &"cast_2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c27xp"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tbs8u"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u27da"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7d6uu"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p472l"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3f1yy"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_phmqn"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hid6s"]
+switch_mode = 2
+advance_mode = 2
+
+[resource]
+states/End/position = Vector2(899, 100)
+states/Start/position = Vector2(196, 100)
+states/attack/node = SubResource("AnimationNodeAnimation_rb55e")
+states/attack/position = Vector2(480, 100)
+states/cast/node = SubResource("AnimationNodeAnimation_koype")
+states/cast/position = Vector2(392, -11)
+states/cast_2/node = SubResource("AnimationNodeAnimation_uamge")
+states/cast_2/position = Vector2(240, -11)
+states/idle/node = SubResource("AnimationNodeAnimation_c27xp")
+states/idle/position = Vector2(318, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_tbs8u"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_u27da"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_7d6uu"), "idle", "cast", SubResource("AnimationNodeStateMachineTransition_p472l"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_3f1yy"), "idle", "cast_2", SubResource("AnimationNodeStateMachineTransition_phmqn"), "cast_2", "idle", SubResource("AnimationNodeStateMachineTransition_hid6s")]
+graph_offset = Vector2(-262, -92)

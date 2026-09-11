@@ -20,7 +20,7 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
         {
             return;
         }
-
+        
         if (Owner.Creature.GetPowerAmount<EngulfPower>() > 0)
         {
             await CorruptionConsumptionEffect(choiceContext, cardPlay);
@@ -29,6 +29,7 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
         else if (cardPlay.Target.GetPowerAmount<AbyssalCorruptionPower>() >= corruptionThreshold)
         {
             await CorruptionConsumptionEffect(choiceContext, cardPlay);
+            await CreatureCmd.TriggerAnim(base.Owner.Creature, "cast_2", 0);
             int consumed = -corruptionThreshold;
             if (this.ConsumptionOverride != 0)
             {

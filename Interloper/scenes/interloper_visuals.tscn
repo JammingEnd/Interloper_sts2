@@ -1,7 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://kfbecv1bv88a"]
+[gd_scene load_steps=13 format=3 uid="uid://kfbecv1bv88a"]
 
 [ext_resource type="Texture2D" uid="uid://de1g5h0j81do8" path="res://Interloper/images/interloper/interloper_attack.png" id="1_lo51d"]
 [ext_resource type="Texture2D" uid="uid://cugwrorn0tml1" path="res://Interloper/images/interloper/Interloper.png" id="2_ilr08"]
+[ext_resource type="Texture2D" uid="uid://bjf3wf53mqrfs" path="res://Interloper/images/interloper/Interloper_cast.png" id="2_ti736"]
+[ext_resource type="Texture2D" uid="uid://cw1fu748qpybj" path="res://Interloper/images/interloper/Interloper_cast_2.png" id="3_metw2"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://ye1137gu4bty" path="res://Interloper/scenes/interloper_visualtree.tres" id="5_metw2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ti736"]
 animations = [{
@@ -15,42 +18,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_ti736")
+}],
+"loop": true,
+"name": &"cast",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_metw2")
+}],
+"loop": true,
+"name": &"cast_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_ilr08")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }]
-
-[sub_resource type="Animation" id="Animation_lo51d"]
-resource_name = "idle"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/AnimatedSprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/AnimatedSprite")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.06666667),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"", 1.0, false],
-"method": &"play"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_ilr08"]
 length = 0.001
@@ -97,37 +86,104 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_v7j5w"]
+resource_name = "cast"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"cast"]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/AnimatedSprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"", 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_x2okk"]
+resource_name = "cast_2"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"cast_2"]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/AnimatedSprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"", 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lo51d"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/AnimatedSprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"", 1.0, false],
+"method": &"play"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v7j5w"]
 _data = {
 &"RESET": SubResource("Animation_ilr08"),
 &"attack": SubResource("Animation_ti736"),
+&"cast": SubResource("Animation_v7j5w"),
+&"cast_2": SubResource("Animation_x2okk"),
 &"idle": SubResource("Animation_lo51d")
 }
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qd7qw"]
-animation = &"attack"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vmn7u"]
-animation = &"idle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_63al6"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vienu"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qsbw0"]
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_2q782"]
-states/End/position = Vector2(904, 168)
-states/Start/position = Vector2(203, 212)
-states/attack/node = SubResource("AnimationNodeAnimation_qd7qw")
-states/attack/position = Vector2(401, 107)
-states/idle/node = SubResource("AnimationNodeAnimation_vmn7u")
-states/idle/position = Vector2(302, 212)
-transitions = ["attack", "idle", SubResource("AnimationNodeStateMachineTransition_63al6"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_vienu"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_qsbw0")]
-graph_offset = Vector2(-265.3825, 26)
 
 [node name="Frigil" type="Node2D"]
 
@@ -149,7 +205,7 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="Visuals"]
 root_node = NodePath("%Visuals/..")
-tree_root = SubResource("AnimationNodeStateMachine_2q782")
+tree_root = ExtResource("5_metw2")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="Bounds" type="Control" parent="."]

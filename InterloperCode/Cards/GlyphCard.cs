@@ -28,7 +28,7 @@ public abstract class GlyphCard(int cost, CardType type, CardRarity rarity, Targ
     {
         if (cardPlay.Card != this)
             return;
-
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "cast", 0);
         switch (GlyphType)
         {
             case GlyphType.EYE:

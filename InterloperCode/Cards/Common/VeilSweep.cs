@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -18,7 +19,7 @@ public class VeilSweep() : InterloperCard(2,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(16, ValueProp.Move),
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 12),
         new CardsVar(2)
     ];
 
@@ -26,7 +27,7 @@ public class VeilSweep() : InterloperCard(2,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

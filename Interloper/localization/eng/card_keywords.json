@@ -1,6 +1,8 @@
 {
   "INTERLOPER-CONSUMED.description": "[gold]Void reach[/gold] cannot bring this card back from the exhaust pile",
   "INTERLOPER-CONSUMED.title": "Consumed",
-  "INTERLOPER-SEQUENCE.description": "Whenever 3 [gold]Glyph[/gold] cards are played, a sequence is fired.",
-  "INTERLOPER-SEQUENCE.title": "Glyph Sequence"
+  "INTERLOPER-CORRUPTIVE.description": "The",
+  "INTERLOPER-CORRUPTIVE.title": "Corruptive",
+  "INTERLOPER-SEQUENCE.description": "Playing 3 [gold]Glyph[/gold] cards activates a [gold]Glyph Sequence[/gold].",
+  "INTERLOPER-SEQUENCE.title": "Sequence"
 }

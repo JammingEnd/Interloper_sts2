@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Common;
@@ -16,6 +17,7 @@ public class FoulPlay() : CorruptionHandlerCard(10, 1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(6, ValueProp.Move),
+        new PowerVar<VulnerablePower>("FoulPlayVulnerable", 1m),
         new CardsVar(1)
     ];
 

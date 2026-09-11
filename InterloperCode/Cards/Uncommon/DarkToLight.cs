@@ -15,14 +15,13 @@ public class DarkToLight() : CorruptionHandlerCard(20, 1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VoidReachPower>("VoidReachPower", 4),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, 5, Owner.Creature, this);
+       
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

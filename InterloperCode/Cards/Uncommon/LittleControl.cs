@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class LittleControl() : InterloperCard(2,
+public class LittleControl() : InterloperCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {

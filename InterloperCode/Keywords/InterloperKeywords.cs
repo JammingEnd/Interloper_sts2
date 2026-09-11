@@ -10,7 +10,11 @@ public static class InterloperKeywords
     [KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Consumed;
     
-    [CustomEnum("Sequence")] 
-    [KeywordProperties(AutoKeywordPosition.After)]
+    [CustomEnum("Corruptive")] 
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Corruptive;
+
+    [CustomEnum("Sequence")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Sequence;
 }

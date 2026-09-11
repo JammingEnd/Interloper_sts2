@@ -1,5 +1,8 @@
+using BaseLib.Config;
 using Godot;
 using HarmonyLib;
+using Interloper.InterloperCode.Telemetry;
+using Interloper.InterloperCode.Utils;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace Interloper.InterloperCode;
@@ -17,6 +20,9 @@ public partial class MainFile : Node
     {
         //If you want to use scripts defined in your mod for Godot scenes, uncomment the following line.
         //Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
+
+        ModConfigRegistry.Register(ModId, new InterloperConfig());
+        TelemetrySetup.Initialize();
 
         Harmony harmony = new(ModId);
 

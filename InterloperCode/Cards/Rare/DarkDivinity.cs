@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
@@ -34,4 +35,10 @@ public class DarkDivinity() : InterloperCard(2,
     {
         DynamicVars.ExtraDamage.UpgradeValueBy(5m);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromCard<GlyphEye>(false),
+        HoverTipFactory.FromCard<GlyphMouth>(false),
+        HoverTipFactory.FromCard<GlyphTail>(false)
+    ];
 }

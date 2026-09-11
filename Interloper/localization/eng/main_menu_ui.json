@@ -1,0 +1,6 @@
+{
+  "INTERLOPER-TELEMETRY_FTUE_PROMPT.header": "Anonymous Telemetry",
+  "INTERLOPER-TELEMETRY_FTUE_PROMPT.body": "This mod collects anonymous run and card data to help balance the Interloper. No personal information is sent. You can change this at any time in the mod configuration.\n\nEnable telemetry?",
+  "INTERLOPER-TELEMETRY_FTUE_MESSAGE.header": "Telemetry {Enabled:enabled|disabled}",
+  "INTERLOPER-TELEMETRY_FTUE_MESSAGE.body": "You can change this anytime in the mod configuration."
+}

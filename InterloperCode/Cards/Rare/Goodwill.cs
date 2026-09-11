@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.HoverTips;
+using Interloper.InterloperCode.Cards.Glyph;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
@@ -45,4 +47,10 @@ public class Goodwill() : InterloperCard(0,
     {
         AddKeyword(CardKeyword.Retain);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromCard<GlyphEye>(false),
+        HoverTipFactory.FromCard<GlyphMouth>(false),
+        HoverTipFactory.FromCard<GlyphTail>(false)
+    ];
 }

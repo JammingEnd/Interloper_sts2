@@ -32,7 +32,8 @@ public class VeilSweep() : InterloperCard(2,
 
     protected override void OnUpgrade()
     {
-            DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)

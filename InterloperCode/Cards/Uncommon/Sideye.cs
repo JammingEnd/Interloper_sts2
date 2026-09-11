@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -17,7 +18,7 @@ public class Sideye() : InterloperCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar("SideyeIni", 7, ValueProp.Move),
+        new PowerVar<WeakPower>("SideyeWeak", 1),
         new BlockVar("SideyeMoved", 15, ValueProp.Move)
     ];
 
@@ -30,8 +31,8 @@ public class Sideye() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SideyeIni"].UpgradeValueBy(3m);
-        DynamicVars["SideyeMoved"].UpgradeValueBy(5m);
+        DynamicVars["SideyeWeak"].UpgradeValueBy(1m);
+        DynamicVars["SideyeMoved"].UpgradeValueBy(3m);
     }
 
     protected override async void AfterMovedFromExhaust(CardModel card)

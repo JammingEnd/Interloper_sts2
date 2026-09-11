@@ -37,8 +37,7 @@ public class LookBeyond() : InterloperCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
-        DynamicVars["VoidReachPower"].UpgradeValueBy(1m);
+        DynamicVars["VoidReachPower"].UpgradeValueBy(2m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

@@ -1,3 +1,4 @@
+using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -26,6 +27,7 @@ public class EffigyOfFirePower() : InterloperPower
             return;
 
         var duplicate = CombatState.CreateCard(card.CanonicalInstance, Owner.Player);
+        duplicate.AddKeyword(InterloperKeywords.Consumed);
         await CardPileCmd.AddGeneratedCardToCombat(duplicate, PileType.Hand, Owner.Player);
 
         await PowerCmd.Remove(this);

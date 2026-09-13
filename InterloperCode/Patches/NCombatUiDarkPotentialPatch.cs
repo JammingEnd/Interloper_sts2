@@ -10,7 +10,10 @@ using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using MegaCrit.Sts2.Core.Runs;
 using InterloperCharacter = Interloper.InterloperCode.Character.Interloper;
 
@@ -63,11 +66,26 @@ internal class NCombatUiDarkPotentialPatch
         {
             Name = "DarkPotentialClearButton",
             Text = "X",
-            Size = new Vector2(44f, 44f),
-            Position = new Vector2(146f, 40f)
+            Size = new Vector2(54f, 54f),
+            // Centered on the bar (bar center = Position + BarSize/2).
+            Position = new Vector2(47f, -64f)
         };
         __instance._energyCounter.AddChild(clearButton);
         clearButton.Pressed += () => RequestClear(me);
+        AttachClearHover(clearButton);
+    }
+
+    private static void AttachClearHover(Button button)
+    {
+        button.MouseEntered += () =>
+        {
+            var loc = new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.clearButton");
+            var hoverTip = new HoverTip(loc);
+            var set = NHoverTipSet.CreateAndShow(button, hoverTip, HoverTip.GetHoverTipAlignment(button));
+            set?.SetExtraFollowOffset(new Vector2(20f, -20f));
+            set?.SetFollowOwner();
+        };
+        button.MouseExited += () => NHoverTipSet.Remove(button);
     }
 
     private static void RequestClear(Player player)

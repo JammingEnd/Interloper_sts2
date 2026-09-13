@@ -12,9 +12,9 @@ namespace Interloper.InterloperCode.Nodes;
 
 public partial class NDarkPotentialBar : Control
 {
-    private static readonly Vector2 BarSize = new(176f, 116f);
+    private static readonly Vector2 BarSize = new(196f, 126f);
 
-    private const float ArcRadius = 50f;
+    private const float ArcRadius = 60f;
     private const float ArcWidth = 14f;
     private const int ArcPointCount = 96;
 
@@ -22,7 +22,7 @@ public partial class NDarkPotentialBar : Control
     private const float ArcSweep = Mathf.Pi * 3f / 2f;
     private const float ArcEndAngle = ArcStartAngle + ArcSweep;
 
-    private const float MarkerSize = 20f;
+    private const float MarkerSize = 30f;
     private const float MarkerInset = 17f;
     private const float MarkerOutset = 5f;
 

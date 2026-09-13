@@ -18,7 +18,7 @@ public class AddedBenefitPower() : InterloperPower
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.Single;
+        PowerStackType.Counter;
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
@@ -27,11 +27,8 @@ public class AddedBenefitPower() : InterloperPower
 
         if (oldPileType == PileType.Exhaust && card.EnergyCost.Canonical >= 2)
         {
-            // AfterCardChangedPiles has no PlayerChoiceContext. Mirror the PainfulRenewalPower /
-            // VeilSweep precedent and build one around a no-op console action so the gain can run
-            // inside the deterministic action pipeline (needed for the OnGained hook dispatch).
             var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner.Player, "h", true));
-            await DarkPotentialCmd.Add(ctx, Owner.Player, 5);
+            await DarkPotentialCmd.Add(ctx, Owner.Player, Amount);
         }
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

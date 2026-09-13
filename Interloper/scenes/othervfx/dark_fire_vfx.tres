@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://qn1t6lij2lw2"]
+
+[ext_resource type="Texture2D" uid="uid://bnfxsjpli3m21" path="res://Interloper/images/vfx/cfxr sword trail noise bubbles.png" id="1_7j2u8"]
+[ext_resource type="Shader" uid="uid://xjxdao3n3ifm" path="res://Interloper/scenes/othervfx/dark_fire_VShader.tres" id="1_urh46"]
+[ext_resource type="Texture2D" uid="uid://bwn8570trdpnl" path="res://Interloper/images/vfx/T_Gradient_circle22.jpg" id="2_urh46"]
+
+[sub_resource type="Gradient" id="Gradient_682fc"]
+offsets = PackedFloat32Array(0, 0.47325101, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.31764707, 0, 0.6666667, 1, 0.58444846, 5.5350364e-07, 0.3525013, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6u43w"]
+gradient = SubResource("Gradient_682fc")
+
+[sub_resource type="Gradient" id="Gradient_vcbrr"]
+offsets = PackedFloat32Array(0, 0.9958848, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.97119343, 0.97119343, 0.97119343, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iakh4"]
+gradient = SubResource("Gradient_vcbrr")
+fill_from = Vector2(1, 0.13247864)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_xhnb4"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s0kto"]
+gradient = SubResource("Gradient_xhnb4")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0.9444444, 0)
+
+[resource]
+shader = ExtResource("1_urh46")
+shader_parameter/Scale = Vector2(2.56, 1.88)
+shader_parameter/Speed = Vector2(0, 1)
+shader_parameter/Texture_1 = ExtResource("1_7j2u8")
+shader_parameter/Texture_2 = SubResource("GradientTexture2D_iakh4")
+shader_parameter/Texture_3 = ExtResource("2_urh46")
+shader_parameter/Texture_4 = SubResource("GradientTexture2D_s0kto")
+shader_parameter/Color_texture = SubResource("GradientTexture1D_6u43w")

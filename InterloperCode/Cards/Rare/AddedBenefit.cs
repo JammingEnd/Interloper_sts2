@@ -13,7 +13,7 @@ public class AddedBenefit() : InterloperCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AddedBenefitPower>("AddedBenefitPower", 1)
+        new PowerVar<AddedBenefitPower>("AddedBenefitPower", 7)
     ];
 
     protected override async Task OnPlay(

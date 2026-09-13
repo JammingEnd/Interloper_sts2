@@ -61,7 +61,7 @@
   "INTERLOPER-FULL_CONTROL.title": "Full Control",
   "INTERLOPER-GONE_FROM_REALITY.description": "Deal damage equal to [color=#952990]Abyssal Corruption[/color] on all enemies.{InCombat:cond:\n({CalculatedDamage:diff()})|}",
   "INTERLOPER-GONE_FROM_REALITY.title": "Gone From Reality",
-  "INTERLOPER-GOODWILL.description": "If you have any [color=#541191]Dark Potential[/color], [color=#541191]Potential[/color] {Potential:diff()}.",
+  "INTERLOPER-GOODWILL.description": "If you have any [color=#541191]Dark Potential[/color], [color=#541191]Potential[/color] {Potential:diff()} and {DistortStr:diff()} Strength.",
   "INTERLOPER-GOODWILL.title": "Goodwill",
   "INTERLOPER-GRASP_OF_THE_ABYSS.description": "Deal {Damage:diff()} damage.\nThe reduction in energy cost from returning lasts the whole combat.",
   "INTERLOPER-GRASP_OF_THE_ABYSS.title": "Grasp Of The Abyss",

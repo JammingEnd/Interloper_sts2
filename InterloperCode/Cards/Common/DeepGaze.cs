@@ -9,12 +9,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 namespace Interloper.InterloperCode.Cards.Common;
 // Gain 5 Dark Potential
 
-public class DeepGaze() : InterloperCard(1,
+public class DeepGaze() : InterloperCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 10)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override async Task OnPlay(
@@ -26,7 +26,7 @@ public class DeepGaze() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Potential"].UpgradeValueBy(5m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

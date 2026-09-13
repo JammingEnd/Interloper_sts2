@@ -39,6 +39,8 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
+        await PowerCmd.Apply<PrayersHeardPower>(choiceContext, play.Target, 2, Owner.Creature, this);
+
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(

@@ -34,6 +34,7 @@ public class Consume() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
         AddKeyword(CardKeyword.Retain);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

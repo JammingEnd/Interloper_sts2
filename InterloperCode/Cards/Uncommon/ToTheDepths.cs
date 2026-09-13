@@ -39,7 +39,7 @@ public class ToTheDepths() : InterloperCard(0,
         if (energyX < 2)
             return;
 
-        int potential = energyX >= 6 ? 10 : energyX >= 4 ? 8 : DynamicVars["Potential"].IntValue;
+        int potential = energyX >= 6 ? 15 : energyX >= 4 ? 10 : DynamicVars["Potential"].IntValue;
         await DarkPotentialCmd.Add(choiceContext, Owner, potential);
     }
 

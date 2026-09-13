@@ -1,8 +1,9 @@
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -28,14 +29,13 @@ public class OnesService() : InterloperCard(1,
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
         await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
-        var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
             HoverTipFactory.FromPower<AbyssalCorruptionPower>(),
-            HoverTipFactory.FromCard<GlyphEye>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
     protected override void OnUpgrade()

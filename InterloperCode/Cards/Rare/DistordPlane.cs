@@ -1,6 +1,6 @@
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
 using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -19,11 +19,7 @@ public class DistordPlane() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            var card = CombatState.CreateCard<GlyphTail>(Owner);
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
-        }
+        await DarkPotentialCmd.Add(choiceContext, Owner, 10);
     }
 
     protected override void OnUpgrade()
@@ -32,7 +28,7 @@ public class DistordPlane() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphTail>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
 }

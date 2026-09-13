@@ -1,8 +1,11 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -37,13 +40,13 @@ public class Sideye() : InterloperCard(1,
 
     protected override async void AfterMovedFromExhaust(CardModel card)
     {
-        var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(card.Owner, "h", true));
+        await DarkPotentialCmd.Add(ctx, card.Owner, 5);
         await CreatureCmd.GainBlock(card.Owner.Creature, DynamicVars["SideyeMoved"] as BlockVar, null);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphEye>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
 }

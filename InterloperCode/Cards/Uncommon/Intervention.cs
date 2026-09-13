@@ -1,11 +1,13 @@
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
@@ -34,12 +36,15 @@ public class Intervention() : InterloperCard(1,
                 exhaustPile.MoveToTopInternal(card);
             }
         }
-        var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
 
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
+    ];
 }

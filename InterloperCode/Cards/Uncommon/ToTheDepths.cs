@@ -1,7 +1,7 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
 using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -29,36 +29,22 @@ public class ToTheDepths() : InterloperCard(0,
         var card = this;
         int energyX = card.ResolveEnergyXValue();
         if (energyX <= 0) return;
-        
+
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(energyX)
             .FromCard(card, play).Targeting(play.Target)
             .Execute(choiceContext);
-        if(energyX < 2)
+
+        if (energyX < 2)
             return;
-        if (energyX < 4)
-        {
-            var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
-            await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
-        }
-        if (energyX < 6)
-        {
-            var eyeCard = CombatState.CreateCard<GlyphMouth>(Owner);
-            await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
-        }
-        if (energyX >= 6)
-        {
-            var eyeCard = CombatState.CreateCard<GlyphTail>(Owner);
-            await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
-        }
-            
+
+        int potential = energyX >= 6 ? 10 : energyX >= 4 ? 8 : 5;
+        await DarkPotentialCmd.Add(choiceContext, Owner, potential);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphEye>(),
-            HoverTipFactory.FromCard<GlyphMouth>(),
-            HoverTipFactory.FromCard<GlyphTail>()
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
     protected override void OnUpgrade()

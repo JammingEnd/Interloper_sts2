@@ -1,6 +1,7 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -26,8 +27,7 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
     {
         await PowerCmd.Apply<PrayersHeardPower>(choiceContext, play.Target, DynamicVars["PrayersHeardPower"].IntValue, Owner.Creature, this);
 
-        var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
 
     protected override void OnUpgrade()
@@ -37,15 +37,13 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var mouthCard = CombatState.CreateCard<GlyphMouth>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(
         [
             HoverTipFactory.FromPower<StrengthPower>(),
-            HoverTipFactory.FromCard<GlyphEye>(false),
-            HoverTipFactory.FromCard<GlyphMouth>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ]);
 
 }

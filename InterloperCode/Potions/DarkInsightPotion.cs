@@ -1,4 +1,4 @@
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -22,16 +22,6 @@ public sealed class DarkInsightPotion : InterloperPotion
         if (combatState == null)
             return;
 
-        for (int i = 0; i < 3; i++)
-        {
-            CardModel glyphCard = Owner.RunState.Rng.CombatCardGeneration.NextInt(3) switch
-            {
-                0 => combatState.CreateCard<GlyphEye>(Owner),
-                1 => combatState.CreateCard<GlyphMouth>(Owner),
-                _ => combatState.CreateCard<GlyphTail>(Owner)
-            };
-
-            await CardPileCmd.AddGeneratedCardToCombat(glyphCard, PileType.Hand, Owner);
-        }
+        await DarkPotentialCmd.Add(choiceContext, Owner, 15);
     }
 }

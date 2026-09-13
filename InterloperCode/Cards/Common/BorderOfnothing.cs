@@ -1,7 +1,7 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
 using Interloper.InterloperCode.Powers;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -27,8 +27,7 @@ public class BorderOfnothing() : InterloperCard(1,
         CardPlay play)
     {
         await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPower"].IntValue, Owner.Creature, this);
-        var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
 
     protected override void OnUpgrade()
@@ -39,6 +38,6 @@ public class BorderOfnothing() : InterloperCard(1,
     [
         HoverTipFactory.FromPower<VoidReachPower>(),
         HoverTipFactory.FromKeyword(InterloperKeywords.Consumed),
-        HoverTipFactory.FromCard<GlyphEye>()
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
     ];
 }

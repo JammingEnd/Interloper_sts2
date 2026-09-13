@@ -1,13 +1,12 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
-using Interloper.InterloperCode.Powers;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
 
@@ -25,8 +24,7 @@ public class Shhhh() : InterloperCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var mouthCard = CombatState.CreateCard<GlyphMouth>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
 
@@ -36,7 +34,7 @@ public class Shhhh() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphMouth>(false),
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential),
         ];
 
 }

@@ -1,8 +1,11 @@
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -24,22 +27,15 @@ public class AddedBenefitPower() : InterloperPower
 
         if (oldPileType == PileType.Exhaust && card.EnergyCost.Canonical >= 2)
         {
-            CardModel glyphCard;
-            int roll = Owner.Player.RunState.Rng.CombatCardGeneration.NextInt(3);
-            glyphCard = roll switch
-            {
-                0 => CombatState.CreateCard<GlyphEye>(Owner.Player),
-                1 => CombatState.CreateCard<GlyphMouth>(Owner.Player),
-                _ => CombatState.CreateCard<GlyphTail>(Owner.Player),
-            };
-
-            await CardPileCmd.AddGeneratedCardToCombat(glyphCard, PileType.Hand, Owner.Player);
+            // AfterCardChangedPiles has no PlayerChoiceContext. Mirror the PainfulRenewalPower /
+            // VeilSweep precedent and build one around a no-op console action so the gain can run
+            // inside the deterministic action pipeline (needed for the OnGained hook dispatch).
+            var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner.Player, "h", true));
+            await DarkPotentialCmd.Add(ctx, Owner.Player, 5);
         }
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromCard<GlyphEye>(false),
-        HoverTipFactory.FromCard<GlyphMouth>(false),
-        HoverTipFactory.FromCard<GlyphTail>(false)
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
     ];
 }

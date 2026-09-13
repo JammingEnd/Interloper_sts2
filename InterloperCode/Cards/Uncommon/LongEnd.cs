@@ -1,6 +1,7 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -38,13 +39,12 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var tailCard = CombatState.CreateCard<GlyphTail>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(tailCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(
         [
-            HoverTipFactory.FromCard<GlyphTail>()
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ]);
 
 }

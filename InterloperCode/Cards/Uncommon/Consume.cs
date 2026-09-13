@@ -1,5 +1,6 @@
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -24,8 +25,8 @@ public class Consume() : InterloperCard(1,
         var target = selected.FirstOrDefault();
         if (target != null)
         {
-            var mouthCard = CombatState.CreateCard<GlyphMouth>(Owner);
-            await CardCmd.Transform(target, mouthCard);
+            await CardCmd.Exhaust(choiceContext, target);
+            await DarkPotentialCmd.Add(choiceContext, Owner, 8);
         }
     }
 
@@ -35,7 +36,7 @@ public class Consume() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphMouth>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
 }

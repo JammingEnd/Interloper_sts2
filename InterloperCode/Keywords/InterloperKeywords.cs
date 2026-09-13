@@ -20,5 +20,9 @@ public static class InterloperKeywords
     [CustomEnum("Glyph")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Glyph;
-    
+
+    [CustomEnum("DarkPotential")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword DarkPotential;
+
 }

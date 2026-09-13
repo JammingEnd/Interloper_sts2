@@ -1,5 +1,6 @@
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -29,8 +30,7 @@ public class WideOpen() : InterloperCard(1,
         if (target != null)
             await CardCmd.Exhaust(choiceContext, target);
 
-        var mouthCard = CombatState.CreateCard<GlyphMouth>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(mouthCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
@@ -41,7 +41,7 @@ public class WideOpen() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphMouth>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
 }

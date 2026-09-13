@@ -1,7 +1,7 @@
 using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
 using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,8 +24,7 @@ public class OutwardStrength() : InterloperCard(2,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play, DynamicVars.Repeat.IntValue).Execute(choiceContext);
-        var eyeCard = CombatState.CreateCard<GlyphMouth>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
     }
 
     protected override void OnUpgrade()
@@ -34,6 +33,6 @@ public class OutwardStrength() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromCard<GlyphMouth>()
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
     ];
 }

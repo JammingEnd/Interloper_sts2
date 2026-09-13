@@ -1,14 +1,10 @@
 using Interloper.InterloperCode.Cards;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Commands;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.HoverTips;
-using Interloper.InterloperCode.Cards.Glyph;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
@@ -22,25 +18,10 @@ public class Goodwill() : InterloperCard(0,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var hand = PileType.Hand.GetPile(Owner);
-        if (!hand.Cards.Any(c => c is GlyphCard))
+        if ((Owner.PlayerCombatState?.GetDarkPotential() ?? 0) <= 0)
             return;
 
-        var prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1);
-        var selected = await CardSelectCmd.FromHand(
-            choiceContext, Owner, prefs, c => c is GlyphCard, this);
-
-        var target = selected.FirstOrDefault();
-        if (target == null)
-            return;
-
-        var newCard = CardFactory.GetForCombat(Owner,
-            ModelDb.CardPool<ColorlessCardPool>()
-                .GetUnlockedCards(Owner.UnlockState, CardMultiplayerConstraint.SingleplayerOnly), 1,
-            Owner.RunState.Rng.CombatCardGeneration).FirstOrDefault();
-
-        if (newCard != null)
-            await CardCmd.Transform(target, newCard);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 10);
     }
 
     protected override void OnUpgrade()
@@ -49,8 +30,6 @@ public class Goodwill() : InterloperCard(0,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromCard<GlyphEye>(false),
-        HoverTipFactory.FromCard<GlyphMouth>(false),
-        HoverTipFactory.FromCard<GlyphTail>(false)
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
     ];
 }

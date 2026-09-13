@@ -10,6 +10,43 @@ public static class DarkPotentialCmd
 
     private static readonly DarkPotentialLevels Levels = new();
 
+    public static readonly int[] EnergyThresholds = { 10, 30, 60, 100 };
+    public static readonly int[] EnergyValues = { 1, 2, 3, 4 };
+
+    /// <summary>Auto grants energy when the bar crosses energy thresholds; otherwise energy is granted on clear.</summary>
+    /// NOTE: this performs no awaits; return `Task.CompletedTask` (NOT an async method) to avoid CS1998.
+    public static Task SetAutoEnergy(PlayerChoiceContext choiceContext, Player player, bool value)
+    {
+        var state = player.PlayerCombatState?.GetDarkPotentialState();
+        if (state == null)
+            return Task.CompletedTask;
+
+        if (CombatManager.Instance.IsOverOrEnding)
+            return Task.CompletedTask;
+
+        state.AutoGrantEnergy = value;
+        ReSeedEnergyIndex(state);
+        OnChanged?.Invoke(player);
+        return Task.CompletedTask;
+    }
+
+    private static int GetEnergyThreshold(DarkPotentialState state, int index)
+        => state.Max * EnergyThresholds[index] / 100;
+
+    private static int GetHighestReachedEnergyIndex(DarkPotentialState state)
+    {
+        var index = -1;
+        for (var i = 0; i < EnergyThresholds.Length; i++)
+        {
+            if (state.Current >= GetEnergyThreshold(state, i))
+                index = i;
+        }
+        return index;
+    }
+
+    private static void ReSeedEnergyIndex(DarkPotentialState state)
+        => state.LastGrantedEnergyIndex = GetHighestReachedEnergyIndex(state);
+
     /// <summary>
     /// Adds Dark Potential up to the max. The gained hook fires only when something was actually
     /// gained, and receives the actual gained amount (clamped), not the requested amount.

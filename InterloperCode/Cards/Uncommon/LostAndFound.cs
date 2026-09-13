@@ -23,7 +23,7 @@ public class LostAndFound() : InterloperCard(1,
     private static readonly LocString SelectPrompt = new("cards", "INTERLOPERMOD.selectionScreenPrompt.return");
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(7, ValueProp.Move)
+        new BlockVar(6, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(
@@ -41,6 +41,6 @@ public class LostAndFound() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(2m);
     }
 }

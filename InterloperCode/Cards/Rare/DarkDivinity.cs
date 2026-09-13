@@ -33,7 +33,7 @@ public class DarkDivinity() : InterloperCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(5m);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

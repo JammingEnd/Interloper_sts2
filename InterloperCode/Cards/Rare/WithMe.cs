@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class WithMe() : InterloperCard(1,
+public class WithMe() : InterloperCard(2,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {

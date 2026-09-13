@@ -71,7 +71,9 @@ public partial class NGlyphArch : Control
     public override void _Ready()
     {
         Size = ArchSize;
-        MouseFilter = MouseFilterEnum.Ignore;
+        MouseFilter = MouseFilterEnum.Stop;
+        MouseEntered += OnArchHovered;
+        MouseExited += OnArchUnhovered;
 
         for (int i = 0; i < SlotCount; i++)
         {
@@ -108,10 +110,6 @@ public partial class NGlyphArch : Control
                 ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
                 StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered
             };
-
-            var slotIndex = i;
-            highlight.MouseEntered += () => OnSlotHovered(highlight);
-            highlight.MouseExited += () => OnSlotUnhovered(highlight);
 
             AddChild(placement);
             AddChild(highlight);
@@ -205,7 +203,6 @@ if (count is 1 or 2)
 
             var highlight = _highlights[i];
             highlight.Visible = isNext;
-            highlight.MouseFilter = isNext ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
         }
     }
 
@@ -217,29 +214,25 @@ if (count is 1 or 2)
         _ => PreloadManager.Cache.GetCompressedTexture2D(GlyphResource.EyeIconPath)
     };
 
-    private void OnSlotHovered(TextureRect highlight)
+    private void OnArchHovered()
     {
         if (_player == null)
             return;
 
-        var queue = _player.PlayerCombatState?.GetGlyphQueue();
-        if (queue == null || queue.Glyphs.Count != SlotCount - 1)
-            return;
-
         var desc = new LocString("static_hover_tips", "INTERLOPER-GLYPH_POSSIBLE_OUTCOMES.description");
-        desc.Add("Outcomes", LocHelper.GetPossibleOutcomeLoc(_player.Creature));
+        desc.Add("Outcomes", LocHelper.GetAllPossibleOutcomes(_player.Creature));
 
         var hoverTip = new HoverTip(
             new LocString("static_hover_tips", "INTERLOPER-GLYPH_POSSIBLE_OUTCOMES.title"),
             desc);
 
-        var set = NHoverTipSet.CreateAndShow(highlight, hoverTip, HoverTip.GetHoverTipAlignment(highlight));
+        var set = NHoverTipSet.CreateAndShow(this, hoverTip, HoverTip.GetHoverTipAlignment(this));
         set?.SetExtraFollowOffset(new Vector2(20, -20));
         set?.SetFollowOwner();
     }
 
-    private void OnSlotUnhovered(TextureRect highlight)
+    private void OnArchUnhovered()
     {
-        NHoverTipSet.Remove(highlight);
+        NHoverTipSet.Remove(this);
     }
 }

@@ -27,7 +27,7 @@ public class NeverAgain() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NeverAgainDraw"].UpgradeValueBy(1);
+        this.AddKeyword(CardKeyword.Innate);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

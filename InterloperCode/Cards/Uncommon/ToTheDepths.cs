@@ -18,7 +18,7 @@ public class ToTheDepths() : InterloperCard(0,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Move),
+        new DamageVar(7, ValueProp.Move),
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -34,19 +34,19 @@ public class ToTheDepths() : InterloperCard(0,
             .WithHitCount(energyX)
             .FromCard(card, play).Targeting(play.Target)
             .Execute(choiceContext);
-        if(energyX < 3)
+        if(energyX < 2)
             return;
-        if (energyX < 6)
+        if (energyX < 4)
         {
             var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
             await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
         }
-        if (energyX < 9)
+        if (energyX < 6)
         {
             var eyeCard = CombatState.CreateCard<GlyphMouth>(Owner);
             await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
         }
-        if (energyX >= 9)
+        if (energyX >= 6)
         {
             var eyeCard = CombatState.CreateCard<GlyphTail>(Owner);
             await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
@@ -63,6 +63,6 @@ public class ToTheDepths() : InterloperCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(4m);
     }
 }

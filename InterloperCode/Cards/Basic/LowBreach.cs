@@ -16,6 +16,7 @@ public class LowBreach() : InterloperCard(1,
     CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [InterloperKeywords.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(4, ValueProp.Move),
         new PowerVar<VoidReachPower>("VoidReachPower",2)
@@ -31,7 +32,7 @@ public class LowBreach() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(3m);
         DynamicVars["VoidReachPower"].UpgradeValueBy(1m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

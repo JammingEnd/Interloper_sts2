@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,9 +18,15 @@ public class EndlessCycle() : CorruptionHandlerCard(20, 1, CardType.Skill, CardR
         new PowerVar<VoidReachPower>("VoidReachPowerPerTurn",2),
     ];
 
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await CommonActions.CardBlock(this, cardPlay);
+        await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPower"].IntValue, Owner.Creature, this);
+    }
+
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-       await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPowerPerTurn"].IntValue, Owner.Creature, this);
+       await PowerCmd.Apply<VoidReachPerTurnPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPowerPerTurn"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -37,7 +37,7 @@ public class HesListening() : InterloperCard(0,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Retain);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

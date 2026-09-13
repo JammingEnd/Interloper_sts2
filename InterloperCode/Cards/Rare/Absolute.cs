@@ -49,7 +49,7 @@ public class Absolute() : InterloperCard(1,
         this.IncreasedDamage += addAmount;
         this.UpdateDamage();
     }
-    private void UpdateDamage() => this.CurrentDamage = 3 + this.IncreasedDamage;
+    private void UpdateDamage() => this.CurrentDamage = IsUpgraded == false ? 3 : 4 + this.IncreasedDamage;
     protected override void AfterDowngraded() => this.UpdateDamage();
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

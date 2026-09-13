@@ -14,25 +14,21 @@ namespace Interloper.InterloperCode.Cards.Ancient;
 public class TouchOfFaith() : InterloperCard(2, CardType.Power, CardRarity.Ancient, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VoidReachPower>("TouchOfFaithStrPower",4),
+        new PowerVar<VoidReachPower>("TouchOfFaithStrPower",1),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TouchOfFaithStrPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
-        await PowerCmd.Apply<TouchOfFaithDexPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<TouchOfFaithPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        this.AddKeyword(CardKeyword.Innate);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<VoidReachPower>(),
-        HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
     ];
 

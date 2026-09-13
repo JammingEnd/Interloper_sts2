@@ -3,18 +3,22 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 
 namespace Interloper.InterloperCode.Keywords;
 
-// consumed cards cannot be retrieved from the exhaust pile
 public static class InterloperKeywords
 {
     [CustomEnum("Consumed")] 
     [KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Consumed;
     
-    [CustomEnum("Corruptive")] 
+    [CustomEnum("Pure")] 
     [KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword Corruptive;
+    public static CardKeyword Pure;
 
     [CustomEnum("Sequence")]
-    [KeywordProperties(AutoKeywordPosition.Before)]
+    [KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Sequence;
+    
+    [CustomEnum("Glyph")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Glyph;
+    
 }

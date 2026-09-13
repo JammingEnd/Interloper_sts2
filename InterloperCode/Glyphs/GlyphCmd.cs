@@ -59,6 +59,39 @@ public static class GlyphCmd
     public static async Task Activate(PlayerChoiceContext choiceContext, Player player,
         CardModel? card = null, CardPlay? cardPlay = null)
     {
+        await ActivateFromQueue(choiceContext, player, clearQueue: true, card, cardPlay);
+    }
+
+    /// <summary>
+    /// Activate the glyph sequence from the queue's counts. When <paramref name="clearQueue"/> is false the queue is left intact.
+    /// </summary>
+    public static async Task Activate(PlayerChoiceContext choiceContext, Player player, bool clearQueue,
+        CardModel? card = null, CardPlay? cardPlay = null)
+    {
+        await ActivateFromQueue(choiceContext, player, clearQueue, card, cardPlay);
+    }
+
+    /// <summary>
+    /// Activate a specific glyph sequence directly, independent of the queue.
+    /// </summary>
+    public static async Task Activate(PlayerChoiceContext choiceContext, Player player, GlyphSequence sequence,
+        CardModel? card = null, CardPlay? cardPlay = null)
+    {
+        if (CombatManager.Instance.IsOverOrEnding)
+            return;
+
+        if (player.Creature.CombatState == null)
+            return;
+
+        var combatState = player.Creature.CombatState;
+        var glyphs = CreateGlyphsForSequence(player, sequence);
+
+        await ActivateSequence(combatState, choiceContext, player, glyphs, sequence);
+    }
+
+    private static async Task ActivateFromQueue(PlayerChoiceContext choiceContext, Player player, bool clearQueue,
+        CardModel? card, CardPlay? cardPlay)
+    {
         if (CombatManager.Instance.IsOverOrEnding)
             return;
 
@@ -72,20 +105,56 @@ public static class GlyphCmd
 
         var glyphs = queue.Glyphs.ToArray();
         var (eyes, mouths, tails) = queue.GetCounts();
-        queue.Clear();
+        if (clearQueue)
+            queue.Clear();
 
-        await ((eyes, mouths, tails) switch
+        await ActivateSequence(combatState, choiceContext, player, glyphs, ToSequence(eyes, mouths, tails));
+    }
+
+    private static GlyphSequence ToSequence(int eyes, int mouths, int tails) => (eyes, mouths, tails) switch
+    {
+        (3, 0, 0) => GlyphSequence.ThreeEyes,
+        (0, 3, 0) => GlyphSequence.ThreeMouths,
+        (0, 0, 3) => GlyphSequence.ThreeTails,
+        (2, 1, 0) => GlyphSequence.TwoEyesOneMouth,
+        (2, 0, 1) => GlyphSequence.TwoEyesOneTail,
+        (1, 2, 0) => GlyphSequence.OneEyeTwoMouths,
+        (0, 2, 1) => GlyphSequence.TwoMouthsOneTail,
+        (1, 0, 2) => GlyphSequence.OneEyeTwoTails,
+        (0, 1, 2) => GlyphSequence.OneMouthTwoTails,
+        (1, 1, 1) => GlyphSequence.OneOfEach,
+        _ => GlyphSequence.OneOfEach
+    };
+
+    private static GlyphModel[] CreateGlyphsForSequence(Player player, GlyphSequence sequence)
+    {
+        var model = sequence switch
         {
-            (3, 0, 0) => ThreeEyes(choiceContext, player),
-            (0, 3, 0) => ThreeMouths(choiceContext, player),
-            (0, 0, 3) => ThreeTails(choiceContext, player),
-            (2, 1, 0) => TwoEyesOneMouth(choiceContext, player),
-            (2, 0, 1) => TwoEyesOneTail(choiceContext, player),
-            (1, 2, 0) => OneEyeTwoMouths(choiceContext, player),
-            (0, 2, 1) => TwoMouthsOneTail(choiceContext, player),
-            (1, 0, 2) => OneEyeTwoTails(choiceContext, player),
-            (0, 1, 2) => OneMouthTwoTails(choiceContext, player),
-            (1, 1, 1) => OneOfEach(choiceContext, player),
+            GlyphSequence.ThreeEyes or GlyphSequence.TwoEyesOneMouth or GlyphSequence.TwoEyesOneTail or GlyphSequence.OneOfEach
+                => ModelDb.Get<GlyphEyeModel>().ToMutable(),
+            GlyphSequence.ThreeMouths or GlyphSequence.OneEyeTwoMouths or GlyphSequence.TwoMouthsOneTail
+                => ModelDb.Get<GlyphMouthModel>().ToMutable(),
+            _ => ModelDb.Get<GlyphTailModel>().ToMutable()
+        };
+        model.Owner = player;
+        return [model];
+    }
+
+    private static async Task ActivateSequence(ICombatState combatState, PlayerChoiceContext choiceContext, Player player,
+        GlyphModel[] glyphs, GlyphSequence sequence)
+    {
+        await (sequence switch
+        {
+            GlyphSequence.ThreeEyes => ThreeEyes(choiceContext, player),
+            GlyphSequence.ThreeMouths => ThreeMouths(choiceContext, player),
+            GlyphSequence.ThreeTails => ThreeTails(choiceContext, player),
+            GlyphSequence.TwoEyesOneMouth => TwoEyesOneMouth(choiceContext, player),
+            GlyphSequence.TwoEyesOneTail => TwoEyesOneTail(choiceContext, player),
+            GlyphSequence.OneEyeTwoMouths => OneEyeTwoMouths(choiceContext, player),
+            GlyphSequence.TwoMouthsOneTail => TwoMouthsOneTail(choiceContext, player),
+            GlyphSequence.OneEyeTwoTails => OneEyeTwoTails(choiceContext, player),
+            GlyphSequence.OneMouthTwoTails => OneMouthTwoTails(choiceContext, player),
+            GlyphSequence.OneOfEach => OneOfEach(choiceContext, player),
             _ => Task.CompletedTask
         });
 
@@ -103,7 +172,12 @@ public static class GlyphCmd
 
     private static async Task ThreeMouths(PlayerChoiceContext choiceContext, Player player)
     {
-        await CreatureCmd.Heal(player.Creature, 3, true);
+        var combatState = player.Creature.CombatState;
+        if (combatState == null)
+            return;
+
+        foreach (var enemy in combatState.HittableEnemies)
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, 2, player.Creature, null);
     }
 
     private static async Task ThreeTails(PlayerChoiceContext choiceContext, Player player)

@@ -1,4 +1,5 @@
 using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Cards.Glyph;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -33,6 +34,8 @@ public class Intervention() : InterloperCard(1,
                 exhaustPile.MoveToTopInternal(card);
             }
         }
+        var eyeCard = CombatState.CreateCard<GlyphEye>(Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(eyeCard, PileType.Hand, Owner);
     }
 
     protected override void OnUpgrade()

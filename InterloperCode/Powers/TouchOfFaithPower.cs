@@ -1,20 +1,27 @@
+using Interloper.InterloperCode.Cards;
+using Interloper.InterloperCode.Cards.Ancient;
+using Interloper.InterloperCode.Glyphs;
+using Interloper.InterloperCode.Helpers;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace Interloper.InterloperCode.Powers;
 
-public class TouchOfFaithDexPower : InterloperPower
+public class TouchOfFaithPower : InterloperPower
 {
     protected override object InitInternalData() => (object) new Data();
-    public override int DisplayAmount => 6 - this.GetInternalData<Data>().corruptionSpend % 6;
+    public override int DisplayAmount => this.GetInternalData<Data>().cardsLeft;
     private class Data
     {
-        public int corruptionSpend;
-        public int triggerCount;
+        public int cardsLeft = 10;
     }
     public override PowerType Type =>
         PowerType.Buff;
@@ -25,24 +32,39 @@ public class TouchOfFaithDexPower : InterloperPower
     public override PowerInstanceType InstanceType =>
         PowerInstanceType.Instanced;
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
-        CardModel? cardSource)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (power.Owner != Owner)
-            return;
-        if(power is not VoidReachPower)
-            return;
-        if (amount >= 0)
+        if (cardPlay.Card is TouchOfFaith || cardPlay.Card.Owner.Creature != this.Owner)
             return;
         var data = GetInternalData<Data>();
-        data.corruptionSpend += (int)amount;
-        int triggers = data.corruptionSpend / 6 - data.triggerCount;
-        if (triggers > 0)
+        data.cardsLeft -= (int)1;
+        if (data.cardsLeft <= 0)
         {
             Flash();
-            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, triggers, Owner, null);
-            data.triggerCount += triggers;
+            int rnd = CombatState.RunState.Rng.CombatEnergyCosts.NextInt(10);
+            GlyphSequence sq = Helpers.Extentions.GetSequenceByIndex(rnd);
+            await GlyphCmd.Activate(choiceContext, cardPlay.Player, sq, null, cardPlay);
+            data.cardsLeft = 10;
         }
         InvokeDisplayAmountChanged();
+    }
+
+    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        if (card.Owner.Creature != this.Owner || card is not GlyphCard)
+        {
+            modifiedCost = originalCost;
+            return false;
+        }
+        modifiedCost = originalCost + 1;
+        return true;
+    }
+
+    public override async Task AfterCardEnteredCombat(CardModel card)
+    {
+        if (card.Owner.Creature == this.Owner || card is GlyphCard)
+        {
+            card.AddKeyword(CardKeyword.Ethereal);
+        }
     }
 }

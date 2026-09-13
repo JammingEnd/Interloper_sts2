@@ -10,6 +10,10 @@ public static class DarkPotentialCmd
 
     private static readonly DarkPotentialLevels Levels = new();
 
+    /// <summary>
+    /// Adds Dark Potential up to the max. The gained hook fires only when something was actually
+    /// gained, and receives the actual gained amount (clamped), not the requested amount.
+    /// </summary>
     public static async Task Add(PlayerChoiceContext choiceContext, Player player, int amount)
     {
         var state = player.PlayerCombatState?.GetDarkPotentialState();
@@ -19,12 +23,16 @@ public static class DarkPotentialCmd
         if (CombatManager.Instance.IsOverOrEnding)
             return;
 
-        state.Current = Math.Min(state.Max, state.Current + amount);
+        int actual = Math.Min(state.Max, state.Current + amount) - state.Current;
+        if (actual <= 0)
+            return;
+
+        state.Current += actual;
         OnChanged?.Invoke(player);
 
         var combatState = player.Creature.CombatState;
         if (combatState != null)
-            await DarkPotentialHook.OnGained(combatState, choiceContext, player, amount);
+            await DarkPotentialHook.OnGained(combatState, choiceContext, player, actual);
     }
 
     public static async Task Clear(PlayerChoiceContext choiceContext, Player player)

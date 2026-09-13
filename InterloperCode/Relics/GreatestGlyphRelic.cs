@@ -1,4 +1,3 @@
-using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Potential;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;

@@ -1,4 +1,6 @@
 using Godot;
+using Interloper.InterloperCode.Extensions;
+using MegaCrit.Sts2.Core.Assets;
 using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -22,14 +24,22 @@ public partial class NDarkPotentialBar : Control
 
     private static readonly DarkPotentialLevels Levels = new();
 
+    private static readonly Texture2D MarkerTexture =
+        PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/potential_marker.png".ImagePath());
+
     private static readonly Color TrackColor = new(0.13f, 0.09f, 0.21f);
     private static readonly Color FillColor = InterloperCharacter.Color;
+
+    private readonly List<TextureRect> _levelMarkers = new();
+    private readonly List<TextureRect> _energyMarkers = new();
 
     private Player? _player;
 
     public void Initialize(Player player)
     {
         _player = player;
+        if (GetChildCount() == 0)
+            CreateMarkers();
         QueueRedraw();
     }
 
@@ -70,6 +80,44 @@ public partial class NDarkPotentialBar : Control
             return;
 
         QueueRedraw();
+    }
+
+    private void CreateMarkers()
+    {
+        for (int i = 1; i <= DarkPotentialLevels.LevelCount; i++)
+        {
+            _levelMarkers.Add(CreateMarker(i / (float)DarkPotentialLevels.LevelCount, Colors.White, false));
+        }
+
+        for (int i = 0; i < DarkPotentialCmd.EnergyThresholds.Length; i++)
+        {
+            _energyMarkers.Add(CreateMarker(DarkPotentialCmd.EnergyThresholds[i] / 100f, new Color(1f, 0.84f, 0f), true));
+        }
+    }
+
+    private TextureRect CreateMarker(double progress, Color tint, bool pointInward)
+    {
+        var marker = new TextureRect
+        {
+            Texture = MarkerTexture,
+            Size = new Vector2(20f, 20f),
+            ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+            StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+            Modulate = tint,
+            MouseFilter = MouseFilterEnum.Stop
+        };
+
+        marker.PivotOffset = marker.Size * 0.5f;
+
+        float angle = ArcStartAngle + ArcSweep * (float)progress;
+        float radius = pointInward ? ArcRadius - 12f : ArcRadius;
+        var arcPoint = Size * 0.5f + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+        marker.Position = arcPoint - marker.Size * 0.5f;
+        // Art points up (-Y); level markers rotate to theta+90deg (outward), energy +180deg more (inward).
+        marker.Rotation = angle + Mathf.Pi / 2f + (pointInward ? Mathf.Pi : 0f);
+
+        AddChild(marker);
+        return marker;
     }
 
     private void OnBarHovered()

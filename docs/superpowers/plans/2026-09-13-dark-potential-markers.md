@@ -37,7 +37,8 @@ public static readonly int[] EnergyThresholds = { 10, 30, 60, 100 };
 public static readonly int[] EnergyValues = { 1, 2, 3, 4 };
 
 /// <summary>Auto grants energy when the bar crosses energy thresholds; otherwise energy is granted on clear.</summary>
-public static async Task SetAutoEnergy(PlayerChoiceContext choiceContext, Player player, bool value)
+/// NOTE: this performs no awaits; return `Task.CompletedTask` (NOT an async method) to avoid CS1998.
+public static Task SetAutoEnergy(PlayerChoiceContext choiceContext, Player player, bool value)
 {
     var state = player.PlayerCombatState?.GetDarkPotentialState();
     if (state == null)
@@ -49,6 +50,7 @@ public static async Task SetAutoEnergy(PlayerChoiceContext choiceContext, Player
     state.AutoGrantEnergy = value;
     ReSeedEnergyIndex(state);
     OnChanged?.Invoke(player);
+    return Task.CompletedTask;
 }
 
 private static int GetEnergyThreshold(DarkPotentialState state, int index)
@@ -168,7 +170,7 @@ private static readonly Texture2D MarkerTexture =
     PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/potential_marker.png".ImagePath());
 ```
 
-Add `using Interloper.InterloperCode.Extensions;` (for `ImagePath`) and the import for `PreloadManager`.
+Add `using Interloper.InterloperCode.Extensions;` (for `ImagePath`) and `using BaseLib.Abstracts;` (for `PreloadManager` — see `InterloperCardPool.cs`).
 
 - [ ] **Step 2:** In `Initialize(Player player)` (after setting `_player` and `QueueRedraw`), spawn the 9 markers — but only if not already spawned (guard `if (GetChildCount() == 0)`, since `Initialize` may be called on re-Activate): Add a `CreateMarker` helper:
 
@@ -224,7 +226,7 @@ git commit -m "feat(potential): threshold markers on the arc"
 
 (`Description` is an optional var — empty, or `" — <GetDescription text>"`). These keys are REQUIRED: the loc-key analyzer (STS001) errors on any `LocString` key missing from the JSON.
 
-- [ ] **Step 2:** Attach hover to each level marker (in `Initialize`, after `CreateMarker`):
+- [ ] **Step 2:** Attach hover to each level marker (in `Initialize`, INSIDE the `GetChildCount() == 0` guard, right after the markers are created — so re-Activate doesn't stack duplicate `MouseEntered` handlers):
 
 ```csharp
 private void AttachLevelHover(TextureRect marker, int level)
@@ -256,7 +258,7 @@ private void ShowLevelTip(TextureRect marker, int level)
 
 NOTE: keep `GetDescription` for when the user fills levels. `BuildLevelsText` is removed in Step 4.
 
-- [ ] **Step 3:** Attach hover to each energy marker:
+- [ ] **Step 3:** Attach hover to each energy marker (same `GetChildCount() == 0` guard scope):
 
 ```csharp
 private void AttachEnergyHover(TextureRect marker, int index)

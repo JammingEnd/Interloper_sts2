@@ -174,7 +174,7 @@
   "INTERLOPER-CORRUPTED_DEFEND.title": "Corrupted Defend",
   "INTERLOPER-ENDLESS_CYCLE.description": "Gain {Block:diff()} [gold]Block[/gold].\nGain {VoidReachPower:diff()} [color=#AE30A8]Void Reach[/color].\n[color=#952990]Absorb[/color] 20+: gain {VoidReachPowerPerTurn:diff()} [color=#AE30A8]Void Reach[/color] per turn.",
   "INTERLOPER-ENDLESS_CYCLE.title": "Endless Cycle",
-  "INTERLOPER-TOUCH_OF_FAITH.description": "Every 10 cards you play, [color=#541191]Potential[/color] 5.",
+  "INTERLOPER-TOUCH_OF_FAITH.description": "Your [color=#541191]Dark Potential[/color] auto-uses energy and the level buff as thresholds are reached. The bar only clears when full.",
   "INTERLOPER-TOUCH_OF_FAITH.title": "Touch of Faith",
   "INTERLOPER-BLACK_TOUCH.description": "Deal {Damage:diff()} damage.\n-[color=#952990]Abyssal Corruption[/color] 15+: Gain {BlackTouchVigor:diff()} [gold]Vigor[/gold].",
   "INTERLOPER-BLACK_TOUCH.title": "Black Touch",

@@ -31,6 +31,40 @@ public static class DarkPotentialCmd
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Auto-resolves the Dark Potential bar: level buffs and energy fire as thresholds are
+    /// reached, and the bar only clears when it reaches max.
+    /// </summary>
+    /// NOTE: this performs no awaits; return `Task.CompletedTask` (NOT an async method) to avoid CS1998.
+    public static Task SetAutoUseThresholds(PlayerChoiceContext choiceContext, Player player, bool value)
+    {
+        var state = player.PlayerCombatState?.GetDarkPotentialState();
+        if (state == null)
+            return Task.CompletedTask;
+
+        if (CombatManager.Instance.IsOverOrEnding)
+            return Task.CompletedTask;
+
+        state.AutoUseThresholds = value;
+        state.LastActivatedLevelIndex = GetHighestReachedLevelIndex(state);
+        OnChanged?.Invoke(player);
+        return Task.CompletedTask;
+    }
+
+    private static int GetLevelThreshold(DarkPotentialState state, int level)
+        => state.Max * level / DarkPotentialLevels.LevelCount;
+
+    private static int GetHighestReachedLevelIndex(DarkPotentialState state)
+    {
+        var index = 0;
+        for (var i = 1; i <= DarkPotentialLevels.LevelCount; i++)
+        {
+            if (state.Current >= GetLevelThreshold(state, i))
+                index = i;
+        }
+        return index;
+    }
+
     private static int GetEnergyThreshold(DarkPotentialState state, int index)
         => state.Max * EnergyThresholds[index] / 100;
 
@@ -67,10 +101,34 @@ public static class DarkPotentialCmd
 
         state.Current += actual;
 
-        // Auto mode: grant energy for each newly-crossed threshold. The index advances before the
-        // first await so a hook-triggered re-entrant Add cannot double-grant.
-        if (state.AutoGrantEnergy)
+        if (state.AutoUseThresholds)
+        {
+            // Fire level buffs as their thresholds are crossed (once per fill cycle).
+            while (state.LastActivatedLevelIndex < DarkPotentialLevels.LevelCount &&
+                   state.Current >= GetLevelThreshold(state, state.LastActivatedLevelIndex + 1))
+            {
+                state.LastActivatedLevelIndex++;
+                await DispatchLevel(choiceContext, player, state.LastActivatedLevelIndex);
+            }
+
+            // Energy auto-grants at energy thresholds.
             await GrantAutoEnergy(choiceContext, player, state);
+
+            // The bar only clears (resets) when it reaches max. The level-5 buff and top energy
+            // already fired above; reset without re-dispatching to avoid a double trigger.
+            if (state.Current >= state.Max)
+            {
+                state.Current = 0;
+                state.LastActivatedLevelIndex = -1;
+                state.LastGrantedEnergyIndex = -1;
+            }
+        }
+        else if (state.AutoGrantEnergy)
+        {
+            // Auto mode: grant energy for each newly-crossed threshold. The index advances before the
+            // first await so a hook-triggered re-entrant Add cannot double-grant.
+            await GrantAutoEnergy(choiceContext, player, state);
+        }
 
         OnChanged?.Invoke(player);
 
@@ -102,7 +160,7 @@ public static class DarkPotentialCmd
             return;
 
         // Capture BEFORE the dispatch await so a level effect that mutates Current can't skew the grant.
-        var level = GetReachedLevel(state);
+        var level = GetHighestReachedLevelIndex(state);
         var energyIndex = !state.AutoGrantEnergy ? GetHighestReachedEnergyIndex(state) : -1;
         if (level > 0)
             await DispatchLevel(choiceContext, player, level);
@@ -113,6 +171,7 @@ public static class DarkPotentialCmd
 
         state.Current = 0;
         state.LastGrantedEnergyIndex = -1;
+        state.LastActivatedLevelIndex = -1;
         OnChanged?.Invoke(player);
 
         var combatState = player.Creature.CombatState;
@@ -146,17 +205,4 @@ public static class DarkPotentialCmd
         5 => Levels.Level5(choiceContext, player),
         _ => Task.CompletedTask
     };
-
-    private static int GetReachedLevel(DarkPotentialState state)
-    {
-        var level = 0;
-        for (var i = 1; i <= DarkPotentialLevels.LevelCount; i++)
-        {
-            var threshold = state.Max * i / DarkPotentialLevels.LevelCount;
-            if (state.Current >= threshold)
-                level = i;
-        }
-
-        return level;
-    }
 }

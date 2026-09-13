@@ -1,9 +1,12 @@
-using Interloper.InterloperCode.Cards.Glyph;
+using BaseLib.Utils;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
 
@@ -14,33 +17,23 @@ public class Flail() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(4),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (card, _) => (Decimal)PileType.Exhaust.GetPile(card.Owner).Cards
-                .Count(c => c is GlyphTail))
+        new DamageVar(8, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var tailCard = CombatState.CreateCard<GlyphTail>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(tailCard, PileType.Hand, Owner);
-
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this, play)
-            .Targeting(play.Target)
-            .Execute(choiceContext);
+        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromCard<GlyphTail>(false)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
-
 }

@@ -1,4 +1,5 @@
-using Interloper.InterloperCode.Cards.Glyph;
+using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,8 +18,7 @@ public class DarkDivinity() : InterloperCard(2,
         new CalculationBaseVar(6),
         new ExtraDamageVar(2),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (card, _) => (Decimal)PileType.Exhaust.GetPile(card.Owner).Cards
-                .Count(c => c is GlyphEye || c is GlyphMouth || c is GlyphTail))
+            (card, _) => (Decimal)(card.Owner.PlayerCombatState?.GetDarkPotential() ?? 0) / 10)
     ];
 
     protected override async Task OnPlay(
@@ -37,8 +37,6 @@ public class DarkDivinity() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromCard<GlyphEye>(false),
-        HoverTipFactory.FromCard<GlyphMouth>(false),
-        HoverTipFactory.FromCard<GlyphTail>(false)
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
     ];
 }

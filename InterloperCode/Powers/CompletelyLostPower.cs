@@ -1,4 +1,3 @@
-using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -7,13 +6,11 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Powers;
 
-// at the start of each turn, deal amount power x amount of cards in your exhaust pile with the consumed keyword (glyphs excluded) to all enemies
+// at the start of each turn, deal amount power x amount of cards in your exhaust pile with the consumed keyword to all enemies
 public class CompletelyLostPower() : InterloperPower
 {
     public override PowerType Type =>
@@ -29,7 +26,7 @@ public class CompletelyLostPower() : InterloperPower
 
         var exhaustPile = PileType.Exhaust.GetPile(player);
         int count = exhaustPile.Cards.Count(c =>
-            c.Keywords.Contains(InterloperKeywords.Consumed) && c is not GlyphCard);
+            c.Keywords.Contains(InterloperKeywords.Consumed));
         if (count <= 0)
             return;
 

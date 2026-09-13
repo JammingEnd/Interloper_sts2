@@ -1,5 +1,5 @@
 using BaseLib.Utils;
-using Interloper.InterloperCode.Glyphs;
+using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -15,7 +15,7 @@ namespace Interloper.InterloperCode.Cards.Rare;
 
 public class Absolute() : InterloperCard(1,
     CardType.Attack, CardRarity.Rare,
-    TargetType.AnyEnemy), IAfterSequenceActivated
+    TargetType.AnyEnemy), IAfterDarkPotentialCleared
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
@@ -62,7 +62,7 @@ public class Absolute() : InterloperCard(1,
         await CommonActions.CardAttack(this, cardPlay).Execute(choiceContext);
     }
 
-    public Task AfterSequenceActivated(PlayerChoiceContext choiceContext, Player player, IReadOnlyList<GlyphModel> glyphs)
+    public Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level)
     {
         if (player != Owner)
             return Task.CompletedTask;

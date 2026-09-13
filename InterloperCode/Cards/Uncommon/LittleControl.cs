@@ -1,5 +1,4 @@
 using Interloper.InterloperCode.Cards;
-using Interloper.InterloperCode.Cards.Glyph;
 using Interloper.InterloperCode.Keywords;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;

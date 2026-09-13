@@ -29,7 +29,7 @@ public class WitnessMe() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromKeyword(InterloperKeywords.Sequence)
+            HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
 }

@@ -26,6 +26,9 @@ public partial class NDarkPotentialBar : Control
     private const float MarkerInset = 17f;
     private const float MarkerOutset = 5f;
 
+    private const float FlameSize = 40f;
+    private const float FlameScale = 1f;
+
     private static readonly DarkPotentialLevels Levels = new();
 
     private static readonly Texture2D MarkerTexture =
@@ -34,11 +37,15 @@ public partial class NDarkPotentialBar : Control
     private static readonly Texture2D EnergyMarkerTexture =
         PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/energy_marker.png".ImagePath());
 
+    private static readonly PackedScene FireVfxScene =
+        PreloadManager.Cache.GetScene("othervfx/dark_fire_vfx.tscn".ScenePath());
+
     private static readonly Color TrackColor = new(0.13f, 0.09f, 0.21f);
     private static readonly Color FillColor = InterloperCharacter.Color;
 
     private readonly List<TextureRect> _levelMarkers = new();
     private readonly List<TextureRect> _energyMarkers = new();
+    private readonly List<Node2D> _flames = new();
 
     private Player? _player;
 
@@ -48,11 +55,13 @@ public partial class NDarkPotentialBar : Control
         if (_levelMarkers.Count == 0)
         {
             CreateMarkers();
+            CreateFlames();
             for (int i = 0; i < _levelMarkers.Count; i++)
                 AttachLevelHover(_levelMarkers[i], i + 1);
             for (int i = 0; i < _energyMarkers.Count; i++)
                 AttachEnergyHover(_energyMarkers[i], i);
         }
+        RefreshFlames();
         QueueRedraw();
     }
 
@@ -90,7 +99,35 @@ public partial class NDarkPotentialBar : Control
         if (player != _player)
             return;
 
+        RefreshFlames();
         QueueRedraw();
+    }
+
+    private void CreateFlames()
+    {
+        foreach (var marker in _levelMarkers)
+        {
+            var flame = FireVfxScene.Instantiate<Node2D>();
+            flame.Position = new Vector2(MarkerSize * 0.5f - FlameSize * 0.5f, MarkerSize * 0.6f - FlameSize * 0.5f);
+            flame.Scale = new Vector2(FlameScale, FlameScale);
+            flame.Visible = false;
+            marker.AddChild(flame);
+            _flames.Add(flame);
+        }
+    }
+
+    private void RefreshFlames()
+    {
+        if (_player?.PlayerCombatState == null || _flames.Count == 0)
+            return;
+
+        int current = _player.PlayerCombatState.GetDarkPotential();
+        int max = _player.PlayerCombatState.GetDarkPotentialMax();
+        for (int i = 0; i < _flames.Count; i++)
+        {
+            int threshold = max * (i + 1) / DarkPotentialLevels.LevelCount;
+            _flames[i].Visible = current >= threshold;
+        }
     }
 
     private void CreateMarkers()

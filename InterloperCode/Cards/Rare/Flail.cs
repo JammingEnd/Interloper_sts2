@@ -17,16 +17,31 @@ public class Flail() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(8, ValueProp.Move),
-        new IntVar("Potential", 5)
+        new DamageVar(6, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
-        await CommonActions.CardAttack(this, play).Execute(choiceContext);
+        int hits = GetHitsFromPotential();
+        if (hits <= 0)
+            return;
+
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hits)
+            .FromCard(this, play)
+            .Targeting(play.Target)
+            .Execute(choiceContext);
+    }
+
+    private int GetHitsFromPotential()
+    {
+        var state = Owner.PlayerCombatState?.GetDarkPotentialState();
+        if (state == null || state.Max <= 0)
+            return 0;
+
+        return state.Current * 10 / state.Max;
     }
 
     protected override void OnUpgrade()

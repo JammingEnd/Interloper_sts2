@@ -51,7 +51,7 @@
   "INTERLOPER-ENGULF.title": "Engulf",
   "INTERLOPER-FEEDING_ON_NOTHINGNESS.description": "Deal 7 damage, increases by 7 each time this card is [gold]Exhausted[/gold]. \nThis card removes [gold]Consumed[/gold] when played. {InCombat:\n({Damage:diff()})|}",
   "INTERLOPER-FEEDING_ON_NOTHINGNESS.title": "Feeding On Nothingness",
-  "INTERLOPER-FLAIL.description": "Deal {Damage:diff()} damage.\n[color=#541191]Potential[/color] {Potential:diff()}.",
+  "INTERLOPER-FLAIL.description": "Deal {Damage:diff()} damage for each 10% of your [color=#541191]Dark Potential[/color] bar filled.",
   "INTERLOPER-FLAIL.title": "Flail",
   "INTERLOPER-FOUL_PLAY.description": "Gain {Block:diff()} [gold]Block[/gold]. \n[color=#952990]Absorb[/color] 10+: draw {Cards:diff()} cards and apply {FoulPlayVulnerable:digit} [gold]Vulnerable[/gold].",
   "INTERLOPER-FOUL_PLAY.title": "Foul Play",

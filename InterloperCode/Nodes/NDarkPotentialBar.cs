@@ -164,7 +164,7 @@ public partial class NDarkPotentialBar : Control
         var loc = new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.energy");
         loc.Add("Percent", DarkPotentialCmd.EnergyThresholds[index]);
         loc.Add("Value", DarkPotentialCmd.EnergyValues[index]);
-        var hoverTip = new HoverTip(loc, loc);
+        var hoverTip = new HoverTip(loc);
         var set = NHoverTipSet.CreateAndShow(marker, hoverTip, HoverTip.GetHoverTipAlignment(marker));
         set?.SetExtraFollowOffset(new Vector2(20f, -20f));
         set?.SetFollowOwner();

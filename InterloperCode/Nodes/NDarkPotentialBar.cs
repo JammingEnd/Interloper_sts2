@@ -31,15 +31,6 @@ public partial class NDarkPotentialBar : Control
 
     private static readonly DarkPotentialLevels Levels = new();
 
-    private static readonly Texture2D MarkerTexture =
-        PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/potential_marker.png".ImagePath());
-
-    private static readonly Texture2D EnergyMarkerTexture =
-        PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/energy_marker.png".ImagePath());
-
-    private static readonly PackedScene FireVfxScene =
-        PreloadManager.Cache.GetScene("othervfx/dark_fire_vfx.tscn".ScenePath());
-
     private static readonly Color TrackColor = new(0.13f, 0.09f, 0.21f);
     private static readonly Color FillColor = InterloperCharacter.Color;
 
@@ -105,9 +96,10 @@ public partial class NDarkPotentialBar : Control
 
     private void CreateFlames()
     {
+        var fireScene = PreloadManager.Cache.GetScene("othervfx/dark_fire_vfx.tscn".ScenePath());
         foreach (var marker in _levelMarkers)
         {
-            var flame = FireVfxScene.Instantiate<Node2D>();
+            var flame = fireScene.Instantiate<Node2D>();
             flame.Position = new Vector2(MarkerSize * 0.5f - FlameSize * 0.5f, MarkerSize * 0.6f - FlameSize * 0.5f - 40f);
             flame.Scale = new Vector2(FlameScale, FlameScale);
             flame.Visible = false;
@@ -132,14 +124,17 @@ public partial class NDarkPotentialBar : Control
 
     private void CreateMarkers()
     {
+        var markerTexture = PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/potential_marker.png".ImagePath());
+        var energyTexture = PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/energy_marker.png".ImagePath());
+
         for (int i = 1; i <= DarkPotentialLevels.LevelCount; i++)
         {
-            _levelMarkers.Add(CreateMarker(MarkerTexture, i / (float)DarkPotentialLevels.LevelCount, Colors.White, false));
+            _levelMarkers.Add(CreateMarker(markerTexture, i / (float)DarkPotentialLevels.LevelCount, Colors.White, false));
         }
 
         for (int i = 0; i < DarkPotentialCmd.EnergyThresholds.Length; i++)
         {
-            _energyMarkers.Add(CreateMarker(EnergyMarkerTexture, DarkPotentialCmd.EnergyThresholds[i] / 100f, Colors.White, true));
+            _energyMarkers.Add(CreateMarker(energyTexture, DarkPotentialCmd.EnergyThresholds[i] / 100f, Colors.White, true));
         }
     }
 

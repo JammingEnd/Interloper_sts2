@@ -17,32 +17,21 @@ using InterloperCharacter = Interloper.InterloperCode.Character.Interloper;
 namespace Interloper.InterloperCode.Patches;
 
 /* =====================================================================================
- * Discovery spike: how the base game enqueues a networked player action from a UI button.
+ * Networking: single path for the Dark Potential clear button.
  *
  * A GameAction (MegaCrit.Sts2.Core.GameActions) is a thin wrapper around an async Task
  * that runs in response to player input, INSIDE the game's deterministic action pipeline.
- * The End Turn button follows this pattern: it enqueues an EndPlayerTurnAction via
- * ActionQueueSynchronizer.RequestEnqueue(GameAction) (also see DevConsole.ProcessCommand,
- * which enqueues a ConsoleCmdGameAction the same way for networked console commands).
+ * The base game's pattern for a networked UI button is to enqueue a ConsoleCmdGameAction
+ * directly via ActionQueueSynchronizer.RequestEnqueue(GameAction) (see DevConsole.ProcessCommand).
  *
- * To subclass GameAction you implement:
- *   - OwnerId                 -> the acting Player's NetId
- *   - ActionType              -> GameActionType.CombatPlayPhaseOnly defers the action until
- *                                the local player's play phase (else the synchronizer holds it)
- *   - ExecuteAction()         -> the actual logic, run inside the pipeline with a PlayerChoiceContext
- *   - ToNetAction()           -> an INetAction used to serialize/broadcast the action to all peers
- *
- * INetAction is a [GenerateSubtypes] interface whose subtype registry is baked at compile
- * time, so a mod cannot ship a brand-new net action type. We therefore reuse the built-in
- * NetConsoleCmdGameAction (which reconstructs to a ConsoleCmdGameAction): on the peer that
- * pressed the button, our custom DarkPotentialClearAction runs DarkPotentialCmd.Clear directly;
- * the networked copy reconstructs as a ConsoleCmdGameAction and runs the registered
- * DarkPotentialClearConsoleCmd (auto-discovered via ReflectionHelper.GetSubtypesInMods<AbstractConsoleCmd>),
- * which performs the SAME DarkPotentialCmd.Clear with a GameActionPlayerChoiceContext.
- * Both paths converge on the same deterministic logic - never a raw UI callback.
- *
- * Enqueue point (button press):
- *   RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new DarkPotentialClearAction(player));
+ * Button press:
+ *   RequestClear -> RequestEnqueue(new ConsoleCmdGameAction(me, Command, inCombat: true))
+ *   -> ActionQueueSynchronizer broadcasts it to every peer (serialized as NetConsoleCmdGameAction)
+ *   -> on each peer the reconstructed ConsoleCmdGameAction runs DarkPotentialClearConsoleCmd
+ *      (auto-discovered via ReflectionHelper.GetSubtypesInMods<AbstractConsoleCmd>)
+ *   -> DarkPotentialClearConsoleCmd.Process runs the SAME DarkPotentialCmd.Clear with a
+ *      GameActionPlayerChoiceContext wrapping the currently-running action.
+ * Every peer runs the same deterministic logic - never a raw UI callback.
  * ===================================================================================== */
 
 [HarmonyPatch(typeof(NCombatUi), nameof(NCombatUi.Activate))]
@@ -73,7 +62,7 @@ internal class NCombatUiDarkPotentialPatch
         var clearButton = new Button
         {
             Name = "DarkPotentialClearButton",
-            Text = "\u2715",
+            Text = "X",
             Size = new Vector2(44f, 44f),
             Position = new Vector2(146f, 40f)
         };
@@ -83,54 +72,17 @@ internal class NCombatUiDarkPotentialPatch
 
     private static void RequestClear(Player player)
     {
-        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new DarkPotentialClearAction(player));
+        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
+            new ConsoleCmdGameAction(player, DarkPotentialClearConsoleCmd.Command, inCombat: true));
     }
 }
 
 /// <summary>
-/// Custom networked player action for the clear button. Runs <see cref="DarkPotentialCmd.Clear"/>
-/// inside the deterministic action pipeline with a <see cref="GameActionPlayerChoiceContext"/>.
-/// <see cref="ToNetAction"/> reuses the built-in NetConsoleCmdGameAction because mods cannot
-/// register new <c>[GenerateSubtypes]</c> net action types; remote peers reconstruct that net
-/// action as a <see cref="ConsoleCmdGameAction"/> running <see cref="DarkPotentialClearConsoleCmd"/>.
-/// </summary>
-public class DarkPotentialClearAction : GameAction
-{
-    private readonly Player _player;
-
-    public override ulong OwnerId => _player.NetId;
-
-    public override GameActionType ActionType => GameActionType.CombatPlayPhaseOnly;
-
-    public DarkPotentialClearAction(Player player)
-    {
-        _player = player;
-    }
-
-    protected override Task ExecuteAction()
-    {
-        return DarkPotentialCmd.Clear(new GameActionPlayerChoiceContext(this), _player);
-    }
-
-    public override INetAction ToNetAction()
-    {
-        return new NetConsoleCmdGameAction
-        {
-            cmd = DarkPotentialClearConsoleCmd.Command,
-            inCombat = true
-        };
-    }
-
-    public override string ToString()
-    {
-        return $"DarkPotentialClearAction for player {_player.NetId}";
-    }
-}
-
-/// <summary>
-/// Backs the networked (remote-peer / reconstructed) path of <see cref="DarkPotentialClearAction"/>.
-/// Auto-registered with the dev console via <c>ReflectionHelper.GetSubtypesInMods&lt;AbstractConsoleCmd&gt;</c>;
-/// performs the same <see cref="DarkPotentialCmd.Clear"/> as the custom action.
+/// Backs the networked clear path. Auto-registered with the dev console via
+/// <c>ReflectionHelper.GetSubtypesInMods&lt;AbstractConsoleCmd&gt;</c>; runs on every peer when
+/// the clear button enqueues a <see cref="ConsoleCmdGameAction"/>. Performs the
+/// <see cref="DarkPotentialCmd.Clear"/> with a <see cref="GameActionPlayerChoiceContext"/> wrapping
+/// the currently-running action (the <see cref="ConsoleCmdGameAction"/> the executor is running).
 /// </summary>
 public class DarkPotentialClearConsoleCmd : AbstractConsoleCmd
 {
@@ -151,8 +103,10 @@ public class DarkPotentialClearConsoleCmd : AbstractConsoleCmd
         if (issuingPlayer == null)
             return new CmdResult(success: false, "No issuing player for Dark Potential clear.");
 
-        var runningAction = RunManager.Instance.ActionExecutor.CurrentlyRunningAction
-            ?? new ConsoleCmdGameAction(issuingPlayer, Command, inCombat: true);
+        var runningAction = RunManager.Instance.ActionExecutor.CurrentlyRunningAction;
+        if (runningAction == null)
+            return new CmdResult(success: false, "No running action to perform Dark Potential clear.");
+
         var ctx = new GameActionPlayerChoiceContext(runningAction);
         return new CmdResult(DarkPotentialCmd.Clear(ctx, issuingPlayer), success: true, "Dark Potential cleared.");
     }

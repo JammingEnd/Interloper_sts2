@@ -39,7 +39,7 @@ Add hoverable threshold markers to the Dark Potential arc, and a second set of t
 
 - **Level marker hover** → `Level i: threshold/max — <GetDescription(i)>` where `threshold = Max · i / LevelCount` (recomputes if `Max` changes).
 - **Energy marker hover** → `M% — +N Energy` (e.g. "30% — +2 Energy"), via loc keys in `static_hover_tips.json`.
-- Whole-bar hover still shows the summary of all levels + energy thresholds (unchanged behavior).
+- **Hovering the bar itself (not a marker) shows no tooltip.** The existing whole-bar summary tooltip is removed; tooltips are shown exclusively by the markers.
 
 ## Notes
 

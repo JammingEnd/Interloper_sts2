@@ -12,7 +12,9 @@ public class Goodwill() : InterloperCard(0,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Potential", 10)
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -21,7 +23,7 @@ public class Goodwill() : InterloperCard(0,
         if ((Owner.PlayerCombatState?.GetDarkPotential() ?? 0) <= 0)
             return;
 
-        await DarkPotentialCmd.Add(choiceContext, Owner, 10);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override void OnUpgrade()

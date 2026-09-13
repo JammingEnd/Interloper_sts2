@@ -18,7 +18,8 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<PrayersHeardPower>("PrayersHeardPower",5)
+        new PowerVar<PrayersHeardPower>("PrayersHeardPower",5),
+        new IntVar("Potential", 5)
     ];
 
     protected override async Task OnPlay(
@@ -27,7 +28,7 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
     {
         await PowerCmd.Apply<PrayersHeardPower>(choiceContext, play.Target, DynamicVars["PrayersHeardPower"].IntValue, Owner.Creature, this);
 
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override void OnUpgrade()
@@ -37,7 +38,7 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(

@@ -15,7 +15,9 @@ public class Intervention() : InterloperCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Potential", 5)
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -36,7 +38,7 @@ public class Intervention() : InterloperCard(1,
                 exhaustPile.MoveToTopInternal(card);
             }
         }
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override void OnUpgrade()

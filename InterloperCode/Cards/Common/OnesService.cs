@@ -21,6 +21,7 @@ public class OnesService() : InterloperCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
             new DamageVar(5, ValueProp.Move),
             new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5),
+            new IntVar("Potential", 5),
     ];
 
     protected override async Task OnPlay(
@@ -29,7 +30,7 @@ public class OnesService() : InterloperCard(1,
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
         await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

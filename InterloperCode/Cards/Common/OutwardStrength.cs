@@ -16,7 +16,8 @@ public class OutwardStrength() : InterloperCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(10, ValueProp.Move),
-        new RepeatVar(2)
+        new RepeatVar(2),
+        new IntVar("Potential", 5)
     ];
 
     protected override async Task OnPlay(
@@ -24,7 +25,7 @@ public class OutwardStrength() : InterloperCard(2,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play, DynamicVars.Repeat.IntValue).Execute(choiceContext);
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override void OnUpgrade()

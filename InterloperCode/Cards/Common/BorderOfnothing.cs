@@ -19,7 +19,8 @@ public class BorderOfnothing() : InterloperCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VoidReachPower>("VoidReachPower", 2)
+        new PowerVar<VoidReachPower>("VoidReachPower", 2), 
+        new IntVar("Potential", 7)
     ];
 
     protected override async Task OnPlay(
@@ -27,7 +28,7 @@ public class BorderOfnothing() : InterloperCard(1,
         CardPlay play)
     {
         await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, DynamicVars["VoidReachPower"].IntValue, Owner.Creature, this);
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override void OnUpgrade()

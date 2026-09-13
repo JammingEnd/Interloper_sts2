@@ -18,13 +18,14 @@ public class Shhhh() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(13, ValueProp.Move),
+        new IntVar("Potential", 5),
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
     }
 

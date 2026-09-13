@@ -19,6 +19,7 @@ public class ToTheDepths() : InterloperCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(7, ValueProp.Move),
+        new IntVar("Potential", 5),
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -38,7 +39,7 @@ public class ToTheDepths() : InterloperCard(0,
         if (energyX < 2)
             return;
 
-        int potential = energyX >= 6 ? 10 : energyX >= 4 ? 8 : 5;
+        int potential = energyX >= 6 ? 10 : energyX >= 4 ? 8 : DynamicVars["Potential"].IntValue;
         await DarkPotentialCmd.Add(choiceContext, Owner, potential);
     }
 

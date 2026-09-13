@@ -18,7 +18,8 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(9, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5)
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5),
+        new IntVar("Potential", 5)
     ];
 
     protected override async Task OnPlay(
@@ -39,7 +40,7 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(

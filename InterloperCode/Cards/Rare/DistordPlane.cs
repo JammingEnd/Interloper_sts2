@@ -13,13 +13,15 @@ public class DistordPlane() : InterloperCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Potential", 10)
+    ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await DarkPotentialCmd.Add(choiceContext, Owner, 10);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override void OnUpgrade()

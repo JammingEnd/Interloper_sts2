@@ -16,7 +16,8 @@ public class WideOpen() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1)
+        new EnergyVar(1),
+        new IntVar("Potential", 5)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -30,7 +31,7 @@ public class WideOpen() : InterloperCard(1,
         if (target != null)
             await CardCmd.Exhaust(choiceContext, target);
 
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }

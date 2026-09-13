@@ -22,7 +22,8 @@ public class Sideye() : InterloperCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>("SideyeWeak", 1),
-        new BlockVar("SideyeMoved", 15, ValueProp.Move)
+        new BlockVar("SideyeMoved", 15, ValueProp.Move),
+        new IntVar("Potential", 5)
     ];
 
     protected override async Task OnPlay(
@@ -41,7 +42,7 @@ public class Sideye() : InterloperCard(1,
     protected override async void AfterMovedFromExhaust(CardModel card)
     {
         var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(card.Owner, "h", true));
-        await DarkPotentialCmd.Add(ctx, card.Owner, 5);
+        await DarkPotentialCmd.Add(ctx, card.Owner, DynamicVars["Potential"].IntValue);
         await CreatureCmd.GainBlock(card.Owner.Creature, DynamicVars["SideyeMoved"] as BlockVar, null);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

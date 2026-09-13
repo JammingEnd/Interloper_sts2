@@ -13,7 +13,8 @@ namespace Interloper.InterloperCode.Cards.Common;
 public class focus() : InterloperCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(6, ValueProp.Move)
+        new BlockVar(6, ValueProp.Move),
+        new IntVar("Potential", 5)
     ];
 
     protected override void OnUpgrade()
@@ -24,6 +25,6 @@ public class focus() : InterloperCard(1, CardType.Skill, CardRarity.Common, Targ
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CommonActions.CardBlock(this, cardPlay);
-        await DarkPotentialCmd.Add(choiceContext, Owner, 5);
+        await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 }

@@ -14,7 +14,9 @@ public class Consume() : InterloperCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Potential", 8)
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -26,7 +28,7 @@ public class Consume() : InterloperCard(1,
         if (target != null)
         {
             await CardCmd.Exhaust(choiceContext, target);
-            await DarkPotentialCmd.Add(choiceContext, Owner, 8);
+            await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
         }
     }
 

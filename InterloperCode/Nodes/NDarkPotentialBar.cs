@@ -15,7 +15,7 @@ public partial class NDarkPotentialBar : Control
     private static readonly Vector2 BarSize = new(176f, 116f);
 
     private const float ArcRadius = 50f;
-    private const float ArcWidth = 10f;
+    private const float ArcWidth = 14f;
     private const int ArcPointCount = 96;
 
     private const float ArcStartAngle = Mathf.Pi * 3f / 4f;
@@ -23,7 +23,8 @@ public partial class NDarkPotentialBar : Control
     private const float ArcEndAngle = ArcStartAngle + ArcSweep;
 
     private const float MarkerSize = 20f;
-    private const float MarkerInset = 12f;
+    private const float MarkerInset = 17f;
+    private const float MarkerOutset = 5f;
 
     private static readonly DarkPotentialLevels Levels = new();
 
@@ -101,7 +102,7 @@ public partial class NDarkPotentialBar : Control
 
         for (int i = 0; i < DarkPotentialCmd.EnergyThresholds.Length; i++)
         {
-            _energyMarkers.Add(CreateMarker(EnergyMarkerTexture, DarkPotentialCmd.EnergyThresholds[i] / 100f, new Color(1f, 0.84f, 0f), true));
+            _energyMarkers.Add(CreateMarker(EnergyMarkerTexture, DarkPotentialCmd.EnergyThresholds[i] / 100f, Colors.White, true));
         }
     }
 
@@ -120,7 +121,7 @@ public partial class NDarkPotentialBar : Control
         marker.PivotOffset = marker.Size * 0.5f;
 
         float angle = ArcStartAngle + ArcSweep * (float)progress;
-        float radius = pointInward ? ArcRadius - MarkerInset : ArcRadius;
+        float radius = pointInward ? ArcRadius - MarkerInset : ArcRadius + MarkerOutset;
         var arcPoint = Size * 0.5f + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
         marker.Position = arcPoint - marker.Size * 0.5f;
         // Art points up (-Y); level markers rotate to theta+90deg (outward), energy +180deg more (inward).

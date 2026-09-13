@@ -108,7 +108,7 @@ public partial class NDarkPotentialBar : Control
         foreach (var marker in _levelMarkers)
         {
             var flame = FireVfxScene.Instantiate<Node2D>();
-            flame.Position = new Vector2(MarkerSize * 0.5f - FlameSize * 0.5f, MarkerSize * 0.6f - FlameSize * 0.5f);
+            flame.Position = new Vector2(MarkerSize * 0.5f - FlameSize * 0.5f, MarkerSize * 0.6f - FlameSize * 0.5f - 40f);
             flame.Scale = new Vector2(FlameScale, FlameScale);
             flame.Visible = false;
             marker.AddChild(flame);

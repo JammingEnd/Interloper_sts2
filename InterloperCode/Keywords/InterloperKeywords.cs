@@ -13,14 +13,6 @@ public static class InterloperKeywords
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Pure;
 
-    [CustomEnum("Sequence")]
-    [KeywordProperties(AutoKeywordPosition.After)]
-    public static CardKeyword Sequence;
-    
-    [CustomEnum("Glyph")]
-    [KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword Glyph;
-
     [CustomEnum("DarkPotential")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword DarkPotential;

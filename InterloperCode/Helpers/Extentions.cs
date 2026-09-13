@@ -1,4 +1,3 @@
-using Interloper.InterloperCode.Glyphs;
 using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -54,22 +53,5 @@ public static class Extentions
     {
         power = creature.GetPower<T>();
         return power != null;
-    }
-    private static readonly GlyphSequence[] Sequences =
-    {
-        GlyphSequence.OneOfEach,
-        GlyphSequence.ThreeEyes,
-        GlyphSequence.ThreeMouths,
-        GlyphSequence.ThreeTails,
-        GlyphSequence.TwoEyesOneMouth,
-        GlyphSequence.TwoEyesOneTail,
-        GlyphSequence.TwoMouthsOneTail,
-        GlyphSequence.OneEyeTwoMouths,
-        GlyphSequence.OneEyeTwoTails,
-        GlyphSequence.OneMouthTwoTails
-    };
-    public static GlyphSequence GetSequenceByIndex(int index)
-    {
-        return Sequences[index]; 
     }
 }

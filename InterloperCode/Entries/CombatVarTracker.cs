@@ -16,15 +16,8 @@ namespace Interloper.InterloperCode.Entries;
 
 public class CombatVarTracker() : CustomSingletonModel(HookType.Combat)
 {
-    public static readonly SpireField<Creature, decimal> totalGlypsPlayedInCombat = new(() => 0);
-    
     public static readonly SpireField<Creature, decimal> totalCorruptionAppliedInTurn = new(() => 0);
 
-    public static decimal GetTotalGlyphsPlayedCombat(Creature creature)
-    {
-        var combatState = creature.CombatState;
-        return combatState == null ? 0 : totalGlypsPlayedInCombat[creature];
-    }
     public static decimal GetTotalCorruptionAppliedTurn(Creature creature)
     {
         var combatState = creature.CombatState;
@@ -36,14 +29,6 @@ public class CombatVarTracker() : CustomSingletonModel(HookType.Combat)
         var combatState = player.Creature.CombatState;
         if (combatState != null)
         {
-            if (combatState.CurrentSide == CombatSide.Player)
-            {
-                if (player.PlayerCombatState.TurnNumber == 1)
-                {
-                    CombatVarTracker.totalGlypsPlayedInCombat[player.Creature] = 0;
-                }
-            }
-
             totalCorruptionAppliedInTurn[player.Creature] = 0;
             MainFile.Logger.Info($"SET the static at turn start!");
         }

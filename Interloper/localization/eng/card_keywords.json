@@ -3,10 +3,6 @@
   "INTERLOPER-CONSUMED.title": "Consumed",
   "INTERLOPER-PURE.description": "This cards gets shuffled into you draw pile when it's in your exhaust pile",
   "INTERLOPER-PURE.title": "Pure",
-  "INTERLOPER-SEQUENCE.description": "Playing 3 [gold]Glyph[/gold] cards activates a [gold]Glyph Sequence[/gold].",
-  "INTERLOPER-SEQUENCE.title": "Sequence",
-  "INTERLOPER-GLYPH.description": "Play 3 of these cards to activate a Sequence, consult the Glyphiary for outcomes",
-  "INTERLOPER-GLYPH.title": "Glyph",
   "INTERLOPER-DARKPOTENTIAL.description": "Gain Dark Potential to fill the bar. Clear it with the button next to your energy to activate the highest level reached.",
   "INTERLOPER-DARKPOTENTIAL.title": "Dark Potential"
 }

@@ -17,7 +17,7 @@ namespace Interloper.InterloperCode.Cards.Common;
 
 // pick a card from your discard pile, its free to play but gains exhaust
 public class LostAndFound() : InterloperCard(1,
-    CardType.Skill, CardRarity.Common,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     private static readonly LocString SelectPrompt = new("cards", "INTERLOPERMOD.selectionScreenPrompt.return");

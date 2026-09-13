@@ -1,4 +1,5 @@
 {
-  "INTERLOPER-DARK_POTENTIAL.title": "Dark Potential",
-  "INTERLOPER-DARK_POTENTIAL.description": "{Levels}"
+  "INTERLOPER-DARK_POTENTIAL.energy": "{Percent}% — +{Value} Energy",
+  "INTERLOPER-DARK_POTENTIAL.levelTitle": "Level {Level}",
+  "INTERLOPER-DARK_POTENTIAL.level": "{Threshold} / {Max}{Description}"
 }

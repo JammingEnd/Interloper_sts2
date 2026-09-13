@@ -22,6 +22,9 @@ public partial class NDarkPotentialBar : Control
     private const float ArcSweep = Mathf.Pi * 3f / 2f;
     private const float ArcEndAngle = ArcStartAngle + ArcSweep;
 
+    private const float MarkerSize = 20f;
+    private const float MarkerInset = 12f;
+
     private static readonly DarkPotentialLevels Levels = new();
 
     private static readonly Texture2D MarkerTexture =
@@ -38,8 +41,14 @@ public partial class NDarkPotentialBar : Control
     public void Initialize(Player player)
     {
         _player = player;
-        if (GetChildCount() == 0)
+        if (_levelMarkers.Count == 0)
+        {
             CreateMarkers();
+            for (int i = 0; i < _levelMarkers.Count; i++)
+                AttachLevelHover(_levelMarkers[i], i + 1);
+            for (int i = 0; i < _energyMarkers.Count; i++)
+                AttachEnergyHover(_energyMarkers[i], i);
+        }
         QueueRedraw();
     }
 
@@ -59,8 +68,6 @@ public partial class NDarkPotentialBar : Control
     {
         Size = BarSize;
         MouseFilter = MouseFilterEnum.Stop;
-        MouseEntered += OnBarHovered;
-        MouseExited += OnBarUnhovered;
     }
 
     public override void _Draw()
@@ -100,7 +107,7 @@ public partial class NDarkPotentialBar : Control
         var marker = new TextureRect
         {
             Texture = MarkerTexture,
-            Size = new Vector2(20f, 20f),
+            Size = new Vector2(MarkerSize, MarkerSize),
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
             StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
             Modulate = tint,
@@ -110,7 +117,7 @@ public partial class NDarkPotentialBar : Control
         marker.PivotOffset = marker.Size * 0.5f;
 
         float angle = ArcStartAngle + ArcSweep * (float)progress;
-        float radius = pointInward ? ArcRadius - 12f : ArcRadius;
+        float radius = pointInward ? ArcRadius - MarkerInset : ArcRadius;
         var arcPoint = Size * 0.5f + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
         marker.Position = arcPoint - marker.Size * 0.5f;
         // Art points up (-Y); level markers rotate to theta+90deg (outward), energy +180deg more (inward).
@@ -120,41 +127,46 @@ public partial class NDarkPotentialBar : Control
         return marker;
     }
 
-    private void OnBarHovered()
+    private void AttachLevelHover(TextureRect marker, int level)
     {
-        if (_player == null)
-            return;
+        marker.MouseEntered += () => ShowLevelTip(marker, level);
+        marker.MouseExited += () => NHoverTipSet.Remove(marker);
+    }
 
-        var description = new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.description");
-        description.Add("Levels", BuildLevelsText(_player));
+    private void ShowLevelTip(TextureRect marker, int level)
+    {
+        if (_player == null) return;
+        int max = _player.PlayerCombatState?.GetDarkPotentialMax() ?? 100;
+        int threshold = max * level / DarkPotentialLevels.LevelCount;
+        string description = Levels.GetDescription(level);
 
-        var hoverTip = new HoverTip(
-            new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.title"),
-            description);
+        var title = new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.levelTitle");
+        title.Add("Level", level);
+        var body = new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.level");
+        body.Add("Threshold", threshold);
+        body.Add("Max", max);
+        body.Add("Description", string.IsNullOrWhiteSpace(description) ? "" : $" — {description}");
 
-        var set = NHoverTipSet.CreateAndShow(this, hoverTip, HoverTip.GetHoverTipAlignment(this));
+        var hoverTip = new HoverTip(title, body);
+        var set = NHoverTipSet.CreateAndShow(marker, hoverTip, HoverTip.GetHoverTipAlignment(marker));
         set?.SetExtraFollowOffset(new Vector2(20f, -20f));
         set?.SetFollowOwner();
     }
 
-    private void OnBarUnhovered()
+    private void AttachEnergyHover(TextureRect marker, int index)
     {
-        NHoverTipSet.Remove(this);
+        marker.MouseEntered += () => ShowEnergyTip(marker, index);
+        marker.MouseExited += () => NHoverTipSet.Remove(marker);
     }
 
-    private static string BuildLevelsText(Player player)
+    private void ShowEnergyTip(TextureRect marker, int index)
     {
-        int max = player.PlayerCombatState?.GetDarkPotentialMax() ?? 100;
-        var lines = new List<string>(DarkPotentialLevels.LevelCount);
-        for (int i = 1; i <= DarkPotentialLevels.LevelCount; i++)
-        {
-            int threshold = max * i / DarkPotentialLevels.LevelCount;
-            string levelDescription = Levels.GetDescription(i);
-            lines.Add(string.IsNullOrWhiteSpace(levelDescription)
-                ? $"Level {i}: {threshold}/{max}"
-                : $"Level {i}: {threshold}/{max} — {levelDescription}");
-        }
-
-        return string.Join("\n", lines);
+        var loc = new LocString("static_hover_tips", "INTERLOPER-DARK_POTENTIAL.energy");
+        loc.Add("Percent", DarkPotentialCmd.EnergyThresholds[index]);
+        loc.Add("Value", DarkPotentialCmd.EnergyValues[index]);
+        var hoverTip = new HoverTip(loc, loc);
+        var set = NHoverTipSet.CreateAndShow(marker, hoverTip, HoverTip.GetHoverTipAlignment(marker));
+        set?.SetExtraFollowOffset(new Vector2(20f, -20f));
+        set?.SetFollowOwner();
     }
 }

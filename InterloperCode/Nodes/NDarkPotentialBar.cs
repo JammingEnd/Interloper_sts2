@@ -30,6 +30,9 @@ public partial class NDarkPotentialBar : Control
     private static readonly Texture2D MarkerTexture =
         PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/potential_marker.png".ImagePath());
 
+    private static readonly Texture2D EnergyMarkerTexture =
+        PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/energy_marker.png".ImagePath());
+
     private static readonly Color TrackColor = new(0.13f, 0.09f, 0.21f);
     private static readonly Color FillColor = InterloperCharacter.Color;
 
@@ -93,20 +96,20 @@ public partial class NDarkPotentialBar : Control
     {
         for (int i = 1; i <= DarkPotentialLevels.LevelCount; i++)
         {
-            _levelMarkers.Add(CreateMarker(i / (float)DarkPotentialLevels.LevelCount, Colors.White, false));
+            _levelMarkers.Add(CreateMarker(MarkerTexture, i / (float)DarkPotentialLevels.LevelCount, Colors.White, false));
         }
 
         for (int i = 0; i < DarkPotentialCmd.EnergyThresholds.Length; i++)
         {
-            _energyMarkers.Add(CreateMarker(DarkPotentialCmd.EnergyThresholds[i] / 100f, new Color(1f, 0.84f, 0f), true));
+            _energyMarkers.Add(CreateMarker(EnergyMarkerTexture, DarkPotentialCmd.EnergyThresholds[i] / 100f, new Color(1f, 0.84f, 0f), true));
         }
     }
 
-    private TextureRect CreateMarker(double progress, Color tint, bool pointInward)
+    private TextureRect CreateMarker(Texture2D texture, double progress, Color tint, bool pointInward)
     {
         var marker = new TextureRect
         {
-            Texture = MarkerTexture,
+            Texture = texture,
             Size = new Vector2(MarkerSize, MarkerSize),
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
             StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,

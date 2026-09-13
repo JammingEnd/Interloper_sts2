@@ -1,7 +1,10 @@
 using Godot;
 using HarmonyLib;
+using Interloper.InterloperCode.Extensions;
 using Interloper.InterloperCode.Field;
+using Interloper.InterloperCode.Nodes;
 using Interloper.InterloperCode.Potential;
+using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.DevConsole;
@@ -62,20 +65,20 @@ internal class NCombatUiDarkPotentialPatch
             existingButton.QueueFree();
         }
 
-        var clearButton = new Button
+        var clearButton = new NDarkPotentialClearButton
         {
             Name = "DarkPotentialClearButton",
-            Text = "X",
-            Size = new Vector2(54f, 54f),
+            TextureNormal = PreloadManager.Cache.GetTexture2D("ui/combat/dark_potential/potential_button.png".ImagePath()),
+            Size = new Vector2(40f, 40f),
             // Centered on the bar (bar center = Position + BarSize/2).
-            Position = new Vector2(47f, -64f)
+            Position = new Vector2(54f, -57f)
         };
         __instance._energyCounter.AddChild(clearButton);
         clearButton.Pressed += () => RequestClear(me);
         AttachClearHover(clearButton);
     }
 
-    private static void AttachClearHover(Button button)
+    private static void AttachClearHover(NDarkPotentialClearButton button)
     {
         button.MouseEntered += () =>
         {

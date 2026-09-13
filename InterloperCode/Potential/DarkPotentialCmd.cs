@@ -44,6 +44,8 @@ public static class DarkPotentialCmd
         OnChanged?.Invoke(player);
 
         var combatState = player.Creature.CombatState;
+        // AfterCleared is intentionally only fired when level > 0: a sub-threshold clear
+        // wastes the bar but does not trigger level consumers like WitnessMe/Absolute.
         if (combatState != null && level > 0)
             await DarkPotentialHook.AfterCleared(combatState, choiceContext, player, level);
     }
@@ -52,6 +54,9 @@ public static class DarkPotentialCmd
     {
         var state = player.PlayerCombatState?.GetDarkPotentialState();
         if (state == null)
+            return;
+
+        if (CombatManager.Instance.IsOverOrEnding)
             return;
 
         state.Max = Math.Max(1, value);

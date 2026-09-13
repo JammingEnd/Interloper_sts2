@@ -57,10 +57,12 @@ Replace the glyph card/sequence system with a **Dark Potential** resource: a fla
 **Remove:**
 - GlyphEye/Mouth/Tail cards, `GlyphCard`, glyph powers, glyph models/queue/field/hook/cmd/sequence (`GlyphCmd`, `GlyphHook`, `GlyphQueue`, `GlyphField`, `GlyphModel`, `GlyphSequence`, `IAfterSequenceActivated`), `NGlyphArch`, `GlyphNode`, `LocHelper` glyph logic, glyph VFX/scenes/sounds.
 - `Glyph` / `Sequence` keywords (`InterloperKeywords.cs`) and their loc.
-- `CombatVarTracker` glyph/sequence tracking (`totalGlypsPlayedInCombat` and related).
+- `CombatVarTracker` glyph/sequence tracking (`totalGlypsPlayedInCombat` and related) and `RunVarTracker` sequence tracking (`totalSequencesPlayedInRun` / `GetTotalSequencesPlayedInRun`).
+- `Helpers/Extentions.cs` `GetSequenceByIndex` (enumerates `GlyphSequence`).
 
 **Migrate generators** (each card that created a glyph token now grants Potential instead):
-- DeepGaze, BorderOfnothing, OnesService, OutwardStrength, Sideye, focus, ToTheDepths, ByStringsPower, AddedBenefitPower — each gains a "Potential X" value (values chosen during implementation; default small values such as 5–10).
+- DeepGaze, BorderOfnothing, OnesService, OutwardStrength, Sideye, focus, ToTheDepths, DistordPlane, ByStringsPower, AddedBenefitPower — each gains a "Potential X" value (values chosen during implementation; default small values such as 5–10).
+- DarkInsightPotion — instead of adding 3 random glyph cards, grants Potential (e.g., add a fixed "Potential 15") or is reworked.
 - Cards that consumed glyph tokens for effects (Consume, Goodwill, WideOpen, Intervention, Shhhh, PrayersHeard, LongEnd) — reworked to grant/bonus Potential or removed.
 
 **Migrate consumers:**

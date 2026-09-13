@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -65,11 +66,30 @@ public static class DarkPotentialCmd
             return;
 
         state.Current += actual;
+
+        // Auto mode: grant energy for each newly-crossed threshold. The index advances before the
+        // first await so a hook-triggered re-entrant Add cannot double-grant.
+        if (state.AutoGrantEnergy)
+            await GrantAutoEnergy(choiceContext, player, state);
+
         OnChanged?.Invoke(player);
 
         var combatState = player.Creature.CombatState;
         if (combatState != null)
             await DarkPotentialHook.OnGained(combatState, choiceContext, player, actual);
+    }
+
+    private static async Task GrantAutoEnergy(PlayerChoiceContext choiceContext, Player player, DarkPotentialState state)
+    {
+        // Re-read the index each iteration: a re-entrant Add during GainEnergy may advance it.
+        for (var i = state.LastGrantedEnergyIndex + 1; i < EnergyThresholds.Length; i = state.LastGrantedEnergyIndex + 1)
+        {
+            if (state.Current < GetEnergyThreshold(state, i))
+                break;
+
+            state.LastGrantedEnergyIndex = i;
+            await PlayerCmd.GainEnergy(EnergyValues[i], player);
+        }
     }
 
     public static async Task Clear(PlayerChoiceContext choiceContext, Player player)
@@ -81,11 +101,18 @@ public static class DarkPotentialCmd
         if (CombatManager.Instance.IsOverOrEnding)
             return;
 
+        // Capture BEFORE the dispatch await so a level effect that mutates Current can't skew the grant.
         var level = GetReachedLevel(state);
+        var energyIndex = !state.AutoGrantEnergy ? GetHighestReachedEnergyIndex(state) : -1;
         if (level > 0)
             await DispatchLevel(choiceContext, player, level);
 
+        // Clear mode (default): pay the highest energy threshold the pre-reset current reached.
+        if (energyIndex >= 0)
+            await PlayerCmd.GainEnergy(EnergyValues[energyIndex], player);
+
         state.Current = 0;
+        state.LastGrantedEnergyIndex = -1;
         OnChanged?.Invoke(player);
 
         var combatState = player.Creature.CombatState;
@@ -106,6 +133,7 @@ public static class DarkPotentialCmd
 
         state.Max = Math.Max(1, value);
         state.Current = Math.Min(state.Current, state.Max);
+        ReSeedEnergyIndex(state);
         OnChanged?.Invoke(player);
     }
 

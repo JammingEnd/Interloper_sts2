@@ -23,7 +23,7 @@
   "INTERLOPER-POCKET_POCKET_DIMENSION_RELIC.description": "When you kill the last enemy with an [color=#952990]Absorb[/color] card, heal 6 HP.",
   "INTERLOPER-POCKET_POCKET_DIMENSION_RELIC.flavor": "Even the one who shackled me can't assert control over there.",
   "INTERLOPER-POCKET_POCKET_DIMENSION_RELIC.title": "Pocket Pocket Dimension",
-  "INTERLOPER-FAMILY_PICTURE_RELIC.description": "Each turn, the first time you play a from a different character, gain 1 [color=#AE30A8]Void Reach[/color].",
+  "INTERLOPER-FAMILY_PICTURE_RELIC.description": "The first time each turn you play a [gold]Colorless[/gold] card, gain 2 [color=#AE30A8]Void Reach[/color]. On pickup, gain a [gold]Colorless[/gold] card reward.",
   "INTERLOPER-FAMILY_PICTURE_RELIC.flavor": "Do i know them? They seem familiar... That could've been me.. It isn't though, is it? i could have been all of them. Or none.",
   "INTERLOPER-FAMILY_PICTURE_RELIC.title": "Family Picture"
 }

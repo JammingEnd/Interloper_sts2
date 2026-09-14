@@ -1,4 +1,3 @@
-using Interloper.InterloperCode.Character;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -7,11 +6,15 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace Interloper.InterloperCode.Relics;
 
-// After playing a card from a different class each turn, gain 1 void reach
+// the first time each turn you play a colorless card, gain 2 void reach. gain a colorless card reward on pickup
 public class FamilyPictureRelic : InterloperRelic
 {
     public override RelicRarity Rarity =>
@@ -26,6 +29,19 @@ public class FamilyPictureRelic : InterloperRelic
             this.AssertMutable();
             this._usedThisTurn = value;
         }
+    }
+    public override async Task AfterObtained()
+    {
+        var colorlessPool = ModelDb.CardPool<ColorlessCardPool>();
+        var options = new CardCreationOptions(
+            new List<CardPoolModel> { colorlessPool },
+            CardCreationSource.Other,
+            CardRarityOddsType.Uniform);
+
+        var reward = new CardReward(
+            options, 3, Owner, RunManager.Instance.PlayerChoiceSynchronizer);
+
+        await RewardsCmd.OfferCustom(Owner, new List<Reward> { reward });
     }
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
@@ -56,9 +72,13 @@ public class FamilyPictureRelic : InterloperRelic
         if (cardPlay.Card.Owner != Owner)
             return;
 
-        if (!_usedThisTurn && cardPlay.Card._pool is not InterloperCardPool)
-        {
-            await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
-        }
+        if (_usedThisTurn)
+            return;
+
+        if (cardPlay.Card.Pool?.IsColorless != true)
+            return;
+
+        UsedThisTurn = true;
+        await PowerCmd.Apply<VoidReachPower>(choiceContext, Owner.Creature, 2, Owner.Creature, null);
     }
 }

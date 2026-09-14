@@ -1,6 +1,5 @@
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.DevConsole;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -27,8 +26,7 @@ public class PainfulRenewalPower() : InterloperPower
         Creature target = cardSource.Owner.Player.RunState.Rng.CombatTargets.NextItem( cardSource.CombatState.HittableEnemies);
         if (target == null)
             return;
-        var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner.Player, "h", true));
-        await CreatureCmd.Damage(ctx, target, this.Amount, ValueProp.Unpowered, this.Owner);
+        await CreatureCmd.Damage(choiceContext, target, this.Amount, ValueProp.Unpowered, this.Owner);
         
     }
 }

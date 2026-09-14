@@ -2,8 +2,9 @@ using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.DevConsole;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -40,11 +41,15 @@ public class InnerSelf() : InterloperCard(1,
         if(card.Owner != this.Owner)
             return;
         
-        PlayerChoiceContext ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner, "h", true));
-        await PowerCmd.Apply<VoidReachPower>(
+        var ctx = new HookPlayerChoiceContext(
+            this,
+            LocalContext.NetId.Value,
+            this.CombatState,
+            GameActionType.CombatPlayPhaseOnly);
+        await ctx.AssignTaskAndWaitForPauseOrCompletion(PowerCmd.Apply<VoidReachPower>(
             ctx, Owner.Creature,
             DynamicVars["VoidReachPower"].IntValue,
-            Owner.Creature, this);
+            Owner.Creature, this));
     }
 
     protected override void OnUpgrade()

@@ -2,8 +2,9 @@ using BaseLib.Utils;
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.DevConsole;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -44,7 +45,11 @@ public class VeilSweep() : InterloperCard(2,
             return;
         if(card.Owner != this.Owner)
             return;
-        PlayerChoiceContext ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner, "h", true));
-        await CardPileCmd.Draw(ctx, DynamicVars.Cards.IntValue, Owner);
+        var ctx = new HookPlayerChoiceContext(
+            this,
+            LocalContext.NetId.Value,
+            this.CombatState,
+            GameActionType.CombatPlayPhaseOnly);
+        await ctx.AssignTaskAndWaitForPauseOrCompletion(CardPileCmd.Draw(ctx, DynamicVars.Cards.IntValue, Owner));
     }
 }

@@ -2,8 +2,9 @@ using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Potential;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.DevConsole;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -27,8 +28,12 @@ public class AddedBenefitPower() : InterloperPower
 
         if (oldPileType == PileType.Exhaust && card.EnergyCost.Canonical >= 2)
         {
-            var ctx = new GameActionPlayerChoiceContext(new ConsoleCmdGameAction(Owner.Player, "h", true));
-            await DarkPotentialCmd.Add(ctx, Owner.Player, Amount);
+            var ctx = new HookPlayerChoiceContext(
+                this,
+                LocalContext.NetId.Value,
+                this.CombatState,
+                GameActionType.CombatPlayPhaseOnly);
+            await ctx.AssignTaskAndWaitForPauseOrCompletion(DarkPotentialCmd.Add(ctx, Owner.Player, Amount));
         }
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

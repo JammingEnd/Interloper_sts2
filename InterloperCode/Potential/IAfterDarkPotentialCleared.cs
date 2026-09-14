@@ -5,5 +5,5 @@ namespace Interloper.InterloperCode.Potential;
 
 public interface IAfterDarkPotentialCleared
 {
-    Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level);
+    Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level, int energy);
 }

@@ -11,7 +11,7 @@ public class GreatestGlyphRelic : InterloperRelic, IAfterDarkPotentialCleared
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
 
-    public async Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level)
+    public async Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level, int energy)
     {
         if (player != Owner)
             return;

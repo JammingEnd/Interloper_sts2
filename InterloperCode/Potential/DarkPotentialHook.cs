@@ -7,13 +7,13 @@ namespace Interloper.InterloperCode.Potential;
 
 public static class DarkPotentialHook
 {
-    public static async Task AfterCleared(ICombatState combatState, PlayerChoiceContext choiceContext, Player player, int level)
+    public static async Task AfterCleared(ICombatState combatState, PlayerChoiceContext choiceContext, Player player, int level, int energy)
     {
         foreach (var model in combatState.IterateHookListeners().OfType<IAfterDarkPotentialCleared>())
         {
             var abstractModel = (AbstractModel)(object)model;
             choiceContext.PushModel(abstractModel);
-            await model.AfterDarkPotentialCleared(choiceContext, player, level);
+            await model.AfterDarkPotentialCleared(choiceContext, player, level, energy);
             abstractModel.InvokeExecutionFinished();
             choiceContext.PopModel(abstractModel);
         }

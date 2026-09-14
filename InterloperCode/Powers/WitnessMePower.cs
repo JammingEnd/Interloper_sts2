@@ -15,7 +15,7 @@ public class WitnessMePower() : InterloperPower, IAfterDarkPotentialCleared
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public async Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level)
+    public async Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level, int energy)
     {
         if (player != Owner.Player)
             return;

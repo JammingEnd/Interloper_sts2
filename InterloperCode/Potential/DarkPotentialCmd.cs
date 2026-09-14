@@ -166,8 +166,9 @@ public static class DarkPotentialCmd
             await DispatchLevel(choiceContext, player, level);
 
         // Clear mode (default): pay the highest energy threshold the pre-reset current reached.
-        if (energyIndex >= 0)
-            await PlayerCmd.GainEnergy(EnergyValues[energyIndex], player);
+        int gainedEnergy = energyIndex >= 0 ? EnergyValues[energyIndex] : 0;
+        if (gainedEnergy > 0)
+            await PlayerCmd.GainEnergy(gainedEnergy, player);
 
         state.Current = 0;
         state.LastGrantedEnergyIndex = -1;
@@ -178,7 +179,7 @@ public static class DarkPotentialCmd
         // AfterCleared is intentionally only fired when level > 0: a sub-threshold clear
         // wastes the bar but does not trigger level consumers like WitnessMe/Absolute.
         if (combatState != null && level > 0)
-            await DarkPotentialHook.AfterCleared(combatState, choiceContext, player, level);
+            await DarkPotentialHook.AfterCleared(combatState, choiceContext, player, level, gainedEnergy);
     }
 
     public static async Task SetMax(PlayerChoiceContext choiceContext, Player player, int value)

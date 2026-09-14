@@ -62,7 +62,7 @@ public class Absolute() : InterloperCard(1,
         await CommonActions.CardAttack(this, cardPlay).Execute(choiceContext);
     }
 
-    public Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level)
+    public Task AfterDarkPotentialCleared(PlayerChoiceContext choiceContext, Player player, int level, int energy)
     {
         if (player != Owner)
             return Task.CompletedTask;

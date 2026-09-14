@@ -29,8 +29,7 @@ public class WeakenMind() : InterloperCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["NextCorruptionMultiplier"].UpgradeValueBy(2m);
+        EnergyCost.UpgradeBy(-1);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

@@ -30,11 +30,10 @@ public class Interloper : PlaceholderCharacterModel
         ModelDb.Card<DefendInterloper>(),
         ModelDb.Card<DefendInterloper>(),
         ModelDb.Card<DefendInterloper>(),
-        ModelDb.Card<DefendInterloper>(),
         ModelDb.Card<LowBreach>(),
         ModelDb.Card<IntoTheUnknown>(),
         ModelDb.Card<DeepScratch>(),
-        ModelDb.Card<DeepScratch>()
+        ModelDb.Card<TheirSuffer>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

@@ -5,19 +5,25 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace Interloper.InterloperCode.Powers;
 
-public class ColorlessPotentialPower() : InterloperPower
+public class TwistedAbyssPower() : InterloperPower
 {
-    private const int PotentialAmount = 4;
-
     public override PowerType Type =>
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.Single;
+        PowerStackType.Counter;
 
-    public override PowerInstanceType InstanceType =>
-        PowerInstanceType.Instanced;
-
+    private bool _usedThisTurn;
+    private bool UsedThisTurn
+    {
+        get => this._usedThisTurn;
+        set
+        {
+            this.AssertMutable();
+            this._usedThisTurn = value;
+        }
+    }
+    
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner != Owner.Player)
@@ -25,7 +31,11 @@ public class ColorlessPotentialPower() : InterloperPower
 
         if (cardPlay.Card.Pool?.IsColorless != true)
             return;
+        if (_usedThisTurn)
+        {
+            await DarkPotentialCmd.Add(choiceContext, cardPlay.Player, Amount);
+        }
 
-        await DarkPotentialCmd.Add(choiceContext, cardPlay.Player, PotentialAmount);
+        _usedThisTurn = true;
     }
 }

@@ -17,7 +17,7 @@
   "INTERLOPER-OLD_INSCRIPTIONS_RELIC.description": "Whenever you clear [color=#8251B0]Dark Potential[/color], gain an extra effect based on the level reached: level 1 applies 1 [gold]Weak[/gold] to a random enemy without Weak, level 2 heals 1, level 3+ applies [color=#952990]Abyssal Corruption[/color] to ALL enemies.",
   "INTERLOPER-OLD_INSCRIPTIONS_RELIC.flavor": "My shackler can't.. or does not bother.. to write. Have i written this? must be. Is it a warning? A tip? Sure.",
   "INTERLOPER-OLD_INSCRIPTIONS_RELIC.title": "Old Inscriptions",
-  "INTERLOPER-GREATEST_GLYPH_RELIC.description": "When 50+ [color=#952990]Abyssal Corruption[/color] is present in combat, clearing [color=#8251B0]Dark Potential[/color] consumes half of all [color=#952990]Abyssal Corruption[/color] on enemies.",
+  "INTERLOPER-GREATEST_GLYPH_RELIC.description": "Whenever you clear at least level 4 of [color=#8251B0]Dark Potential[/color], your [color=#8251B0]Dark Potential[/color] is set back to level 1.",
   "INTERLOPER-GREATEST_GLYPH_RELIC.flavor": "Reice, domina, servitute opprime, impera.",
   "INTERLOPER-GREATEST_GLYPH_RELIC.title": "Greatest Glyph",
   "INTERLOPER-POCKET_POCKET_DIMENSION_RELIC.description": "When you kill the last enemy with an [color=#952990]Absorb[/color] card, heal 6 HP.",

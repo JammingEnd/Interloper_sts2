@@ -216,6 +216,24 @@ public static class DarkPotentialCmd
         await DispatchLevel(choiceContext, player, level - 1);
     }
 
+    /// <summary>
+    /// Sets the bar to a specific level's threshold (e.g. level 1 = 20% of max). Fires OnChanged.
+    /// </summary>
+    /// NOTE: this performs no awaits; return `Task.CompletedTask` (NOT an async method) to avoid CS1998.
+    public static Task SetCurrentToLevel(PlayerChoiceContext choiceContext, Player player, int level)
+    {
+        var state = player.PlayerCombatState?.GetDarkPotentialState();
+        if (state == null)
+            return Task.CompletedTask;
+
+        if (CombatManager.Instance.IsOverOrEnding)
+            return Task.CompletedTask;
+
+        state.Current = GetLevelThreshold(state, level);
+        OnChanged?.Invoke(player);
+        return Task.CompletedTask;
+    }
+
     private static Task DispatchLevel(PlayerChoiceContext choiceContext, Player player, int level) => level switch
     {
         1 => Levels.Level1(choiceContext, player),

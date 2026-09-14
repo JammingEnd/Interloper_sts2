@@ -1,6 +1,7 @@
 using Interloper.InterloperCode.Cards;
 using Interloper.InterloperCode.Helpers;
 using Interloper.InterloperCode.Keywords;
+using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
@@ -38,6 +39,8 @@ public class TwistedAbyss() : InterloperCard(0,
                 await CardCmd.Transform(oldestCard, newcard);
             }
         }
+
+        await PowerCmd.Apply<ColorlessPotentialPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade()
     {

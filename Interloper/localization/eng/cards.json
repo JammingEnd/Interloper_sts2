@@ -147,7 +147,7 @@
   "INTERLOPER-TO_THE_DEPTHS.title": "To The Depths",
   "INTERLOPER-TUNNEL_VISION.description": "At the start of each turn, move {TunnelVisionPower:diff()} [color=#952990]Abyssal Corruption[/color] from each enemy to the enemy with the highest HP.",
   "INTERLOPER-TUNNEL_VISION.title": "Tunnel Vision",
-  "INTERLOPER-TWISTED_ABYSS.description": "Transform the oldest card in your [gold]Exhaust[/gold] pile into a random [gold]Colorless[/gold] card.",
+  "INTERLOPER-TWISTED_ABYSS.description": "Transform the oldest card in your [gold]Exhaust[/gold] pile into a random [gold]Colorless[/gold] card.\nGain a power that makes [gold]Colorless[/gold] cards give 4 [color=#8251B0]Dark Potential[/color].",
   "INTERLOPER-TWISTED_ABYSS.title": "Twisted Abyss",
   "INTERLOPER-UNFAIR_ADVANTAGE.description": "Apply {WeakPower:diff()} [gold]Weak[/gold].\n[color=#952990]Absorb[/color] 5+: Apply -1 [gold]Strength[/gold].",
   "INTERLOPER-UNFAIR_ADVANTAGE.title": "Unfair Advantage",

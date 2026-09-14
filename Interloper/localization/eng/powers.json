@@ -4,6 +4,9 @@
   "INTERLOPER-ABYSSAL_CORRUPTION_POWER.title": "Abyssal Corruption",
   "INTERLOPER-ABYSS_FORM_POWER.description": "At the start of your turn, up to {Amount} cards with [gold]Retain[/gold] or [gold]Exhaust[/gold] gain -1 [gold]Energy[/gold] until played.",
   "INTERLOPER-ABYSS_FORM_POWER.smartDescription": "At the start of your turn, up to {Amount} cards with [gold]Retain[/gold] or [gold]Exhaust[/gold] gain -1 [gold]Energy[/gold] until played.",
+  "INTERLOPER-COLORLESS_POTENTIAL_POWER.description": "Whenever you play a [gold]Colorless[/gold] card, gain 4 [color=#8251B0]Dark Potential[/color].",
+  "INTERLOPER-COLORLESS_POTENTIAL_POWER.smartDescription": "Whenever you play a [gold]Colorless[/gold] card, gain 4 [color=#8251B0]Dark Potential[/color].",
+  "INTERLOPER-COLORLESS_POTENTIAL_POWER.title": "Colorless Potential",
   "INTERLOPER-ABYSS_FORM_POWER.title": "Abyss Form",
   "INTERLOPER-ADDED_BENEFIT_POWER.description": "Whenever a card with cost 2 or more leaves your [gold]Exhaust pile[/gold], [color=#8251B0]Potential[/color] 7.",
   "INTERLOPER-ADDED_BENEFIT_POWER.smartDescription": "Whenever a card with cost 2 or more leaves your [gold]Exhaust pile[/gold], [color=#8251B0]Potential[/color] {Amount}.",
@@ -89,7 +92,7 @@
   "INTERLOPER-DEX_NEXT_TURN_POWER.description": "At the start of your next turn, gain {Amount} [gold]Dexterity[/gold].",
   "INTERLOPER-DEX_NEXT_TURN_POWER.smartDescription": "At the start of your next turn, gain {Amount} [gold]Dexterity[/gold].",
   "INTERLOPER-DEX_NEXT_TURN_POWER.title": "Dexterity Next Turn",
-  "INTERLOPER-EMPOWER_CURSE_POWER.description": "Whenever your Block breaks, gain {Amount} [gold]Energy[/gold].",
-  "INTERLOPER-EMPOWER_CURSE_POWER.smartDescription": "Whenever your Block breaks, gain {Amount} [gold]Energy[/gold].",
+  "INTERLOPER-EMPOWER_CURSE_POWER.description": "Whenever your Block breaks, gain {Amount} [gold]Energy[/gold], expires on turn end.",
+  "INTERLOPER-EMPOWER_CURSE_POWER.smartDescription": "Whenever your Block breaks, gain {Amount} [gold]Energy[/gold], expires on turn end.",
   "INTERLOPER-EMPOWER_CURSE_POWER.title": "Empower Curse"
 }

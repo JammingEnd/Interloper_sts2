@@ -13,7 +13,7 @@ public class AbyssForm() : InterloperCard(3,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AbyssFormPower>("AbyssFormPower", 1)
+        new PowerVar<AbyssFormPower>("AbyssFormPower", 2)
     ];
 
     protected override async Task OnPlay(

@@ -1,6 +1,6 @@
-{
+﻿{
   "INTERLOPER-DARK_POTENTIAL.energy": "{Percent}% — +{Value} Energy",
   "INTERLOPER-DARK_POTENTIAL.levelTitle": "Level {Level}",
   "INTERLOPER-DARK_POTENTIAL.level": "{Threshold} / {Max}{Description}",
-  "INTERLOPER-DARK_POTENTIAL.clearButton": "Consume and gain a buff based on your current [color=#541191]Dark Potential[/color]"
+  "INTERLOPER-DARK_POTENTIAL.clearButton": "Consume and gain a buff based on your current [outline_size=2][outline_color=#FFFFFF][color=#541191]Dark Potential[/color][/outline_color][/outline_size]"
 }

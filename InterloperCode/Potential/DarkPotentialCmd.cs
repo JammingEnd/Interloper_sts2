@@ -196,6 +196,26 @@ public static class DarkPotentialCmd
         OnChanged?.Invoke(player);
     }
 
+    /// <summary>
+    /// Activates the level buff one below the currently reached level (e.g. at level 4, activates
+    /// level 3). Does nothing at level 1 or lower. The bar is not cleared.
+    /// </summary>
+    public static async Task ActivatePreviousLevel(PlayerChoiceContext choiceContext, Player player)
+    {
+        var state = player.PlayerCombatState?.GetDarkPotentialState();
+        if (state == null)
+            return;
+
+        if (CombatManager.Instance.IsOverOrEnding)
+            return;
+
+        var level = GetHighestReachedLevelIndex(state);
+        if (level < 2)
+            return;
+
+        await DispatchLevel(choiceContext, player, level - 1);
+    }
+
     private static Task DispatchLevel(PlayerChoiceContext choiceContext, Player player, int level) => level switch
     {
         1 => Levels.Level1(choiceContext, player),

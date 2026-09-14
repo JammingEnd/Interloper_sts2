@@ -29,6 +29,8 @@ public class DarkDivinity() : InterloperCard(2,
             .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
+
+        await DarkPotentialCmd.ActivatePreviousLevel(choiceContext, Owner);
     }
 
     protected override void OnUpgrade()

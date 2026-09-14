@@ -9,4 +9,4 @@ Properties/
 packages/
 .editorconfig
 *.user
-Directory.Build.props
+Directory.Build.propsdocs/

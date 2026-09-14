@@ -18,20 +18,20 @@ namespace Interloper.InterloperCode.Cards.Uncommon;
 
 public class Sideye() : InterloperCard(1,
     CardType.Skill, CardRarity.Common,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>("SideyeWeak", 1),
         new BlockVar("SideyeMoved", 15, ValueProp.Move),
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 7)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await CommonActions.CardBlock(this, DynamicVars["SideyeIni"], play);
+        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, DynamicVars["SideyeWeak"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

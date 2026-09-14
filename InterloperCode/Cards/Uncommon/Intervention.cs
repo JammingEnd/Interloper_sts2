@@ -16,7 +16,7 @@ public class Intervention() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 7)
     ];
 
     protected override async Task OnPlay(
@@ -44,6 +44,7 @@ public class Intervention() : InterloperCard(1,
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
+        DynamicVars["Potential"].UpgradeValueBy(4m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

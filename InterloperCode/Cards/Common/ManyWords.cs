@@ -19,4 +19,9 @@ public class ManyWords() : InterloperCard(0, CardType.Attack, CardRarity.Common,
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(choiceContext);
     }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(3m);
+    }
 }

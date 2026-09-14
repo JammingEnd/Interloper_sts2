@@ -18,7 +18,7 @@ public class Shhhh() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(13, ValueProp.Move),
-        new IntVar("Potential", 5),
+        new IntVar("Potential", 9),
     ];
 
     protected override async Task OnPlay(
@@ -31,7 +31,7 @@ public class Shhhh() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars["Potential"].UpgradeValueBy(8m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

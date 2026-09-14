@@ -14,7 +14,7 @@ public class DistordPlane() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Potential", 10)
+        new IntVar("Potential", 42)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override async Task OnPlay(

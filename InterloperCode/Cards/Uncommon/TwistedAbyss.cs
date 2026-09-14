@@ -14,11 +14,13 @@ using MegaCrit.Sts2.Core.Models.Cards;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class TwistedAbyss() : InterloperCard(0,
+public class TwistedAbyss() : InterloperCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<TwistedAbyssPower>("TwistedAbyssPower", 4)
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -40,10 +42,11 @@ public class TwistedAbyss() : InterloperCard(0,
             }
         }
 
-        await PowerCmd.Apply<ColorlessPotentialPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<TwistedAbyssPower>(choiceContext, Owner.Creature, DynamicVars["TwistedAbyssPower"].IntValue, Owner.Creature, this);
     }
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
         this.AddKeyword(CardKeyword.Retain);
     }
 }

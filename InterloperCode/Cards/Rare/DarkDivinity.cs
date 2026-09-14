@@ -15,17 +15,14 @@ public class DarkDivinity() : InterloperCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(6),
-        new ExtraDamageVar(2),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (card, _) => (Decimal)(card.Owner.PlayerCombatState?.GetDarkPotential() ?? 0) / 10)
+        new DamageVar(15, ValueProp.Move),
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        await DamageCmd.Attack(DynamicVars.Damage.IntValue)
             .FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
@@ -35,7 +32,7 @@ public class DarkDivinity() : InterloperCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(5m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

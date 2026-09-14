@@ -14,12 +14,13 @@ public class focus() : InterloperCard(1, CardType.Skill, CardRarity.Common, Targ
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(6, ValueProp.Move),
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 7)
     ];
 
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars["Potential"].UpgradeValueBy(4m);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

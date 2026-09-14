@@ -19,7 +19,7 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<PrayersHeardPower>("PrayersHeardPower",5),
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 7)
     ];
 
     protected override async Task OnPlay(
@@ -34,6 +34,7 @@ public class PrayersHeard() : CorruptionHandlerCard(10, 1,
     protected override void OnUpgrade()
     {
         DynamicVars["PrayersHeardPower"].UpgradeValueBy(2m);
+        DynamicVars["Potential"].UpgradeValueBy(4m);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

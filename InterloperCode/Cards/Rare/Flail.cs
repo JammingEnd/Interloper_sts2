@@ -17,7 +17,7 @@ public class Flail() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Move)
+        new DamageVar(5, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(

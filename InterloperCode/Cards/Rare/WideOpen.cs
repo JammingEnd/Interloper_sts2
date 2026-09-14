@@ -17,7 +17,7 @@ public class WideOpen() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1),
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 7)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

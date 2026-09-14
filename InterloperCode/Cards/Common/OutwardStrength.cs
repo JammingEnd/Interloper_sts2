@@ -17,7 +17,7 @@ public class OutwardStrength() : InterloperCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(10, ValueProp.Move),
         new RepeatVar(2),
-        new IntVar("Potential", 5)
+        new IntVar("Potential", 9)
     ];
 
     protected override async Task OnPlay(
@@ -31,6 +31,7 @@ public class OutwardStrength() : InterloperCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["Potential"].UpgradeValueBy(4m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

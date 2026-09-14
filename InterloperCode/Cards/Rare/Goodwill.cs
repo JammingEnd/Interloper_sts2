@@ -15,8 +15,8 @@ public class Goodwill() : InterloperCard(0,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Potential", 50),
-        new PowerVar<StrengthPower>("DistortStr", 3)
+        new IntVar("Potential", 22),
+        new PowerVar<StrengthPower>("DistortStr", 2)
     ];
 
     protected override async Task OnPlay(

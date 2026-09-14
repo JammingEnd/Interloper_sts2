@@ -21,7 +21,7 @@ public class OnesService() : InterloperCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
             new DamageVar(5, ValueProp.Move),
             new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5),
-            new IntVar("Potential", 5),
+            new IntVar("Potential", 7),
     ];
 
     protected override async Task OnPlay(

@@ -14,7 +14,7 @@ public class DeepGaze() : InterloperCard(0,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Potential", 10)
+        new IntVar("Potential", 12)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, InterloperKeywords.Consumed];
     protected override async Task OnPlay(
@@ -26,7 +26,8 @@ public class DeepGaze() : InterloperCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Potential"].UpgradeValueBy(5m);
+        DynamicVars["Potential"].UpgradeValueBy(6m);
+        this.RemoveKeyword(InterloperKeywords.Consumed);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

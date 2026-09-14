@@ -19,7 +19,7 @@ public class ToTheDepths() : InterloperCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(7, ValueProp.Move),
-        new IntVar("Potential", 5),
+        new IntVar("Potential", 9),
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -51,5 +51,6 @@ public class ToTheDepths() : InterloperCard(0,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars["Potential"].UpgradeValueBy(4m);
     }
 }

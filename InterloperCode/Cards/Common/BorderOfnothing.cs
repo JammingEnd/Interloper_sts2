@@ -20,7 +20,7 @@ public class BorderOfnothing() : InterloperCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VoidReachPower>("VoidReachPower", 2), 
-        new IntVar("Potential", 7)
+        new IntVar("Potential", 9)
     ];
 
     protected override async Task OnPlay(
@@ -34,6 +34,7 @@ public class BorderOfnothing() : InterloperCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars["VoidReachPower"].UpgradeValueBy(2m);
+        DynamicVars["Potential"].UpgradeValueBy(4m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

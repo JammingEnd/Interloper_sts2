@@ -15,7 +15,7 @@ public class Consume() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Potential", 8)
+        new IntVar("Potential", 10)
     ];
 
     protected override async Task OnPlay(

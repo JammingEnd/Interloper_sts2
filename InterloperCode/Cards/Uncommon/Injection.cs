@@ -45,5 +45,6 @@ public class Injection() : CorruptionHandlerCard(10,1,
         base.ExtraHoverTips.Concat(
         [
             HoverTipFactory.FromPower<VulnerablePower>(),
+            HoverTipFactory.FromPower<WeakPower>()
         ]);
 }

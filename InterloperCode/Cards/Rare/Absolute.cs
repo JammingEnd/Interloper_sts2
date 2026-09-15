@@ -75,6 +75,16 @@ public class Absolute() : InterloperCard(1,
         return Task.CompletedTask;
     }
 
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    {
+        if (card != this)
+            return;
+
+        // Re-sync the displayed damage whenever this card moves piles (e.g. drawn again), so the
+        // combat-long buff isn't lost to the DamageVar's construction-time base value.
+        DynamicVars.Damage.BaseValue = IsUpgraded == false ? 3 : 4 + this.IncreasedDamage;
+    }
+
     protected override void OnUpgrade()
     {
         DynamicVars["Increase"].UpgradeValueBy(1m);

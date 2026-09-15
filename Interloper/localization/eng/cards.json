@@ -1,5 +1,5 @@
 ﻿{
-  "INTERLOPER-ABSOLUTE.description": "Deal {Damage:diff()} damage.\nWhenever you clear [color=#8251B0]Dark Potential[/color], permanently increase this card's damage.",
+  "INTERLOPER-ABSOLUTE.description": "Deal {Damage:diff()} damage.\nGain {Increase:diff()} damage for each time you clear [color=#8251B0]Dark Potential[/color] this combat.",
   "INTERLOPER-ABSOLUTE.title": "Absolute",
   "INTERLOPER-ABSORB.description": "Remove 1 [gold]Vulnerable[/gold], 1 [gold]Weak[/gold], and 1 [gold]Frail[/gold] from yourself.\nGain [color=#AE30A8]Void Reach[/color] for each removed.",
   "INTERLOPER-ABSORB.title": "Absorb",

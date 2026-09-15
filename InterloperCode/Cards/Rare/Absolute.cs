@@ -2,13 +2,10 @@ using BaseLib.Utils;
 using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Rare;
@@ -20,40 +17,8 @@ public class Absolute() : InterloperCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
 
-    private int _currentDamage = 3;
-    private int _increasedDamage;
-    [SavedProperty]
-    public int CurrentDamage
-    {
-        get => this._currentDamage;
-        set
-        {
-            this.AssertMutable();
-            this._currentDamage = value;
-            this.DynamicVars.Damage.BaseValue = (Decimal) this._currentDamage;
-        }
-    }
-
-    [SavedProperty]
-    public int IncreasedDamage
-    {
-        get => this._increasedDamage;
-        set
-        {
-            this.AssertMutable();
-            this._increasedDamage = value;
-        }
-    }
-    private void BuffFromPlay(int addAmount)
-    {
-        this.IncreasedDamage += addAmount;
-        this.UpdateDamage();
-    }
-    private void UpdateDamage() => this.CurrentDamage = IsUpgraded == false ? 3 : 4 + this.IncreasedDamage;
-    protected override void AfterDowngraded() => this.UpdateDamage();
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar((Decimal) this.CurrentDamage, ValueProp.Move),
+        new DamageVar(3, ValueProp.Move),
         new IntVar("Increase", 2M)
     ];
 
@@ -67,11 +32,7 @@ public class Absolute() : InterloperCard(1,
         if (player != Owner)
             return Task.CompletedTask;
 
-        int value = DynamicVars["Increase"].IntValue;
-        BuffFromPlay(value);
-        if (DeckVersion is Absolute deckVersion)
-            deckVersion.BuffFromPlay(value);
-
+        SyncDamage();
         return Task.CompletedTask;
     }
 
@@ -80,9 +41,13 @@ public class Absolute() : InterloperCard(1,
         if (card != this)
             return;
 
-        // Re-sync the displayed damage whenever this card moves piles (e.g. drawn again), so the
-        // combat-long buff isn't lost to the DamageVar's construction-time base value.
-        DynamicVars.Damage.BaseValue = IsUpgraded == false ? 3 : 4 + this.IncreasedDamage;
+        SyncDamage();
+    }
+
+    private void SyncDamage()
+    {
+        int clears = Owner.PlayerCombatState?.GetDarkPotentialState()?.Clears ?? 0;
+        DynamicVars.Damage.BaseValue = (IsUpgraded == false ? 3 : 4) + clears * DynamicVars["Increase"].IntValue;
     }
 
     protected override void OnUpgrade()

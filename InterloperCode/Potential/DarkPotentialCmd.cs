@@ -118,6 +118,7 @@ public static class DarkPotentialCmd
             // already fired above; reset without re-dispatching to avoid a double trigger.
             if (state.Current >= state.Max)
             {
+                state.Clears++;
                 state.Current = 0;
                 state.LastActivatedLevelIndex = -1;
                 state.LastGrantedEnergyIndex = -1;
@@ -163,7 +164,10 @@ public static class DarkPotentialCmd
         var level = GetHighestReachedLevelIndex(state);
         var energyIndex = !state.AutoGrantEnergy ? GetHighestReachedEnergyIndex(state) : -1;
         if (level > 0)
+        {
+            state.Clears++;
             await DispatchLevel(choiceContext, player, level);
+        }
 
         // Clear mode (default): pay the highest energy threshold the pre-reset current reached.
         int gainedEnergy = energyIndex >= 0 ? EnergyValues[energyIndex] : 0;

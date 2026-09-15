@@ -18,8 +18,8 @@ public class Absolute() : InterloperCard(1,
         [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(3, ValueProp.Move),
-        new IntVar("Increase", 2M)
+        new DamageVar(4, ValueProp.Move),
+        new IntVar("Increase", 3M)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -47,11 +47,11 @@ public class Absolute() : InterloperCard(1,
     private void SyncDamage()
     {
         int clears = Owner.PlayerCombatState?.GetDarkPotentialState()?.Clears ?? 0;
-        DynamicVars.Damage.BaseValue = (IsUpgraded == false ? 3 : 4) + clears * DynamicVars["Increase"].IntValue;
+        DynamicVars.Damage.BaseValue = (IsUpgraded == false ? 3 : 5) + clears * DynamicVars["Increase"].IntValue;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Increase"].UpgradeValueBy(1m);
+        DynamicVars["Increase"].UpgradeValueBy(2m);
     }
 }

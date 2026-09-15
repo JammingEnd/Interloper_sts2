@@ -38,6 +38,8 @@ public partial class NDarkPotentialBar : Control
     private readonly List<TextureRect> _energyMarkers = new();
     private readonly List<Node2D> _flames = new();
 
+    private Label? _potentialLabel;
+
     private Player? _player;
 
     public void Initialize(Player player)
@@ -47,11 +49,13 @@ public partial class NDarkPotentialBar : Control
         {
             CreateMarkers();
             CreateFlames();
+            CreatePotentialCounter();
             for (int i = 0; i < _levelMarkers.Count; i++)
                 AttachLevelHover(_levelMarkers[i], i + 1);
             for (int i = 0; i < _energyMarkers.Count; i++)
                 AttachEnergyHover(_energyMarkers[i], i);
         }
+        UpdatePotentialCounter();
         RefreshFlames();
         QueueRedraw();
     }
@@ -90,8 +94,36 @@ public partial class NDarkPotentialBar : Control
         if (player != _player)
             return;
 
+        UpdatePotentialCounter();
         RefreshFlames();
         QueueRedraw();
+    }
+
+    private void CreatePotentialCounter()
+    {
+        _potentialLabel = new Label
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Size = new Vector2(BarSize.X, 22f),
+            Position = new Vector2(0f, Size.Y * 0.5f + 8f),
+            LabelSettings = new LabelSettings
+            {
+                FontSize = 16,
+                FontColor = Colors.White,
+                OutlineSize = 4,
+                OutlineColor = new Color(0f, 0f, 0f, 0.6f)
+            }
+        };
+        AddChild(_potentialLabel);
+    }
+
+    private void UpdatePotentialCounter()
+    {
+        if (_potentialLabel == null || _player == null)
+            return;
+
+        _potentialLabel.Text = (_player.PlayerCombatState?.GetDarkPotential() ?? 0).ToString();
     }
 
     private void CreateFlames()

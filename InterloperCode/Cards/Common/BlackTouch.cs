@@ -29,6 +29,6 @@ public class BlackTouch() : CorruptionHandlerCard(15, 1, CardType.Attack, CardRa
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<VigorPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<VigorPower>(choiceContext, Owner.Creature, DynamicVars["BlackTouchVigor"].IntValue, Owner.Creature, this);
     }
 }

@@ -84,7 +84,7 @@
   "INTERLOPER-VOID_REACH_PER_TURN_POWER.smartDescription": "At the start of your turn, gain {Amount} [color=#AE30A8]Void Reach[/color].",
   "INTERLOPER-VOID_REACH_PER_TURN_POWER.title": "Void Reach Per Turn",
   "INTERLOPER-INTERPLANAR_SHACKLES_POWER.description": "Whenever [color=#952990]Abyssal Corruption[/color] is consumed on this creature, it takes 5 damage for each stack of this power.",
-  "INTERLOPER-INTERPLANAR_SHACKLES_POWER.smartDescription": "Whenever [color=#952990]Abyssal Corruption[/color] is consumed on this creature, it takes 5 damage.",
+  "INTERLOPER-INTERPLANAR_SHACKLES_POWER.smartDescription": "Whenever [color=#952990]Abyssal Corruption[/color] is consumed on this creature, it takes {Amount} damage.",
   "INTERLOPER-INTERPLANAR_SHACKLES_POWER.title": "Interplanar Shackles",
   "INTERLOPER-TOUCH_OF_FAITH_POWER.description": "Your [color=#8251B0]Dark Potential[/color] auto-uses energy and the level buff as thresholds are reached. The bar only clears when full.",
   "INTERLOPER-TOUCH_OF_FAITH_POWER.smartDescription": "Your [color=#8251B0]Dark Potential[/color] auto-uses energy and the level buff as thresholds are reached. The bar only clears when full.",
@@ -92,7 +92,7 @@
   "INTERLOPER-DEX_NEXT_TURN_POWER.description": "At the start of your next turn, gain {Amount} [gold]Dexterity[/gold].",
   "INTERLOPER-DEX_NEXT_TURN_POWER.smartDescription": "At the start of your next turn, gain {Amount} [gold]Dexterity[/gold].",
   "INTERLOPER-DEX_NEXT_TURN_POWER.title": "Dexterity Next Turn",
-  "INTERLOPER-EMPOWER_CURSE_POWER.description": "Whenever your Block breaks, gain {Amount} {energyPrefix:energyIcons(1)}, expires on turn end.",
-  "INTERLOPER-EMPOWER_CURSE_POWER.smartDescription": "Whenever your Block breaks, gain {Amount} {energyPrefix:energyIcons(1)}, expires on turn end.",
+  "INTERLOPER-EMPOWER_CURSE_POWER.description": "When your [gold]Block[/gold] breaks, apply 1 [gold]Weak[/gold] to a random enemy. If it does not break, gain 1 [gold]Temporary Strength[/gold].",
+  "INTERLOPER-EMPOWER_CURSE_POWER.smartDescription": "When your [gold]Block[/gold] breaks, apply 1 [gold]Weak[/gold] to a random enemy. If it does not break, gain 1 [gold]Temporary Strength[/gold].",
   "INTERLOPER-EMPOWER_CURSE_POWER.title": "Empower Curse"
 }

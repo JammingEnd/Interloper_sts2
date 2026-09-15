@@ -106,7 +106,7 @@ public partial class NDarkPotentialBar : Control
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
             Size = new Vector2(BarSize.X, 22f),
-            Position = new Vector2(0f, Size.Y * 0.5f + 1f),
+            Position = new Vector2(0f, Size.Y * 0.5f - 3f),
             LabelSettings = new LabelSettings
             {
                 FontSize = 16,

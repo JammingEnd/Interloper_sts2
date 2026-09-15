@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Cards.Common;
 
 // block 10, consume 5 corruption
-public class HoldingItIn() : CorruptionHandlerCard(5, 1,
+public class HoldingItIn() : CorruptionHandlerCard(10, 0,
     CardType.Skill, CardRarity.Common,
     TargetType.AnyEnemy)
 {

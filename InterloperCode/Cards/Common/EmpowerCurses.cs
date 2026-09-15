@@ -11,17 +11,18 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Cards.Common;
 
 // Gain 8(12) block, next turn if your block did not break, gain 1 energy 
-public class EmpowerCurses() : InterloperCard(2, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class EmpowerCurses() : InterloperCard(2, CardType.Skill, CardRarity.Event, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(8, ValueProp.Move),
+        new PowerVar<EmpowerCursePower>("EmpowerCursesPower", 2)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CommonActions.CardBlock(this, cardPlay);
-        await PowerCmd.Apply<EmpowerCursePower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<EmpowerCursePower>(choiceContext, Owner.Creature, DynamicVars["EmpowerCursesPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

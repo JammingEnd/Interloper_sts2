@@ -9,8 +9,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Interloper.InterloperCode.Cards.Common;
 
-// Deal 6(8) damage and 1 (2) apply weak, when A.C.  10+, gain 1 dex next turn
-public class QuickPeek() : CorruptionHandlerCard(10, 1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+// Deal 6(8) damage and 1 (2) apply weak, when A.C.  5+, gain 1 dex next turn
+public class QuickPeek() : CorruptionHandlerCard(5, 1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [InterloperKeywords.Pure];
 

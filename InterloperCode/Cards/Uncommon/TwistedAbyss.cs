@@ -19,7 +19,7 @@ public class TwistedAbyss() : InterloperCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<TwistedAbyssPower>("TwistedAbyssPower", 4)
+        new PowerVar<TwistedAbyssPower>("TwistedAbyssPower", 6)
     ];
 
     protected override async Task OnPlay(

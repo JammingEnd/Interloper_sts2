@@ -10,13 +10,15 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Interloper.InterloperCode.Cards.Rare;
 
-public class Goodwill() : InterloperCard(0,
+public class Goodwill() : InterloperCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Potential", 22),
-        new PowerVar<StrengthPower>("DistortStr", 2)
+        new PowerVar<StrengthPower>("DistortStr", 1)
     ];
 
     protected override async Task OnPlay(
@@ -31,7 +33,8 @@ public class Goodwill() : InterloperCard(0,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars["DistortStr"].UpgradeValueBy(1m);
+        DynamicVars["Potential"].UpgradeValueBy(8m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

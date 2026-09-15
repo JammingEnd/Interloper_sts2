@@ -9,7 +9,7 @@ using Interloper.InterloperCode.Keywords;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class DarkToLight() : CorruptionHandlerCard(20, 1,
+public class DarkToLight() : CorruptionHandlerCard(10, 1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {

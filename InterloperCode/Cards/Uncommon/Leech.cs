@@ -38,9 +38,6 @@ public class Leech() : CorruptionHandlerCard(15, 2,
     {
         this.EnergyCost.SetThisTurn(0);
         await CardPileCmd.Add(this, PileType.Hand);
-        await PowerCmd.Apply<AbyssalCorruptionPower>(
-            choiceContext, play.Target,
-            5, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

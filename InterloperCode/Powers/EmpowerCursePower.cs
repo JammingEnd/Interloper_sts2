@@ -11,7 +11,6 @@ namespace Interloper.InterloperCode.Cards.Uncommon;
 public class EmpowerCursePower : InterloperPower
 {
     private const int MaxHandCost = 6;
-    private const int StrengthAmount = 2;
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -20,10 +19,11 @@ public class EmpowerCursePower : InterloperPower
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         var hand = PileType.Hand.GetPile(Owner.Player);
-        int totalCost = hand.Cards.Sum(c => c.EnergyCost.Canonical);
+        int totalCost = hand.Cards.Sum(c => c.EnergyCost.GetWithModifiers(CostModifiers.All));
         if (totalCost > MaxHandCost)
             return;
 
-        await PowerCmd.Apply<TemporaryStrengthPower>(choiceContext, Owner, StrengthAmount, Owner, null);
+        //await PowerCmd.Apply<TemporaryDexterityPower>(choiceContext, Owner, Amount, Owner, null);
+        await PowerCmd.Remove(this);
     }
 }

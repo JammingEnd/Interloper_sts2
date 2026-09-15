@@ -26,7 +26,7 @@ public class DistordPlane() : InterloperCard(1,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        DynamicVars["Potential"].UpgradeValueBy(13m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [

@@ -15,10 +15,9 @@ namespace Interloper.InterloperCode.Cards.Common;
 
 // deal 12 damage, if the enemy has 15+ corruption, deal damage to all enemies
 public class VeilSweep() : InterloperCard(2,
-    CardType.Attack, CardRarity.Common,
+    CardType.Skill, CardRarity.Common,
     TargetType.AnyEnemy)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 12),
         new CardsVar(2)

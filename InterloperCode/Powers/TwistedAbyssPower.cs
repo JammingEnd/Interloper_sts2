@@ -13,17 +13,7 @@ public class TwistedAbyssPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    private bool _usedThisTurn;
-    private bool UsedThisTurn
-    {
-        get => this._usedThisTurn;
-        set
-        {
-            this.AssertMutable();
-            this._usedThisTurn = value;
-        }
-    }
-    
+
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner != Owner.Player)
@@ -31,11 +21,9 @@ public class TwistedAbyssPower() : InterloperPower
 
         if (cardPlay.Card.Pool?.IsColorless != true)
             return;
-        if (_usedThisTurn)
-        {
-            await DarkPotentialCmd.Add(choiceContext, cardPlay.Player, Amount);
-        }
+        await DarkPotentialCmd.Add(choiceContext, cardPlay.Player, Amount);
+        
 
-        _usedThisTurn = true;
+   
     }
 }

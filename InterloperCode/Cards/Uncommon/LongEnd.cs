@@ -18,7 +18,7 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(9, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5),
+        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 9),
         new IntVar("Potential", 12)
     ];
 

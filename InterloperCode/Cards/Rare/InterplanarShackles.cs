@@ -14,16 +14,18 @@ namespace Interloper.InterloperCode.Cards.Rare;
 // a random enemy gains the InterplanarShacklesPower debuff, which, when on the enemy causes each time abyssalcorruption is consumed to deal 7 (amount of stacks) damage
 public class InterplanarShackles() : InterloperCard(2,
     CardType.Skill, CardRarity.Rare,
-    TargetType.RandomEnemy)
+    TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<InterplanarShacklesPower>("InterplanarShacklesPower", 5m)
+    ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<InterplanarShacklesPower>(choiceContext, play.Target, 1, Owner.Creature, this);
+        await PowerCmd.Apply<InterplanarShacklesPower>(choiceContext, play.Target, DynamicVars["InterplanarShacklesPower"].IntValue, Owner.Creature, this);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

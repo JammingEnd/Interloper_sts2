@@ -29,5 +29,6 @@ public class AddedBenefit() : InterloperCard(2,
     protected override void OnUpgrade()
     {
         AddKeyword(CardKeyword.Innate);
+        EnergyCost.UpgradeBy(-1);
     }
 }

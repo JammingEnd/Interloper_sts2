@@ -18,9 +18,5 @@ public class AbyssalCorruptionPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
-        CardModel? cardSource, CardPlay? cardPlay)
-    {
-        return (decimal)(1 + (this.Amount * 0.02));
-    }
+   
 }

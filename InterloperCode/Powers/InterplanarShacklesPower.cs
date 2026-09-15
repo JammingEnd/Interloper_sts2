@@ -29,7 +29,7 @@ public class InterplanarShacklesPower() : InterloperPower
         if (amount >= 0)
             return;
 
-        await CreatureCmd.Damage(choiceContext, Owner, 5m * this.Amount, ValueProp.Unpowered, applier, null, null);
+        await CreatureCmd.Damage(choiceContext, Owner, this.Amount, ValueProp.Unpowered, applier, null, null);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

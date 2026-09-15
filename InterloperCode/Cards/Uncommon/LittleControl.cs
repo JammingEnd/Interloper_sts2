@@ -23,7 +23,10 @@ public class LittleControl() : InterloperCard(1,
         CardPlay play)
     {
         var prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, DynamicVars.Cards.IntValue);
-        var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(Owner).Cards, Owner, prefs);
+        var cards = PileType.Draw.GetPile(Owner).Cards
+            .Where(c => c.Type == CardType.Attack || c.Type == CardType.Skill)
+            .ToList();
+        var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, cards, Owner, prefs);
         if (selected != null)
         {
             foreach (var card in selected)

@@ -180,7 +180,7 @@
   "INTERLOPER-TOUCH_OF_FAITH.title": "Touch of Faith",
   "INTERLOPER-BLACK_TOUCH.description": "Deal {Damage:diff()} damage.\n[color=#952990]Absorb[/color] 15+: Gain {BlackTouchVigor:diff()} [gold]Vigor[/gold].",
   "INTERLOPER-BLACK_TOUCH.title": "Black Touch",
-  "INTERLOPER-EMPOWER_CURSES.description": "Gain {Block:diff()} [gold]Block[/gold].\nWhen your [gold]Block[/gold] breaks, apply 1 [gold]Weak[/gold] to a random enemy. If it does not break, gain 1 [gold]Temporary Strength[/gold].",
+  "INTERLOPER-EMPOWER_CURSES.description": "Gain {Block:diff()} [gold]Block[/gold].\nAt the start of your turn, if the total cost of cards in your hand is 6 or less, gain 2 [gold]Temporary Strength[/gold].",
   "INTERLOPER-EMPOWER_CURSES.title": "Empower Curses",
   "INTERLOPER-FOCUS.description": "Gain {Block:diff()} [gold]Block[/gold].\n [color=#8251B0]Potential[/color] {Potential:diff()}.",
   "INTERLOPER-FOCUS.title": "Focus",

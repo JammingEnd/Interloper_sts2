@@ -11,13 +11,15 @@ namespace Interloper.InterloperCode.Telemetry;
 
 public class TelemetryRewardHook() : CustomSingletonModel(HookType.Run)
 {
-    public override async Task BeforeCombatRewardOffered(RewardsSet rewards, CombatRoom room)
+    public override bool TryModifyRewards(Player player, List<Reward> rewards, AbstractRoom room)
     {
-        if (rewards.Player.Character is not InterloperCharacter)
-            return;
+        if (player.Character is not InterloperCharacter)
+            return false;
 
-        foreach (var reward in rewards.Rewards.OfType<CardReward>())
-            TelemetryManager.RecordCardOffer(rewards.Player.RunState, rewards.Player, reward);
+        foreach (var reward in rewards.OfType<CardReward>())
+            TelemetryManager.RecordCardOffer(player.RunState, player, reward);
+
+        return false;
     }
 
     public override async Task AfterRewardTaken(Player player, Reward reward)

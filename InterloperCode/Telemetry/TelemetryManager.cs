@@ -92,17 +92,20 @@ public static class TelemetryManager
             return;
 
         if (!_offerGroups.TryGetValue(reward, out var offerGroup))
-            return;
-        _offerGroups.Remove(reward);
+            offerGroup = Guid.NewGuid();
+        else
+            _offerGroups.Remove(reward);
 
-        foreach (var card in reward.Cards)
+        // Compare the deck snapshot captured at offer time against the deck now; the card whose
+        // count increased is the pick. (reward.Cards may not contain the selected card after OnSelect.)
+        foreach (var (key, before) in _deckSnapshot)
         {
-            string key = card.Id.Entry;
-            int before = _deckSnapshot.GetValueOrDefault(key, 0);
             int after = CountInDeck(player, key);
             if (after > before)
             {
-                FireAndForget(() => PostCardEvent(runState, key, "picked", offerGroup));
+                string cardId = key;
+                Guid group = offerGroup;
+                FireAndForget(() => PostCardEvent(runState, cardId, "picked", group));
                 break;
             }
         }

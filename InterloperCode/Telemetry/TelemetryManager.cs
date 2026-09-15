@@ -1,3 +1,4 @@
+using Interloper.InterloperCode.Character;
 using Interloper.InterloperCode.Telemetry;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
@@ -79,6 +80,9 @@ public static class TelemetryManager
 
         foreach (var card in reward.Cards)
         {
+            if (!ShouldTrack(card))
+                continue;
+
             _deckSnapshot[card.Id.Entry] = CountInDeck(player, card.Id.Entry);
             string cardId = card.Id.Entry;
             Guid group = offerGroup;
@@ -116,6 +120,9 @@ public static class TelemetryManager
     public static void RecordCardPlay(CardModel card, IRunState runState, int turn)
     {
         if (!_active || _client == null || _runId == null)
+            return;
+
+        if (!ShouldTrack(card))
             return;
 
         string cardId = card.Id.Entry;
@@ -168,6 +175,9 @@ public static class TelemetryManager
             });
         }
     }
+
+    private static bool ShouldTrack(CardModel card)
+        => card.Pool?.IsColorless == true || card.Pool is InterloperCardPool;
 
     private static int CountInDeck(Player player, string cardId)
     {

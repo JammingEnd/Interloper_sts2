@@ -37,6 +37,14 @@ public static class TelemetryManager
         if (player == null || player.Character is not InterloperCharacter)
             return;
 
+        // Continuing a saved run (Continue from the menu) fires RunStarted again via
+        // RunManager.Launch; reuse the existing run instance instead of creating a new row.
+        if (_active && _runId != null)
+        {
+            _runState = runState;
+            return;
+        }
+
         _runState = runState;
         _runId = Guid.NewGuid().ToString();
         _active = true;

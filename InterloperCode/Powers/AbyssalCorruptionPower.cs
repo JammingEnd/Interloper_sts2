@@ -21,6 +21,24 @@ public class AbyssalCorruptionPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        base.CanonicalVars.Concat([new IntVar("Removal", 0)]);
+
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
+        CardModel? cardSource)
+    {
+        if (power != this)
+            return;
+
+        UpdateRemoval();
+    }
+
+    private void UpdateRemoval()
+    {
+        int amount = this.Amount;
+        DynamicVars["Removal"].BaseValue = amount * Math.Min(amount, 75) / 100;
+    }
+
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player)

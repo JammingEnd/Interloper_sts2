@@ -20,15 +20,15 @@ public class AbyssalCorruptionPower() : InterloperPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player)
             return;
 
-        int half = this.Amount / 2;
-        if (half <= 0)
+        int removed = this.Amount * this.Amount / 100;
+        if (removed <= 0)
             return;
 
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, Owner, -half, Owner, null);
+        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, Owner, -removed, Owner, null);
     }
 }

@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Interloper.InterloperCode.Cards.Uncommon;
 
-public class UnfairAdvantage() : CorruptionHandlerCard(5, 0,
+public class UnfairAdvantage() : CorruptionHandlerCard(10, 0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {

@@ -1,6 +1,6 @@
 ﻿{
-  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.description": "A stacking debuff that accumulates on enemies. Triggers bonus effects on cards that [color=#952990]Absorb[/color] it. The amount [color=#952990]Absorbed[/color] is 50% of the required threshold. At the end of your turn, a portion is removed.",
-  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.smartDescription": "{Amount} [color=#952990]Abyssal Corruption[/color]. Triggers bonus effects when [color=#952990]Absorbed[/color] by cards. At the end of your turn, removes {Removal} of its amount (capped at 75%).",
+  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.description": "A stacking debuff that accumulates on enemies, allowing more damage to be dealt to the enemy. Triggers bonus effects on cards that [color=#952990]Absorb[/color] it. The amount [color=#952990]Absorbed[/color] is 50% of the required threshold. At the end of your turn, a portion is removed.",
+  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.smartDescription": "{Amount} [color=#952990]Abyssal Corruption[/color].\nDeal {DamageIncrease}% more damage.\nTriggers bonus effects when [color=#952990]Absorbed[/color] by cards. At the end of your turn, removes {Removal}.",
   "INTERLOPER-ABYSSAL_CORRUPTION_POWER.title": "Abyssal Corruption",
   "INTERLOPER-ABYSS_FORM_POWER.description": "At the start of your turn, up to {Amount} cards with [gold]Retain[/gold] or [gold]Exhaust[/gold] gain -1 {energyPrefix:energyIcons(1)} until played.",
   "INTERLOPER-ABYSS_FORM_POWER.smartDescription": "At the start of your turn, up to {Amount} cards with [gold]Retain[/gold] or [gold]Exhaust[/gold] gain -1 {energyPrefix:energyIcons(1)} until played.",
@@ -27,7 +27,7 @@
   "INTERLOPER-ENERGY_NEXT_TURN_POWER.smartDescription": "At the start of your next turn, gain {Amount:energyIcons()}.",
   "INTERLOPER-ENERGY_NEXT_TURN_POWER.title": "Energy Next Turn",
   "INTERLOPER-HUGE_RIFT_POWER.description": "At the start of each turn, apply [color=#952990]Abyssal Corruption[/color] to ALL enemies. The enemy with the lowest HP receives double.",
-  "INTERLOPER-HUGE_RIFT_POWER.smartDescription": "At the start of each turn, apply {Amount} [color=#952990]Abyssal Corruption[/color] to ALL enemies. The enemy with the lowest HP receives {Amount} x2 instead.",
+  "INTERLOPER-HUGE_RIFT_POWER.smartDescription": "At the start of each turn, apply {Amount} [color=#952990]Abyssal Corruption[/color] to ALL enemies. The enemy with the lowest HP receives double.",
   "INTERLOPER-HUGE_RIFT_POWER.title": "Huge Rift",
   "INTERLOPER-LAST_WORDS_POWER.description": "Whenever you take unblocked damage, apply that much [color=#952990]Abyssal Corruption[/color] to the attacker.",
   "INTERLOPER-LAST_WORDS_POWER.smartDescription": "Whenever you take unblocked damage, apply that much [color=#952990]Abyssal Corruption[/color] to the attacker.",

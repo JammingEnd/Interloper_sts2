@@ -25,7 +25,8 @@ public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, C
         if (side != CombatSide.Player)
             return;
 
-        int removed = this.Amount * this.Amount / 100;
+        int percent = Math.Min(this.Amount, 75);
+        int removed = this.Amount * percent / 100;
         if (removed <= 0)
             return;
 

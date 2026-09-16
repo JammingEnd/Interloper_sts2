@@ -1,5 +1,5 @@
 ﻿{
-  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.description": "A stacking debuff that accumulates on enemies. Triggers bonus effects on cards that [color=#952990]Absorb[/color] it. The amount [color=#952990]Absorbed[/color] is 50% of the required threshold.",
+  "INTERLOPER-ABYSSAL_CORRUPTION_POWER.description": "A stacking debuff that accumulates on enemies. Triggers bonus effects on cards that [color=#952990]Absorb[/color] it. The amount [color=#952990]Absorbed[/color] is 50% of the required threshold. Removes 50% of its amount at the end of your turn.",
   "INTERLOPER-ABYSSAL_CORRUPTION_POWER.smartDescription": "{Amount} [color=#952990]Abyssal Corruption[/color]. Triggers bonus effects when [color=#952990]Absorbed[/color] by cards.",
   "INTERLOPER-ABYSSAL_CORRUPTION_POWER.title": "Abyssal Corruption",
   "INTERLOPER-ABYSS_FORM_POWER.description": "At the start of your turn, up to {Amount} cards with [gold]Retain[/gold] or [gold]Exhaust[/gold] gain -1 {energyPrefix:energyIcons(1)} until played.",

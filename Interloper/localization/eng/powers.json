@@ -94,5 +94,8 @@
   "INTERLOPER-DEX_NEXT_TURN_POWER.title": "Dexterity Next Turn",
   "INTERLOPER-EMPOWER_CURSE_POWER.description": "At the start of your turn, if the total cost of cards in your hand is 6 or less, gain {Amount} [gold]Temporary Dexterity[/gold].",
   "INTERLOPER-EMPOWER_CURSE_POWER.smartDescription": "At the start of your turn, if the total cost of cards in your hand is 6 or less, gain {Amount} [gold]Temporary Dexterity[/gold].",
-  "INTERLOPER-EMPOWER_CURSE_POWER.title": "Empower Curse"
+  "INTERLOPER-EMPOWER_CURSE_POWER.title": "Empower Curse",
+  "INTERLOPER-TEMP_DEX_POWER.description": "Gain {Amount} [gold]Dexterity[/gold] this turn.",
+  "INTERLOPER-TEMP_DEX_POWER.smartDescription": "Gain {Amount} [gold]Dexterity[/gold] this turn.",
+  "INTERLOPER-TEMP_DEX_POWER.title": "Temporary Dexterity"
 }

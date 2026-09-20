@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using Interloper.InterloperCode.Keywords;
 using Interloper.InterloperCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,6 +21,13 @@ public class QuickPeek() : CorruptionHandlerCard(5, 1, CardType.Attack, CardRari
         new PowerVar<WeakPower>("QuickPeekWeak", 1),
         new PowerVar<DexterityPower>("QuickPeekDex", 1), 
     ];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await CommonActions.CardAttack(this, cardPlay).Execute(choiceContext);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["QuickPeekWeak"].IntValue,
+            Owner.Creature, this);
+    }
 
     protected override void OnUpgrade()
     {

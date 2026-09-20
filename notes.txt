@@ -1,0 +1,27 @@
+some notes i guess
+
+- Void reach / exhaust feeling overcomplicated
+- character too overcomplicated
+
+is void reach too complicated? whilst the tooltip is a bit large, practically its simple 'cards in exhaust need twice the amount of void reach to be brought back, with -1 cost'. im not sure how to handle this. something with cheaper next cycle, drawing cards should enable quick usage.
+
+is the character too complicated? there are guards at place to prevent super powercreep and buffs to keep abyssal corruption viable.
+
+
+perhaps a small rework?
+maybe exhausted cards go into a side deck. this deck can hold a max amount of cards. then with a token card you can release all those cards in your draw/hand pile? you'd have multiple of these sub-decks you can rotate using a different token card / via a button. maybe the sub-deck has a cooldown when another is released. the 'consumed' keyword can still act as a true-exhaust option. would pure still be needed?
+maybe cards in the sub-deck lose energy cost every turn theyre in there.
+so instead of "exhaust", perhaps a different keyword that would send that to the subdecks?
+
+>> Pro's (since it sort of replaces the exhaust pile)
+can still keep the 'when card leaves pile' cards.
+allows for more interesting powers like
+1. sub-decks can hold 1 more card and 1 more colorless
+2. releasing a subdeck gives shield based on total energy cost of released cards
+3. chose 1 card from a release to put in your hand
+
+>> cons
+more manual input required (cycling sub-decks)
+potentially even more complicated
+less consistent? (with void reach in exhaust you know whats comming and how much you need, only void reach power is required, switching to tokens and stuff might be less rewarding)
+more ui clutter (viewing the subdecks and inside previews may be too much)

@@ -143,7 +143,7 @@
   "INTERLOPER-STRIKE_INTERLOPER.title": "Strike",
   "INTERLOPER-SYPHON.description": "Whenever you apply 15 [color=#952990]Abyssal Corruption[/color] in a single turn, gain {Energy:energyIcons()} next turn.",
   "INTERLOPER-SYPHON.title": "Syphon",
-  "INTERLOPER-TO_THE_DEPTHS.description": "Deal {Damage:diff()} damage X times. [color=#8251B0]Potential[/color] {Potential:diff()} at X 2/4/6+.",
+  "INTERLOPER-TO_THE_DEPTHS.description": "Deal {Damage:diff()} and gain [color=#8251B0]Potential[/color] {Potential:diff()} damage X times.",
   "INTERLOPER-TO_THE_DEPTHS.title": "To The Depths",
   "INTERLOPER-TUNNEL_VISION.description": "At the start of each turn, move {TunnelVisionPower:diff()} [color=#952990]Abyssal Corruption[/color] from each enemy to the enemy with the highest HP.",
   "INTERLOPER-TUNNEL_VISION.title": "Tunnel Vision",

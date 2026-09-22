@@ -4,6 +4,7 @@ using Interloper.InterloperCode.Potential;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -28,4 +29,9 @@ public class focus() : InterloperCard(1, CardType.Skill, CardRarity.Common, Targ
         await CommonActions.CardBlock(this, cardPlay);
         await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
+    ];
 }

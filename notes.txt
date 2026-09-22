@@ -25,3 +25,11 @@ more manual input required (cycling sub-decks)
 potentially even more complicated
 less consistent? (with void reach in exhaust you know whats comming and how much you need, only void reach power is required, switching to tokens and stuff might be less rewarding)
 more ui clutter (viewing the subdecks and inside previews may be too much)
+
+Other option:
+token based exhaust retrieval.
+instead of cards generating void reach, id have token cards that bring back exhausted cards, these token cards can be upgraded to retrieve more expensive cards.
+- cards GENERATE a void reach token
+- cards UPGRADE void reach token cards
+- cards can give bonuses to token cards like 'select x cards to bring back' or 'selected cards are free to play' or 'select cards generate gain consumed'
+- maybe these token cards are seperated in a way that some may only grab a skill/attack/power? then also a generic one for all

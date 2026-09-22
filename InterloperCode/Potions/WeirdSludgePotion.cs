@@ -20,7 +20,7 @@ public sealed class WeirdSludgePotion : InterloperPotion
         if (combatState == null)
             return;
 
-        await PowerCmd.Apply<GammaPower>(choiceContext, combatState.HittableEnemies, 15, Owner.Creature,
+        await PowerCmd.Apply<GammaPower>(choiceContext, combatState.HittableEnemies, 45, Owner.Creature,
             null);
 
     }

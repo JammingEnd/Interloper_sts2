@@ -20,7 +20,7 @@ public class OnesService() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
             new DamageVar(5, ValueProp.Move),
-            new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 5),
+            new PowerVar<GammaPower>("Gamma", 5),
             new IntVar("Potential", 7),
     ];
 
@@ -29,19 +29,19 @@ public class OnesService() : InterloperCard(1,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target, DynamicVars["Gamma"].IntValue, Owner.Creature, this);
         await DarkPotentialCmd.Add(choiceContext, Owner, DynamicVars["Potential"].IntValue);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>(),
+            HoverTipFactory.FromPower<GammaPower>(),
             HoverTipFactory.FromKeyword(InterloperKeywords.DarkPotential)
         ];
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["AbyssalCorruption"].UpgradeValueBy(3m);
+        DynamicVars["Gamma"].UpgradeValueBy(3m);
     }
 }

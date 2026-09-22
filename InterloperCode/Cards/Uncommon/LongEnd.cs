@@ -18,7 +18,7 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(9, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 9),
+        new PowerVar<GammaPower>("GammaPower", 9),
         new IntVar("Potential", 12)
     ];
 
@@ -28,14 +28,14 @@ public class LongEnd() : CorruptionHandlerCard(15,1,
     {
         ConsumptionOverride = 5;
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruptionPower"].IntValue,
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target, DynamicVars["GammaPower"].IntValue,
             Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3);
+        DynamicVars["GammaPower"].UpgradeValueBy(3);
     }
 
     protected override async Task CorruptionConsumptionEffect(PlayerChoiceContext choiceContext, CardPlay play)

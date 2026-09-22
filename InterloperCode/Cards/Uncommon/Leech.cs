@@ -27,7 +27,7 @@ public class Leech() : CorruptionHandlerCard(15, 2,
     {
         await CommonActions.CardAttack(this, play, DynamicVars.Repeat.IntValue).Execute(choiceContext);
         this.ConsumptionOverride = 15;
-        bool metThreshold = play.Target.GetPowerAmount<AbyssalCorruptionPower>() >= 15;
+        bool metThreshold = play.Target.GetPowerAmount<GammaPower>() >= 15;
         if (!metThreshold)
         {
             await CardCmd.Exhaust(choiceContext, this);

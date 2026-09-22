@@ -30,7 +30,7 @@ public class LastWords() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+            HoverTipFactory.FromPower<GammaPower>()
         ];
 
 }

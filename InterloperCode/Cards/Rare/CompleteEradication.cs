@@ -20,7 +20,7 @@ public class CompleteEradication() : CorruptionHandlerCard(40, 3,
         new CalculationBaseVar(25),
         new ExtraDamageVar(3),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-            (Func<CardModel, Creature, Decimal>) ((_, target) => (Decimal) (target != null ? target.GetPowerAmount<AbyssalCorruptionPower>() >= 40 ? 25 : 0 : 0)))
+            (Func<CardModel, Creature, Decimal>) ((_, target) => (Decimal) (target != null ? target.GetPowerAmount<GammaPower>() >= 40 ? 25 : 0 : 0)))
     ];
 
     protected override async Task OnPlay(

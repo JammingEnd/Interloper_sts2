@@ -16,7 +16,7 @@ public class OpenWound() : InterloperCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5)
+        new PowerVar<GammaPower>("GammaPower", 5)
     ];
 
     protected override async Task OnPlay(
@@ -28,19 +28,19 @@ public class OpenWound() : InterloperCard(0,
 
         if (play.Target.CurrentHp < initialHp)
         {
-            await PowerCmd.Apply<AbyssalCorruptionPower>(
+            await PowerCmd.Apply<GammaPower>(
                 choiceContext, play.Target,
-                DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
+                DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
+        DynamicVars["GammaPower"].UpgradeValueBy(3m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 }

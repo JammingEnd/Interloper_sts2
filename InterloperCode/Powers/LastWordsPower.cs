@@ -25,7 +25,7 @@ public class LastWordsPower() : InterloperPower
             int amount = (int)result.UnblockedDamage;
             if (amount > 0)
             {
-               await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, dealer, amount, Owner, null);
+               await PowerCmd.Apply<GammaPower>(choiceContext, dealer, amount, Owner, null);
             }
         }
     }

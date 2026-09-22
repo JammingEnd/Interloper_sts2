@@ -19,7 +19,7 @@ public class MinorRift() : InterloperCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new RepeatVar(4),
         new DamageVar(5, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 4)
+        new PowerVar<GammaPower>("Gamma", 4)
     ];
 
     protected override async Task OnPlay(
@@ -33,8 +33,8 @@ public class MinorRift() : InterloperCard(2,
             if (enemy  != null)
             {
                 await CreatureCmd.Damage(choiceContext, enemy, this.DynamicVars.Damage, this, null);
-                await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, enemy,
-                    card.DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
+                await PowerCmd.Apply<GammaPower>(choiceContext, enemy,
+                    card.DynamicVars["Gamma"].IntValue, Owner.Creature, this);
             }
             enemy = (Creature)null;
         }
@@ -46,6 +46,6 @@ public class MinorRift() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 }

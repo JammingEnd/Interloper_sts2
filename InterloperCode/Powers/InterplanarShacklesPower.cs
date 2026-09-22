@@ -20,7 +20,7 @@ public class InterplanarShacklesPower() : InterloperPower
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (power is not AbyssalCorruptionPower)
+        if (power is not GammaPower)
             return;
 
         if (power.Owner != Owner)
@@ -33,7 +33,7 @@ public class InterplanarShacklesPower() : InterloperPower
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 
 }

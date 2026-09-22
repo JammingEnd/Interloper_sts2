@@ -20,7 +20,7 @@ public class GoneFromReality() : InterloperCard(1,
         new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
             (card, _) => (Decimal)card.CombatState.HittableEnemies
-                .Sum(e => e.GetPowerAmount<AbyssalCorruptionPower>()))
+                .Sum(e => e.GetPowerAmount<GammaPower>()))
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -38,6 +38,6 @@ public class GoneFromReality() : InterloperCard(1,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 }

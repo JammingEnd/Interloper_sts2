@@ -15,23 +15,23 @@ public class Corrupt() : InterloperCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower",10)
+        new PowerVar<GammaPower>("GammaPower",10)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target, DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+            HoverTipFactory.FromPower<GammaPower>()
         ];
 
     protected override void OnUpgrade()
     {
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(5m);
+        DynamicVars["GammaPower"].UpgradeValueBy(5m);
     }
 }

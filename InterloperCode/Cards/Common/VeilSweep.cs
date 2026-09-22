@@ -19,7 +19,7 @@ public class VeilSweep() : InterloperCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 12),
+        new PowerVar<GammaPower>("GammaPower", 12),
         new CardsVar(2)
     ];
 
@@ -27,12 +27,12 @@ public class VeilSweep() : InterloperCard(2,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target, DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
+        DynamicVars["GammaPower"].UpgradeValueBy(3m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 

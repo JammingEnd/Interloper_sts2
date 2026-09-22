@@ -15,7 +15,6 @@ public static class DarkPotentialCmd
     public static readonly int[] EnergyValues = { 1, 2, 3, 4 };
 
     /// <summary>Auto grants energy when the bar crosses energy thresholds; otherwise energy is granted on clear.</summary>
-    /// NOTE: this performs no awaits; return `Task.CompletedTask` (NOT an async method) to avoid CS1998.
     public static Task SetAutoEnergy(PlayerChoiceContext choiceContext, Player player, bool value)
     {
         var state = player.PlayerCombatState?.GetDarkPotentialState();
@@ -35,7 +34,6 @@ public static class DarkPotentialCmd
     /// Auto-resolves the Dark Potential bar: level buffs and energy fire as thresholds are
     /// reached, and the bar only clears when it reaches max.
     /// </summary>
-    /// NOTE: this performs no awaits; return `Task.CompletedTask` (NOT an async method) to avoid CS1998.
     public static Task SetAutoUseThresholds(PlayerChoiceContext choiceContext, Player player, bool value)
     {
         var state = player.PlayerCombatState?.GetDarkPotentialState();
@@ -103,19 +101,15 @@ public static class DarkPotentialCmd
 
         if (state.AutoUseThresholds)
         {
-            // Fire level buffs as their thresholds are crossed (once per fill cycle).
             while (state.LastActivatedLevelIndex < DarkPotentialLevels.LevelCount &&
                    state.Current >= GetLevelThreshold(state, state.LastActivatedLevelIndex + 1))
             {
                 state.LastActivatedLevelIndex++;
                 await DispatchLevel(choiceContext, player, state.LastActivatedLevelIndex);
             }
-
-            // Energy auto-grants at energy thresholds.
+            
             await GrantAutoEnergy(choiceContext, player, state);
-
-            // The bar only clears (resets) when it reaches max. The level-5 buff and top energy
-            // already fired above; reset without re-dispatching to avoid a double trigger.
+            
             if (state.Current >= state.Max)
             {
                 state.Clears++;
@@ -126,8 +120,6 @@ public static class DarkPotentialCmd
         }
         else if (state.AutoGrantEnergy)
         {
-            // Auto mode: grant energy for each newly-crossed threshold. The index advances before the
-            // first await so a hook-triggered re-entrant Add cannot double-grant.
             await GrantAutoEnergy(choiceContext, player, state);
         }
 
@@ -140,7 +132,6 @@ public static class DarkPotentialCmd
 
     private static async Task GrantAutoEnergy(PlayerChoiceContext choiceContext, Player player, DarkPotentialState state)
     {
-        // Re-read the index each iteration: a re-entrant Add during GainEnergy may advance it.
         for (var i = state.LastGrantedEnergyIndex + 1; i < EnergyThresholds.Length; i = state.LastGrantedEnergyIndex + 1)
         {
             if (state.Current < GetEnergyThreshold(state, i))
@@ -159,8 +150,7 @@ public static class DarkPotentialCmd
 
         if (CombatManager.Instance.IsOverOrEnding)
             return;
-
-        // Capture BEFORE the dispatch await so a level effect that mutates Current can't skew the grant.
+        
         var level = GetHighestReachedLevelIndex(state);
         var energyIndex = !state.AutoGrantEnergy ? GetHighestReachedEnergyIndex(state) : -1;
         if (level > 0)
@@ -180,8 +170,6 @@ public static class DarkPotentialCmd
         OnChanged?.Invoke(player);
 
         var combatState = player.Creature.CombatState;
-        // AfterCleared is intentionally only fired when level > 0: a sub-threshold clear
-        // wastes the bar but does not trigger level consumers like WitnessMe/Absolute.
         if (combatState != null && level > 0)
             await DarkPotentialHook.AfterCleared(combatState, choiceContext, player, level, gainedEnergy);
     }

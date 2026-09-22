@@ -26,7 +26,7 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
             await CorruptionConsumptionEffect(choiceContext, cardPlay);
             await PowerCmd.Apply<EngulfPower>(choiceContext, cardPlay.Card.Owner.Creature, -1, Owner.Creature, null);
         }
-        else if (cardPlay.Target.GetPowerAmount<AbyssalCorruptionPower>() >= corruptionThreshold)
+        else if (cardPlay.Target.GetPowerAmount<GammaPower>() >= corruptionThreshold)
         {
             await CorruptionConsumptionEffect(choiceContext, cardPlay);
             await CreatureCmd.TriggerAnim(base.Owner.Creature, "cast_2", 0);
@@ -41,12 +41,12 @@ public abstract class CorruptionHandlerCard(int corruptionThreshold, int cost, C
             {
                 consumed = 0;
             }
-            await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, cardPlay.Target, consumed * 0.5m, Owner.Creature, this);
+            await PowerCmd.Apply<GammaPower>(choiceContext, cardPlay.Target, consumed * 0.5m, Owner.Creature, this);
         }
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
     
 }

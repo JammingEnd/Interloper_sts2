@@ -17,7 +17,7 @@ public class ShadowAbove() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
             new DamageVar(6, ValueProp.Move),
-            new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower",3)
+            new PowerVar<GammaPower>("GammaPower",3)
     ];
 
     protected override async Task OnPlay(
@@ -27,18 +27,18 @@ public class ShadowAbove() : InterloperCard(1,
         CommonActions.CardAttack(this, play).Execute(choiceContext);
         foreach (var enemy in CombatState!.HittableEnemies)
         {
-            await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, enemy, DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<GammaPower>(choiceContext, enemy, DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
         }
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+            HoverTipFactory.FromPower<GammaPower>()
         ];
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
+        DynamicVars["GammaPower"].UpgradeValueBy(3m);
     }
 }

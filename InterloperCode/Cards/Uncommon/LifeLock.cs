@@ -14,23 +14,23 @@ public class LifeLock() : InterloperCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 15)
+        new PowerVar<GammaPower>("GammaPower", 15)
     ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target,
-            DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target,
+            DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(7m);
+        DynamicVars["GammaPower"].UpgradeValueBy(7m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 }

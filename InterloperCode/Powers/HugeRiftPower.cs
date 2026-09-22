@@ -30,7 +30,7 @@ public class HugeRiftPower() : InterloperPower
             if (enemy == lowestHpEnemy)
                 amount *= 2;
 
-            await PowerCmd.Apply<AbyssalCorruptionPower>(
+            await PowerCmd.Apply<GammaPower>(
                 choiceContext, enemy,
                 amount,
                 Owner, null

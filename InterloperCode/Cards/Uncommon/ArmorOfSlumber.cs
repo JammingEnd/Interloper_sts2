@@ -17,7 +17,7 @@ public class ArmorOfSlumber() : InterloperCard(1,
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5m),
+        new PowerVar<GammaPower>("GammaPower", 5m),
         new BlockVar("SlumberBlock", 0, ValueProp.Move)
     ];
 
@@ -26,18 +26,18 @@ public class ArmorOfSlumber() : InterloperCard(1,
         CardPlay play)
     {
         DynamicVars["SlumberBlock"].BaseValue = 0;
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target,
-            DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
-        var targetCorruption = play.Target.GetPowerAmount<AbyssalCorruptionPower>();
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target,
+            DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
+        var targetCorruption = play.Target.GetPowerAmount<GammaPower>();
         await CreatureCmd.GainBlock(Owner.Creature, targetCorruption, ValueProp.Move, play);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["AbyssalCorruptionPower"].UpgradeValueBy(3m);
+        DynamicVars["GammaPower"].UpgradeValueBy(3m);
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 }

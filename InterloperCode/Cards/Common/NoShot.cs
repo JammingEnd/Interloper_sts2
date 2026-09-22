@@ -18,7 +18,7 @@ public class NoShot() : InterloperCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(7, ValueProp.Move),
-         new PowerVar<AbyssalCorruptionPower>("AbyssalCorruption", 7)
+         new PowerVar<GammaPower>("Gamma", 7)
     ];
 
     protected override async Task OnPlay(
@@ -28,18 +28,18 @@ public class NoShot() : InterloperCard(1,
          await CommonActions.CardAttack(this, play).Execute(choiceContext);
          if (play.Target.Monster.NextMove.Intents.OfType<AbstractIntent>().Any(e => e.IntentType is IntentType.Debuff or IntentType.DebuffStrong or IntentType.Buff or IntentType.Heal))
          {
-             await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target, DynamicVars["AbyssalCorruption"].IntValue, Owner.Creature, this);
+             await PowerCmd.Apply<GammaPower>(choiceContext, play.Target, DynamicVars["Gamma"].IntValue, Owner.Creature, this);
          }
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+            HoverTipFactory.FromPower<GammaPower>()
         ];
 
     protected override void OnUpgrade()
     {
             DynamicVars.Damage.UpgradeValueBy(3m);
-            DynamicVars["AbyssalCorruption"].UpgradeValueBy(3m);
+            DynamicVars["Gamma"].UpgradeValueBy(3m);
     }
 }

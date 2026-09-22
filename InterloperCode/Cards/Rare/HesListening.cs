@@ -21,11 +21,11 @@ public class HesListening() : InterloperCard(0,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        int corruption = play.Target.GetPowerAmount<AbyssalCorruptionPower>();
+        int corruption = play.Target.GetPowerAmount<GammaPower>();
         if (corruption <= 0)
             return;
 
-        await PowerCmd.Apply<AbyssalCorruptionPower>(
+        await PowerCmd.Apply<GammaPower>(
             choiceContext, play.Target,
             -corruption, Owner.Creature, this);
 
@@ -41,6 +41,6 @@ public class HesListening() : InterloperCard(0,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<AbyssalCorruptionPower>()
+        HoverTipFactory.FromPower<GammaPower>()
     ];
 }

@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace Interloper.InterloperCode.Powers;
 
 // void corruption now also increases the intensity of other debuffs
-public class AbyssalCorruptionPower() : InterloperPower
+public class GammaPower() : InterloperPower
 {
     public override PowerType Type =>
         PowerType.Debuff;
@@ -61,7 +61,7 @@ public class AbyssalCorruptionPower() : InterloperPower
         if (removed <= 0)
             return;
 
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, Owner, -removed, Owner, null);
+        await PowerCmd.Apply<GammaPower>(choiceContext, Owner, -removed, Owner, null);
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,

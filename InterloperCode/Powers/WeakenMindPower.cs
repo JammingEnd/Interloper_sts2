@@ -18,7 +18,7 @@ public class WeakenMindPower() : InterloperPower
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier,
         out decimal modifiedAmount)
     {
-        if (canonicalPower.GetType() != typeof(AbyssalCorruptionPower))
+        if (canonicalPower.GetType() != typeof(GammaPower))
         {
             modifiedAmount = amount;
             return false;
@@ -37,7 +37,7 @@ public class WeakenMindPower() : InterloperPower
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (power.GetType() != typeof(AbyssalCorruptionPower))
+        if (power.GetType() != typeof(GammaPower))
             return;
 
         if (applier != Owner)

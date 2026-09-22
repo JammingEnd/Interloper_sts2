@@ -27,7 +27,7 @@ public class FoulPlay() : CorruptionHandlerCard(10, 1,
     {
         await CommonActions.CardBlock(this, play);
         // see if enemy has 10+ corruption
-        if(play.Target.GetPowerAmount<AbyssalCorruptionPower>() >= 10)
+        if(play.Target.GetPowerAmount<GammaPower>() >= 10)
         {
             ConsumptionOverride = -1;
         }

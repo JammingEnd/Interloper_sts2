@@ -22,24 +22,6 @@ using InterloperCharacter = Interloper.InterloperCode.Character.Interloper;
 
 namespace Interloper.InterloperCode.Patches;
 
-/* =====================================================================================
- * Networking: single path for the Dark Potential clear button.
- *
- * A GameAction (MegaCrit.Sts2.Core.GameActions) is a thin wrapper around an async Task
- * that runs in response to player input, INSIDE the game's deterministic action pipeline.
- * The base game's pattern for a networked UI button is to enqueue a ConsoleCmdGameAction
- * directly via ActionQueueSynchronizer.RequestEnqueue(GameAction) (see DevConsole.ProcessCommand).
- *
- * Button press:
- *   RequestClear -> RequestEnqueue(new ConsoleCmdGameAction(me, Command, inCombat: true))
- *   -> ActionQueueSynchronizer broadcasts it to every peer (serialized as NetConsoleCmdGameAction)
- *   -> on each peer the reconstructed ConsoleCmdGameAction runs DarkPotentialClearConsoleCmd
- *      (auto-discovered via ReflectionHelper.GetSubtypesInMods<AbstractConsoleCmd>)
- *   -> DarkPotentialClearConsoleCmd.Process runs the SAME DarkPotentialCmd.Clear with a
- *      GameActionPlayerChoiceContext wrapping the currently-running action.
- * Every peer runs the same deterministic logic - never a raw UI callback.
- * ===================================================================================== */
-
 [HarmonyPatch(typeof(NCombatUi), nameof(NCombatUi.Activate))]
 internal class NCombatUiDarkPotentialPatch
 {
@@ -98,13 +80,6 @@ internal class NCombatUiDarkPotentialPatch
     }
 }
 
-/// <summary>
-/// Backs the networked clear path. Auto-registered with the dev console via
-/// <c>ReflectionHelper.GetSubtypesInMods&lt;AbstractConsoleCmd&gt;</c>; runs on every peer when
-/// the clear button enqueues a <see cref="ConsoleCmdGameAction"/>. Performs the
-/// <see cref="DarkPotentialCmd.Clear"/> with a <see cref="GameActionPlayerChoiceContext"/> wrapping
-/// the currently-running action (the <see cref="ConsoleCmdGameAction"/> the executor is running).
-/// </summary>
 public class DarkPotentialClearConsoleCmd : AbstractConsoleCmd
 {
     public const string Command = "interloper_darkpotential_clear";

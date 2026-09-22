@@ -16,12 +16,12 @@ public class QuarkWormRelic : InterloperRelic
 
     private const int ConsumeThreshold = 20;
 
-    private int _consumedAbyssalCorruption;
+    private int _consumedGamma;
     private int _lastTriggered;
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (power is not AbyssalCorruptionPower)
+        if (power is not GammaPower)
             return;
 
         if (applier != Owner.Creature)
@@ -30,8 +30,8 @@ public class QuarkWormRelic : InterloperRelic
         if (amount >= 0m)
             return;
 
-        _consumedAbyssalCorruption += (int)Math.Abs(amount);
-        int triggers = _consumedAbyssalCorruption / ConsumeThreshold - _lastTriggered;
+        _consumedGamma += (int)Math.Abs(amount);
+        int triggers = _consumedGamma / ConsumeThreshold - _lastTriggered;
         if (triggers <= 0)
             return;
 

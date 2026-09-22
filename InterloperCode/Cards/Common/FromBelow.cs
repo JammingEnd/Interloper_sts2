@@ -16,7 +16,7 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(7, ValueProp.Move),
-        new PowerVar<AbyssalCorruptionPower>("AbyssalCorruptionPower", 5)
+        new PowerVar<GammaPower>("GammaPower", 5)
     ];
 
     protected override async Task OnPlay(
@@ -24,8 +24,8 @@ public class FromBelow() : CorruptionHandlerCard(10, 1,
         CardPlay play)
     {
         await CommonActions.CardAttack(this, play).Execute(choiceContext);
-        await PowerCmd.Apply<AbyssalCorruptionPower>(choiceContext, play.Target,
-            DynamicVars["AbyssalCorruptionPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<GammaPower>(choiceContext, play.Target,
+            DynamicVars["GammaPower"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

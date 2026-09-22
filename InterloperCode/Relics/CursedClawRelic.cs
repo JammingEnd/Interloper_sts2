@@ -32,7 +32,7 @@ public class CursedClawRelic : InterloperRelic
         }
 
         var target = cardPlay.Target;
-        bool willConsume = target != null && target.GetPowerAmount<AbyssalCorruptionPower>() >= handler.CorruptionThreshold;
+        bool willConsume = target != null && target.GetPowerAmount<GammaPower>() >= handler.CorruptionThreshold;
 
         _isCorruptionCardPlay = willConsume;
     }

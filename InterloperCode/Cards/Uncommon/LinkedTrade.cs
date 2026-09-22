@@ -31,7 +31,7 @@ public class LinkedTrade() : InterloperCard(2,
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
-            HoverTipFactory.FromPower<AbyssalCorruptionPower>(),
+            HoverTipFactory.FromPower<GammaPower>(),
             HoverTipFactory.FromPower<VoidReachPower>(),
             HoverTipFactory.FromKeyword(InterloperKeywords.Consumed)
         ];

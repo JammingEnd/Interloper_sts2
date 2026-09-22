@@ -24,7 +24,7 @@ public class LinkedTradePower() : InterloperPower
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (power.GetType() != typeof(AbyssalCorruptionPower))
+        if (power.GetType() != typeof(GammaPower))
             return;
 
         if (applier != Owner)

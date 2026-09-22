@@ -23,7 +23,7 @@ public class HoldingItIn() : CorruptionHandlerCard(10, 0,
 
     protected override bool IsPlayable =>
         CombatState?.Enemies.Any(e =>
-            e.GetPowerAmount<AbyssalCorruptionPower>() >= 5) ?? false;
+            e.GetPowerAmount<GammaPower>() >= 5) ?? false;
     
     
     protected override async Task OnPlay(

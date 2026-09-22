@@ -19,7 +19,7 @@ public class TunnelVisionPower() : InterloperPower
         var enemies = CombatState.HittableEnemies.ToList();
         if (enemies.Count == 1)
         {
-            await PowerCmd.Apply<AbyssalCorruptionPower>(
+            await PowerCmd.Apply<GammaPower>(
                 choiceContext, enemies[0],
                 Amount,
                 Owner, null
@@ -40,14 +40,14 @@ public class TunnelVisionPower() : InterloperPower
 
         foreach (var enemy in enemies)
         {
-            if (enemy == highestHpEnemy || enemy.GetPowerAmount<AbyssalCorruptionPower>() < 5) continue;
-            await PowerCmd.Apply<AbyssalCorruptionPower>(
+            if (enemy == highestHpEnemy || enemy.GetPowerAmount<GammaPower>() < 5) continue;
+            await PowerCmd.Apply<GammaPower>(
                 choiceContext, enemy,
                 -this.Amount,
                 Owner, null
             );
         }
-        await PowerCmd.Apply<AbyssalCorruptionPower>(
+        await PowerCmd.Apply<GammaPower>(
             choiceContext, highestHpEnemy,
             totalLoss,
             Owner, null
